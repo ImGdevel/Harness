@@ -1,0 +1,45 @@
+name: Validate PR Template
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  validate-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate required PR sections
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || "";
+            const stripComments = (text) => text.replace(/<!--[\s\S]*?-->/g, "").trim();
+            const requiredSections = [
+              "## Summary",
+              "## Scope",
+              "## Validation",
+              "## Checklist",
+            ];
+
+            const missingSections = requiredSections.filter((section) => !body.includes(section));
+            if (missingSections.length > 0) {
+              core.setFailed(`PR body is missing required sections: ${missingSections.join(", ")}`);
+              return;
+            }
+
+            const extractSection = (heading) => {
+              const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+              const pattern = new RegExp(`${escaped}\\s*([\\s\\S]*?)(?=\\n##\\s|$)`, "i");
+              const match = body.match(pattern);
+              return match ? stripComments(match[1]) : "";
+            };
+
+            const requiredContentSections = ["## Summary", "## Scope", "## Validation"];
+            const emptySections = requiredContentSections.filter((section) => extractSection(section).length === 0);
+            if (emptySections.length > 0) {
+              core.setFailed(`PR body has empty required sections: ${emptySections.join(", ")}`);
+            }

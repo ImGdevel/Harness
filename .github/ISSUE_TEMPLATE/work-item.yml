@@ -1,0 +1,66 @@
+name: Work Item
+description: Feature, refactor, docs, build, or chore work item
+title: "[work] "
+labels:
+  - task
+body:
+  - type: dropdown
+    id: work_type
+    attributes:
+      label: Work Type
+      description: Choose the closest work category.
+      options:
+        - feature
+        - refactor
+        - docs
+        - chore
+        - build
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: Write the outcome this work should achieve.
+      placeholder: Explain the goal in 1-3 short bullets.
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: Background
+      description: Add context, constraints, or the reason this work is needed.
+      placeholder: Explain why this work matters now.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Write what is included and excluded.
+      placeholder: |
+        Included:
+        - ...
+
+        Excluded:
+        - ...
+    validations:
+      required: true
+  - type: textarea
+    id: done_criteria
+    attributes:
+      label: Done Criteria
+      description: Write the conditions that define completion.
+      placeholder: |
+        - ...
+        - ...
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Add links, docs, related plans, or related discussions when relevant.
+      placeholder: Optional references
+    validations:
+      required: false

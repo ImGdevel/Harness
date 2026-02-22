@@ -1,0 +1,57 @@
+name: Bug Report
+description: Defect, incident, regression, or unexpected behavior report
+title: "[bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the actual symptom.
+      placeholder: What broke, where, and how often?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: Describe the expected result.
+      placeholder: What should have happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Write reproducible steps or the observed trigger condition.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Describe user impact, business impact, or severity.
+      placeholder: Who is affected and how serious is it?
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Add version, stack, environment, or branch information when known.
+      placeholder: app version, branch, environment, browser, runtime, etc.
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or Evidence
+      description: Paste logs, screenshots, stack traces, or related references.
+      placeholder: Optional evidence
+    validations:
+      required: false
