@@ -31,6 +31,18 @@ Choose the nearest scope that owns the spec:
 
 If one project accumulates multiple spec documents, group them under `project/<name>/docs/spec/` and keep `project/<name>/docs/index.md` as the top-level entry point.
 
+For project scope, prefer these destinations first:
+
+- API contract: `project/<name>/docs/api/`
+- data model or ERD: `project/<name>/docs/erd/`
+- domain technical spec: `project/<name>/docs/domain-tech-spec/`
+- system architecture: `project/<name>/docs/architecture/`
+- infrastructure or deployment: `project/<name>/docs/infrastructure/`
+- local environment setup: `project/<name>/docs/local-setup/`
+- security design or policy: `project/<name>/docs/security/`
+- stack rationale: `project/<name>/docs/stack-selection/`
+- external references: `project/<name>/docs/references/`
+
 ## Recommended Structure
 
 Keep only the sections that help future work:

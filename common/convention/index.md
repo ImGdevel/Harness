@@ -6,6 +6,8 @@
 
 - `project-artifact-conventions.md`
   프로젝트 내부 `docs/`, `plan/`, `troubleshooting/` 경로와 파일명, 버전 규칙을 정의한다.
+- `project-doc-structure.md`
+  프로젝트 `docs/` 내부 표준 폴더 구조와 각 문서 영역의 역할을 정의한다.
 - `git-commit-conventions.md`
   커밋 범위, 커밋 시점, 커밋 메시지 형식을 정의한다.
 - `git-branch-gitflow.md`

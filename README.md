@@ -35,6 +35,24 @@ CLAUDE.MD                # Claude 전용 작업 규칙
 - 공통 템플릿은 `common/templates/`에 둔다.
 - 짧게 재사용하는 코드 예제는 각 프레임워크의 `snippets/`에 둔다.
 - GitHub 이슈/PR 템플릿은 `.github/`에 두고, 설명용 공통 템플릿은 `common/templates/`에 둔다.
+- 공통 워크플로우 모델과 카탈로그는 `common/spec/`에 둔다.
+
+## Workflow Model
+
+이 워크스페이스의 표준 워크플로우 계층은 아래와 같다.
+
+- `step`: 가장 작은 실행 단위
+- `job`: 여러 step을 묶는 중단위 작업
+- `pipeline`: 여러 job을 묶는 통합 작업 흐름
+
+예를 들면:
+
+- `branch-create`, `commit`, `push`, `open-pr`는 `step`
+- `full-test`, `pr-delivery`는 `job`
+- `implementation-delivery`, `incident-response`, `delivery-pipeline`은 `pipeline`
+
+요청 의도가 분명하면 사용자가 모든 세부 단계를 나열하지 않아도 적절한 `job` 또는 `pipeline`을 자동 선택해 실행한다.
+대단위 작업의 표준 이름은 `delivery pipeline`이며, 요구사항부터 PR 피드백 반영까지 장시간 연속 실행이 가능하다.
 
 ## Project Rules
 
@@ -42,6 +60,14 @@ CLAUDE.MD                # Claude 전용 작업 규칙
 
 ```text
 project/miyou/docs/index.md
+project/miyou/docs/api/index.md
+project/miyou/docs/erd/index.md
+project/miyou/docs/domain-tech-spec/index.md
+project/miyou/docs/architecture/index.md
+project/miyou/docs/infrastructure/index.md
+project/miyou/docs/local-setup/index.md
+project/miyou/docs/security/index.md
+project/miyou/docs/stack-selection/index.md
 project/miyou/plan/
 project/miyou/troubleshooting/
 project/miyou/miyou/src/
@@ -51,12 +77,20 @@ project/miyou/miyou/.git
 - `project/<name>/`는 프로젝트 컨테이너다.
 - 실제 Git 저장소는 `project/<name>/<repo-name>/` 아래에 둔다.
 - 프로젝트 자체 문서는 컨테이너 루트인 `project/<name>/docs/`에 둔다.
+- `docs/`는 최소한 `api/`, `architecture/`, `convention/`, `domain-tech-spec/`, `erd/`, `infrastructure/`, `local-setup/`, `references/`, `security/`, `stack-selection/` 구조를 가진다.
 - 구현 계획은 `project/<name>/plan/`에 저장한다.
 - 트러블슈팅 기록은 `project/<name>/troubleshooting/`에 저장한다.
+- `plan/`과 `troubleshooting/`는 프로젝트 컨테이너의 필수 디렉터리다.
 - 루트 워크스페이스 Git은 `project/*/...` 아래 내용을 추적하지 않는다.
 - `plan/`과 `troubleshooting/` 문서는 `YYYY-MM-DD_HHMM_<slug>.md` 형식을 기본으로 사용한다.
 - 같은 주제의 후속 수정은 새 파일보다 `_v2`, `_v3` 버전을 우선한다.
 - 프로젝트는 특정 프레임워크에 종속되지 않는다. 여러 프레임워크를 함께 써도 `project/<name>/` 하나로 관리한다.
+
+프로젝트 컨테이너를 새로 만들 때는 다음 스크립트를 사용한다.
+
+```powershell
+.\scripts\init-project-container.ps1 -ProjectName <project-name> -RepoName <repo-name>
+```
 
 ## GitHub Rules
 

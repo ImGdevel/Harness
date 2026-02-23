@@ -38,6 +38,14 @@
   GitHub 이슈와 PR 본문을 템플릿 기준으로 작성하거나 수정할 때 사용하는 기본 스킬이다.
   실제 템플릿 구조와 강제 규칙은 `common/convention/github-collaboration-conventions.md`와 `common/templates/`를 따른다.
 
+- `workflow-orchestration/`
+  `step`, `job`, `pipeline` 계층으로 작업 흐름을 선택하고 자동 실행할 때 사용하는 기본 스킬이다.
+  `full-test`, `pr-delivery`, `implementation-delivery` 같은 등록된 워크플로우를 기준으로 동작한다.
+
+- `delivery-pipeline/`
+  요구사항 상세화부터 설계, 구현, 테스트, 문서화, PR, 피드백 반영까지 장시간 연속 실행하는 대단위 delivery pipeline 스킬이다.
+  사용자가 중간 프롬프트를 다시 쓰지 않아도 완료 또는 실제 blocker까지 계속 전진하는 것을 기본으로 한다.
+
 ## Registration Rule
 
 - 새 스킬 문서를 추가하면 이 인덱스에 목적과 경로를 기록한다.

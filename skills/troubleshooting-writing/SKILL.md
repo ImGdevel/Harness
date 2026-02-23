@@ -28,11 +28,16 @@ For real project issues, save the document in:
 
 `project/<name>/troubleshooting/`
 
+For project issues with reuse or prevention value, this is mandatory.
+Do not leave the troubleshooting result only in chat.
+
 Use the filename format:
 
 `YYYY-MM-DD_HHMM_<slug>.md`
 
 If the document is a revision or direct continuation of the same issue, keep the same base name and use `_v2`, `_v3`, and so on.
+
+If `project/<name>/troubleshooting/` does not exist yet, create it before writing the document.
 
 ## Required Content
 
@@ -55,6 +60,7 @@ Keep these sections unless they are truly not applicable:
 - Record failed attempts only when they help future debugging.
 - Prefer concrete symptoms, logs, and verification steps.
 - If the result contains reusable framework insight, extract that insight to common or framework docs after saving the project note.
+- For repeated or high-cost failures, not saving the troubleshooting note is a rule violation.
 
 ## Template Usage
 

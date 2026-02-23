@@ -18,6 +18,8 @@
 - 사용자가 요청하지 않은 실제 프로젝트 코드는 루트 워크스페이스 Git에 추가하지 않는다.
 - 계획이나 트러블슈팅이 필요하면 대화에서 끝내지 말고 문서로 남긴다.
 - 이슈와 PR을 다룰 때는 `.github` 템플릿과 공통 템플릿 구조를 따른다.
+- 요청이 등록된 `job` 또는 `pipeline`에 명확히 대응되면 세부 step을 다시 물어보지 말고 자동으로 수행한다.
+- `delivery-pipeline`에 해당하는 요청이면 요구사항, 설계, 구현, 검증, 문서화, PR, 피드백까지 연속적으로 전진한다.
 
 ## Documentation Rule
 
@@ -39,8 +41,11 @@
 - 실제 Git 저장소는 `project/<name>/<repo-name>/` 아래에 둔다.
 - 루트 Git은 `project/*/...` 아래 내용을 추적하지 않는다.
 - 프로젝트 전용 규칙과 스펙은 컨테이너 루트의 `docs/`에 둔다.
+- 프로젝트 `docs/`는 최소한 `api/`, `architecture/`, `convention/`, `domain-tech-spec/`, `erd/`, `infrastructure/`, `local-setup/`, `references/`, `security/`, `stack-selection/` 구조를 유지한다.
 - 실제 프로젝트 계획 문서는 컨테이너 루트의 `plan/`에 둔다.
 - 실제 프로젝트 트러블슈팅 문서는 컨테이너 루트의 `troubleshooting/`에 둔다.
+- `plan/`과 `troubleshooting/`는 필수 디렉터리로 간주한다.
+- 프로젝트 컨테이너에 해당 디렉터리가 없으면 문서 작성 전에 먼저 만든다.
 - 파일명은 `YYYY-MM-DD_HHMM_<slug>.md` 형식을 기본으로 한다.
 - 기존 계획이나 같은 이슈의 후속 문서면 `_v2`, `_v3`처럼 버전을 올린다.
 - 프로젝트는 특정 프레임워크 트리 아래에 두지 않는다.
@@ -54,3 +59,4 @@
 - 짧은 재사용 코드 조각은 각 프레임워크 `snippets/`에 둔다.
 - `scripts/`에는 반복 실행할 자동화 스크립트를 둔다.
 - GitHub 이슈/PR 강제 템플릿은 `.github/`에서 관리한다.
+- 공통 워크플로우 모델은 `common/spec/workflow-model.md`와 `common/spec/workflow-catalog.md`를 기준으로 한다.

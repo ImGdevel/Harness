@@ -31,6 +31,8 @@ Choose the nearest scope that owns the rule:
 
 If one project accumulates multiple rule documents, group them under `project/<name>/docs/convention/` and keep `project/<name>/docs/index.md` as the entry point.
 
+For project-specific rules, prefer `project/<name>/docs/convention/` instead of mixing them into other doc folders.
+
 ## Default Structure
 
 Prefer this shape:

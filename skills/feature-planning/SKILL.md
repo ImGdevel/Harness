@@ -35,6 +35,9 @@ Choose the plan scope first:
 Save the plan in the nearest relevant documentation area, not at the workspace root.
 If the scope is `project`, save the plan under `project/<name>/plan/`.
 
+For project work, this is mandatory, not optional.
+Do not leave a project plan only in chat when the plan has execution value.
+
 ## Planning Rules
 
 - Prefer 2-5 phases.
@@ -48,9 +51,11 @@ If the scope is `project`, save the plan under `project/<name>/plan/`.
 
 - When the user asks for a plan, do not leave it only in chat if it should be retained.
 - For real project work, persist the plan as a Markdown file in the project `plan/` directory.
+- If `project/<name>/plan/` does not exist yet, create it before writing the plan.
 - Use the filename format `YYYY-MM-DD_HHMM_<slug>.md`.
 - If the plan is a revision or continuation of the same topic, reuse the same base filename and add `_v2`, `_v3`, and so on.
 - Keep old plan versions as history; do not overwrite silently.
+- For retained implementation work, not saving the plan is a rule violation.
 
 ## Quality Gate Rules
 

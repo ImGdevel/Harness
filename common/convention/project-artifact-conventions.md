@@ -8,6 +8,33 @@
 - 프로젝트 계획 문서: `project/<project-name>/plan/`
 - 프로젝트 트러블슈팅 문서: `project/<project-name>/troubleshooting/`
 - 실제 Git 저장소: `project/<project-name>/<repo-name>/`
+- 프로젝트 `docs/` 내부 표준 구조는 `project-doc-structure.md`를 따른다.
+
+## Container Minimum Structure
+
+각 프로젝트 컨테이너는 최소한 아래 구조를 가져야 한다.
+
+```text
+project/<project-name>/
+  docs/
+    api/
+    architecture/
+    convention/
+    domain-tech-spec/
+    erd/
+    infrastructure/
+    local-setup/
+    references/
+    security/
+    stack-selection/
+  plan/
+  troubleshooting/
+  <repo-name>/
+```
+
+- `docs/`, `plan/`, `troubleshooting/`가 없으면 실제 작업 전에 먼저 만든다.
+- `plan/`과 `troubleshooting/`는 선택 디렉터리가 아니라 표준 디렉터리다.
+- `docs/` 안의 세부 구조는 프로젝트 표준 문서 트리로 유지한다.
 
 ## Filename Convention
 
@@ -40,6 +67,8 @@ YYYY-MM-DD_HHMM_<slug>_v3.md
 - 계획 템플릿은 `../templates/project-plan-template.md`를 사용한다.
 - 프로젝트는 프레임워크와 무관하게 루트 `project/` 아래에서 관리한다.
 - 계획 문서와 실제 저장소는 같은 컨테이너 안에서 분리해 관리한다.
+- 프로젝트 컨테이너에 `plan/`이 없으면 먼저 생성한 뒤 저장한다.
+- 유지 가치가 있는 프로젝트 계획을 문서로 남기지 않는 것은 규칙 위반이다.
 
 ## Troubleshooting Rule
 
@@ -47,3 +76,5 @@ YYYY-MM-DD_HHMM_<slug>_v3.md
 - 트러블슈팅 템플릿은 `../templates/troubleshooting-template.md`를 사용한다.
 - 프로젝트 특화 이슈라도 프레임워크 공통 인사이트가 생기면 공통 또는 프레임워크 문서로 다시 추출한다.
 - 루트 워크스페이스 Git은 `project/*/...` 아래 내용을 추적하지 않는다.
+- 프로젝트 컨테이너에 `troubleshooting/`이 없으면 먼저 생성한 뒤 저장한다.
+- 재발 방지 가치가 있는 디버깅 결과를 문서로 남기지 않는 것은 규칙 위반이다.
