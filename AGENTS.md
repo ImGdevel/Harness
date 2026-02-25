@@ -8,7 +8,8 @@
 1. `common/index.md`
 2. `stack/index.md`
 3. 대상 프레임워크의 `index.md`
-4. 실제 프로젝트가 있다면 `project/<name>/docs/index.md`
+4. 실제 프로젝트가 있다면 `project/index.md`와 `project/registry.yaml`
+5. registry에서 경로를 찾았으면 실제 프로젝트의 `docs/index.md`
 
 ## Core Rules
 
@@ -16,6 +17,7 @@
 - 문서 폴더에는 항상 `index.md`를 유지한다.
 - 새로운 문서를 추가하면 해당 `index.md`도 함께 갱신한다.
 - 사용자가 요청하지 않은 실제 프로젝트 코드는 루트 워크스페이스 Git에 추가하지 않는다.
+- 하네스 내부 `project/`를 실제 프로젝트 clone 위치로 사용하지 않는다.
 - 계획이나 트러블슈팅이 필요하면 대화에서 끝내지 말고 문서로 남긴다.
 - 이슈와 PR을 다룰 때는 `.github` 템플릿과 공통 템플릿 구조를 따른다.
 - 요청이 등록된 `job` 또는 `pipeline`에 명확히 대응되면 세부 step을 다시 물어보지 말고 자동으로 수행한다.
@@ -37,18 +39,20 @@
 
 ## Project Rules
 
-- 프로젝트 컨테이너는 `project/<name>/` 아래에 둔다.
-- 실제 Git 저장소는 `project/<name>/<repo-name>/` 아래에 둔다.
-- 루트 Git은 `project/*/...` 아래 내용을 추적하지 않는다.
-- 프로젝트 전용 규칙과 스펙은 컨테이너 루트의 `docs/`에 둔다.
+- `project/registry.yaml`는 프로젝트 이름과 실제 저장소 경로를 연결하는 단일 진실 원천이다.
+- `project/index.md`는 사람이 보는 레지스트리 요약이다.
+- 실제 프로젝트 Git 저장소는 하네스 밖 sibling 경로에 둔다.
+- 사용자가 프로젝트 이름을 말하면 먼저 registry에서 `repo_path`를 찾는다.
+- 프로젝트 전용 규칙과 스펙은 실제 저장소의 `<project-root>/docs/`에 둔다.
 - 프로젝트 `docs/`는 최소한 `api/`, `architecture/`, `convention/`, `domain-tech-spec/`, `erd/`, `infrastructure/`, `local-setup/`, `references/`, `security/`, `stack-selection/` 구조를 유지한다.
-- 실제 프로젝트 계획 문서는 컨테이너 루트의 `plan/`에 둔다.
-- 실제 프로젝트 트러블슈팅 문서는 컨테이너 루트의 `troubleshooting/`에 둔다.
-- `plan/`과 `troubleshooting/`는 필수 디렉터리로 간주한다.
-- 프로젝트 컨테이너에 해당 디렉터리가 없으면 문서 작성 전에 먼저 만든다.
+- 실제 프로젝트 계획 문서는 `<project-root>/plan/`에 둔다.
+- 실제 프로젝트 트러블슈팅 문서는 `<project-root>/troubleshooting/`에 둔다.
+- `plan/`과 `troubleshooting/`는 실제 프로젝트 저장소 안의 필수 디렉터리로 간주한다.
+- 프로젝트 문서 경로가 없다면 실제 프로젝트 저장소 안에 만든다.
 - 파일명은 `YYYY-MM-DD_HHMM_<slug>.md` 형식을 기본으로 한다.
 - 기존 계획이나 같은 이슈의 후속 문서면 `_v2`, `_v3`처럼 버전을 올린다.
-- 프로젝트는 특정 프레임워크 트리 아래에 두지 않는다.
+- 공통 Git 규칙 문서는 기본적으로 실제 프로젝트 저장소 Git에 적용된다.
+- 하네스 저장소 Git은 별도 맥락이며 자동 기본 대상이 아니다.
 
 ## Workspace Conventions
 

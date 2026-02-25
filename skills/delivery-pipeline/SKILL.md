@@ -38,23 +38,12 @@ Use a smaller `job` only when:
 - Do not stop at “analysis complete” if the next executable job is clear.
 - Keep moving until the pipeline is completed or a real blocker is hit.
 
-## Default Flow
+## Authoritative Flow Rule
 
-1. `requirement-shaping`
-2. `context-discovery`
-3. `plan-sync`
-4. `design-sync`
-5. `work-bootstrap`
-6. `implementation-cycle`
-7. `test-authoring`
-8. `quality-cycle`
-9. `requirements-implementation-sync`
-10. `full-test`
-11. `troubleshooting-record` if needed
-12. `implementation-doc-sync`
-13. `backlog-capture`
-14. `pr-delivery`
-15. `feedback-response`
+- Follow the registered `delivery-pipeline` entry in `common/spec/workflow-catalog.md` as the only authoritative job order.
+- Use `common/spec/delivery-pipeline.md` for long-running behavior, stop rules, and loop semantics only.
+- Do not restate or invent an alternate order inside this skill.
+- Treat `pr-delivery` as the delivery job that already includes commit, push, and PR creation.
 
 ## Loop Policy
 

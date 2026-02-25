@@ -1,56 +1,26 @@
-# Projects Index
+# Project Registry Index
 
-이 디렉터리는 실제 프로젝트 저장소의 목록을 관리한다.
+이 디렉터리는 하네스가 참조하는 외부 프로젝트 레지스트리를 관리한다.
+
+## Authoritative Source
+
+- 단일 진실 원천은 `registry.yaml`이다.
+- 이 문서는 사람이 빠르게 찾기 위한 요약 인덱스다.
+- 실제 프로젝트 코드와 문서는 하네스 내부가 아니라 registry가 가리키는 외부 저장소에 있다.
 
 ## Rule
 
-- 프로젝트 컨테이너는 `project/<project-name>/` 아래에 둔다.
-- 실제 Git 저장소는 `project/<project-name>/<repo-name>/` 아래에 둔다.
-- 각 컨테이너는 최소한 `docs/`, `plan/`, `troubleshooting/`, `<repo-name>/` 구조를 가진다.
-- `docs/`는 최소한 `api/`, `architecture/`, `convention/`, `domain-tech-spec/`, `erd/`, `infrastructure/`, `local-setup/`, `references/`, `security/`, `stack-selection/`을 가진다.
-- 실제 저장소는 `<repo-name>/src/`, `<repo-name>/.git` 같은 구조를 가진다.
-- 계획 문서는 컨테이너 루트의 `plan/`에, 트러블슈팅 기록은 컨테이너 루트의 `troubleshooting/`에 둔다.
+- 하네스 내부 `project/`에는 메타데이터만 둔다.
+- 실제 프로젝트 저장소를 이 디렉터리 아래에 clone하거나 이동하지 않는다.
+- 프로젝트 작업을 시작할 때는 먼저 `registry.yaml`에서 `repo_path`를 확인한다.
+- 프로젝트 전용 문서는 실제 저장소의 `<project-root>/docs/`에 둔다.
+- 계획 문서는 `<project-root>/plan/`에 둔다.
+- 트러블슈팅 문서는 `<project-root>/troubleshooting/`에 둔다.
 - 파일명과 버전 규칙은 `common/convention/project-artifact-conventions.md`를 따른다.
 - `docs/` 표준 구조는 `common/convention/project-doc-structure.md`를 따른다.
-- 프로젝트는 특정 프레임워크 폴더에 종속되지 않는다.
-- `plan/`과 `troubleshooting/`는 필수 디렉터리다.
-- 컨테이너를 새로 만들 때 이 디렉터리들이 없으면 먼저 만든다.
 
-## Minimum Tree
+## Registered Projects
 
-```text
-project/<project-name>/
-  docs/
-    index.md
-    api/
-      index.md
-    architecture/
-      index.md
-    convention/
-      index.md
-    domain-tech-spec/
-      index.md
-    erd/
-      index.md
-    infrastructure/
-      index.md
-    local-setup/
-      index.md
-    references/
-      index.md
-    security/
-      index.md
-    stack-selection/
-      index.md
-  plan/
-  troubleshooting/
-  <repo-name>/
-    .git/
-    src/
-```
-
-## Tracking
-
-- 루트 워크스페이스 Git은 `project/*/...` 아래 내용을 추적하지 않는다.
-- 이 인덱스 파일에는 프로젝트 이름, 실제 저장소 이름, 사용 프레임워크, 목적, 상태를 기록한다.
-- 실제 컨테이너 디렉터리가 아직 안 보인다면, 아직 `project/<project-name>/`를 만들지 않은 상태일 가능성이 높다.
+| id | name | path | default branch | stacks | status |
+| --- | --- | --- | --- | --- | --- |
+| `miyou` | `MIYOU` | `C:\Users\imdls\workspace\MIYOU_ai-voice-chat` | `develop` | `spring`, `react` | `active` |

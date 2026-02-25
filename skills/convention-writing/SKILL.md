@@ -19,7 +19,8 @@ Read only the documents that affect the target rule:
 2. The nearest target `index.md`
 3. Existing related convention documents in the same scope
 4. The framework `index.md` when the rule is stack-specific
-5. `project/<name>/docs/index.md` when the rule is project-specific
+5. `project/index.md` and `project/registry.yaml` when the rule is project-specific
+6. The actual project `docs/index.md` after resolving `repo_path`
 
 ## Save Location
 
@@ -27,11 +28,11 @@ Choose the nearest scope that owns the rule:
 
 - shared workspace rule: `common/convention/`
 - framework rule: `stack/<framework>/convention/`
-- project rule: `project/<name>/docs/`
+- project rule: `<project-root>/docs/`
 
-If one project accumulates multiple rule documents, group them under `project/<name>/docs/convention/` and keep `project/<name>/docs/index.md` as the entry point.
+If one project accumulates multiple rule documents, group them under `<project-root>/docs/convention/` and keep `<project-root>/docs/index.md` as the entry point.
 
-For project-specific rules, prefer `project/<name>/docs/convention/` instead of mixing them into other doc folders.
+For project-specific rules, prefer `<project-root>/docs/convention/` instead of mixing them into other doc folders.
 
 ## Default Structure
 
@@ -66,5 +67,5 @@ Prefer this shape:
 Whenever you add or move a convention document:
 
 - update the nearest `index.md`
-- if you create `project/<name>/docs/convention/`, update both that folder's `index.md` and `project/<name>/docs/index.md`
+- if you create `<project-root>/docs/convention/`, update both that folder's `index.md` and `<project-root>/docs/index.md`
 - keep the index entry short and operational

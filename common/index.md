@@ -11,5 +11,6 @@
 ## Rule
 
 - 새 문서를 추가하면 이 인덱스에 한 줄 요약과 위치를 기록한다.
+- 문서 배치, `index.md` 유지, 범위별 우선순위 규칙은 `convention/documentation-governance.md`를 기준으로 한다.
 - Git 작업 규칙은 `convention/` 아래 Git 관련 문서를 먼저 확인한다.
 - 워크플로우 정의와 자동 실행 규칙은 `spec/` 아래 워크플로우 문서를 먼저 확인한다.

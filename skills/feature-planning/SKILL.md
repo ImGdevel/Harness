@@ -20,7 +20,8 @@ Before planning, read only the context that matters:
 3. `common/templates/project-plan-template.md`
 4. `stack/index.md`
 5. The target framework `index.md`
-6. If planning for a real project, `project/<name>/docs/index.md`
+6. If planning for a real project, `project/index.md` and `project/registry.yaml`
+7. After resolving the project path, the actual project `docs/index.md`
 
 Do not load broad unrelated documentation just to create a plan.
 
@@ -30,10 +31,10 @@ Choose the plan scope first:
 
 - `common`: workspace-wide rules, shared conventions, shared automation
 - `framework`: `stack/spring/`, `stack/spring-webflux/`, `stack/fastapi/`, `stack/react/` level work
-- `project`: a project container inside `project/<name>/` with a real repository in `project/<name>/<repo-name>/`
+- `project`: a registered external project repository resolved from `project/registry.yaml`
 
 Save the plan in the nearest relevant documentation area, not at the workspace root.
-If the scope is `project`, save the plan under `project/<name>/plan/`.
+If the scope is `project`, save the plan under `<project-root>/plan/`.
 
 For project work, this is mandatory, not optional.
 Do not leave a project plan only in chat when the plan has execution value.
@@ -51,7 +52,8 @@ Do not leave a project plan only in chat when the plan has execution value.
 
 - When the user asks for a plan, do not leave it only in chat if it should be retained.
 - For real project work, persist the plan as a Markdown file in the project `plan/` directory.
-- If `project/<name>/plan/` does not exist yet, create it before writing the plan.
+- Resolve the actual project root from `project/registry.yaml` before writing.
+- If `<project-root>/plan/` does not exist yet, create it inside the actual project repository before writing the plan.
 - Use the filename format `YYYY-MM-DD_HHMM_<slug>.md`.
 - If the plan is a revision or continuation of the same topic, reuse the same base filename and add `_v2`, `_v3`, and so on.
 - Keep old plan versions as history; do not overwrite silently.

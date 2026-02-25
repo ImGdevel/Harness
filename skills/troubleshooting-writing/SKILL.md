@@ -20,13 +20,14 @@ Before writing, read only the relevant context:
 3. `common/templates/troubleshooting-template.md`
 4. `stack/index.md`
 5. The target framework `index.md`
-6. If it exists, `project/<name>/docs/index.md`
+6. `project/index.md` and `project/registry.yaml`
+7. If it exists, the actual project `docs/index.md`
 
 ## Save Location
 
 For real project issues, save the document in:
 
-`project/<name>/troubleshooting/`
+`<project-root>/troubleshooting/`
 
 For project issues with reuse or prevention value, this is mandatory.
 Do not leave the troubleshooting result only in chat.
@@ -37,7 +38,8 @@ Use the filename format:
 
 If the document is a revision or direct continuation of the same issue, keep the same base name and use `_v2`, `_v3`, and so on.
 
-If `project/<name>/troubleshooting/` does not exist yet, create it before writing the document.
+Resolve `<project-root>` from `project/registry.yaml` first.
+If `<project-root>/troubleshooting/` does not exist yet, create it inside the actual project repository before writing the document.
 
 ## Required Content
 
@@ -56,7 +58,7 @@ Keep these sections unless they are truly not applicable:
 
 - Write what happened, not vague summaries.
 - Include commit id, environment, and related documents when known.
-- Distinguish the project container path from the actual repository path when both matter.
+- Distinguish the harness registry path from the actual repository path when both matter.
 - Record failed attempts only when they help future debugging.
 - Prefer concrete symptoms, logs, and verification steps.
 - If the result contains reusable framework insight, extract that insight to common or framework docs after saving the project note.

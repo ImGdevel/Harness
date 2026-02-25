@@ -20,7 +20,8 @@ Read these files before drafting:
 3. `common/templates/github-pr-template.md`
 4. `common/templates/github-issue-work-item-template.md`
 5. `common/templates/github-issue-bug-template.md`
-6. If working in a real project, `project/<name>/docs/index.md`
+6. If working in a real project, `project/index.md` and `project/registry.yaml`
+7. After resolving the project path, the actual project `docs/index.md`
 
 ## Issue Rules
 

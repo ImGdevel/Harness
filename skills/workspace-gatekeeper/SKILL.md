@@ -21,7 +21,8 @@ Read only the minimum context needed:
 4. `stack/index.md`
 5. The target framework `index.md` when framework context matters
 6. `project/index.md` when the work touches a real project
-7. `project/<name>/docs/index.md` when project-specific rules exist
+7. `project/registry.yaml` when a project name or alias is known
+8. The actual project `docs/index.md` after resolving `repo_path`
 
 Do not load unrelated framework or project docs just to start work.
 
@@ -31,7 +32,7 @@ Choose one primary scope first:
 
 - `common`: workspace-wide rules, templates, shared workflows
 - `framework`: one stack under `stack/<framework>/`
-- `project`: one project container under `project/<name>/`
+- `project`: one registered external project repository
 
 If the task spans multiple scopes, start from the narrowest scope that owns the change and pull shared context only when needed.
 
@@ -40,9 +41,9 @@ If the task spans multiple scopes, start from the narrowest scope that owns the 
 Confirm which repository you are operating on:
 
 - Workspace repo: root harness files such as `skills/`, `common/`, `stack/`, `scripts/`
-- Real project repo: `project/<name>/<repo-name>/`
+- Real project repo: the `repo_path` resolved from `project/registry.yaml`
 
-Do not confuse these with the project container docs under `project/<name>/`.
+The harness `project/` directory is registry metadata only, not a clone location.
 
 ## Handoff Rules
 

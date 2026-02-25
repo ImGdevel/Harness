@@ -1,0 +1,20 @@
+﻿version: 1
+projects:
+  # BEGIN project:miyou
+  - id: miyou
+    name: MIYOU
+    repo_path: 'C:\Users\imdls\workspace\MIYOU_ai-voice-chat'
+    repo_url: 'https://github.com/ImGdevel/MIYOU_ai-voice-chat.git'
+    default_branch: develop
+    docs_path: docs
+    plan_path: plan
+    troubleshooting_path: troubleshooting
+    status: active
+    stacks:
+      - spring,react
+    aliases:
+      - miyou,MIYOU_ai-voice-chat
+      - miyou
+      - MIYOU
+  # END project:miyou
+

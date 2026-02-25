@@ -1,6 +1,6 @@
 # Git Commit Conventions
 
-이 문서는 워크스페이스 공통 커밋 규칙을 정의한다.
+이 문서는 실제 프로젝트 Git 저장소에 기본 적용하는 커밋 규칙을 정의한다.
 
 ## Core Rules
 
@@ -8,7 +8,8 @@
 - 기능 변경, 리팩터링, 포맷 변경, 문서 수정은 가능하면 분리한다.
 - 관련 없는 파일은 같은 커밋에 넣지 않는다.
 - 커밋 전에 변경 범위를 다시 확인한다.
-- 루트 워크스페이스 Git과 실제 프로젝트 Git 저장소를 혼동하지 않는다.
+- 하네스 저장소 Git과 실제 프로젝트 Git 저장소를 혼동하지 않는다.
+- 사용자가 명시하지 않았다면 이 규칙의 기본 대상은 registry가 가리키는 실제 프로젝트 저장소다.
 
 ## Commit Timing
 
@@ -29,7 +30,7 @@ type(scope): summary
 ```text
 feat(auth): add token refresh flow
 fix(api): handle empty search query
-docs(workspace): document project container layout
+docs(payment): document settlement flow
 ```
 
 ## Recommended Types

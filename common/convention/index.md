@@ -4,6 +4,8 @@
 
 ## Documents
 
+- `documentation-governance.md`
+  공통, 프레임워크, 프로젝트 범위에서 문서를 배치하고 `index.md`를 유지하는 기준과 우선순위를 정의한다.
 - `project-artifact-conventions.md`
   프로젝트 내부 `docs/`, `plan/`, `troubleshooting/` 경로와 파일명, 버전 규칙을 정의한다.
 - `project-doc-structure.md`

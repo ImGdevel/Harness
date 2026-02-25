@@ -7,7 +7,7 @@
 
 - 공통 규칙과 스펙을 빠르게 찾을 수 있어야 한다.
 - 프레임워크별 문서를 독립적으로 축적할 수 있어야 한다.
-- 실제 프로젝트는 워크스페이스 안에 두되, 루트 Git과는 분리되어야 한다.
+- 실제 프로젝트는 하네스 밖의 별도 Git 저장소로 두고, 하네스는 그 위치만 관리해야 한다.
 
 ## Root Structure
 
@@ -16,10 +16,10 @@ skills/                  # 재사용 가능한 스킬 문서
 common/                  # 공통 컨벤션, 공통 스펙, 공통 템플릿
 stack/                   # 모든 프레임워크 스택 묶음
 stack/spring/            # Spring 문서 인덱스와 세부 문서
-stack/spring-webflux/    # Spring WebFlux 문서 인덱스와 세부 문서
+stack/spring-webflux/    # Spring WebFlux 문서 인덱스, 세부 문서, 스니핏
 stack/fastapi/           # FastAPI 문서 인덱스와 세부 문서
 stack/react/             # React 문서 인덱스와 세부 문서
-project/                 # 실제 프로젝트 보관 위치
+project/                 # 외부 프로젝트 레지스트리와 경로 메타데이터
 scripts/                 # 워크플로우 자동화 스크립트
 AGENTS.md                # Codex/Claude 공통 작업 규칙
 CLAUDE.MD                # Claude 전용 작업 규칙
@@ -56,40 +56,36 @@ CLAUDE.MD                # Claude 전용 작업 규칙
 
 ## Project Rules
 
-실제 프로젝트는 아래와 같은 형태로 들어간다.
-
-```text
-project/miyou/docs/index.md
-project/miyou/docs/api/index.md
-project/miyou/docs/erd/index.md
-project/miyou/docs/domain-tech-spec/index.md
-project/miyou/docs/architecture/index.md
-project/miyou/docs/infrastructure/index.md
-project/miyou/docs/local-setup/index.md
-project/miyou/docs/security/index.md
-project/miyou/docs/stack-selection/index.md
-project/miyou/plan/
-project/miyou/troubleshooting/
-project/miyou/miyou/src/
-project/miyou/miyou/.git
-```
-
-- `project/<name>/`는 프로젝트 컨테이너다.
-- 실제 Git 저장소는 `project/<name>/<repo-name>/` 아래에 둔다.
-- 프로젝트 자체 문서는 컨테이너 루트인 `project/<name>/docs/`에 둔다.
+- 하네스 내부 `project/`는 실제 프로젝트 저장소가 아니라 레지스트리 영역이다.
+- 단일 진실 원천은 `project/registry.yaml`이다.
+- `project/index.md`는 사람이 빠르게 찾기 위한 요약 인덱스다.
+- 실제 프로젝트 Git 저장소는 하네스 밖 sibling 경로에 둔다.
+- 사용자가 프로젝트 이름을 말하면 먼저 `project/registry.yaml`에서 `repo_path`를 찾는다.
+- 실제 프로젝트 전용 문서와 산출물은 모두 해당 저장소 루트에 둔다.
+- 기본 경로는 `<project-root>/docs/`, `<project-root>/plan/`, `<project-root>/troubleshooting/`다.
 - `docs/`는 최소한 `api/`, `architecture/`, `convention/`, `domain-tech-spec/`, `erd/`, `infrastructure/`, `local-setup/`, `references/`, `security/`, `stack-selection/` 구조를 가진다.
-- 구현 계획은 `project/<name>/plan/`에 저장한다.
-- 트러블슈팅 기록은 `project/<name>/troubleshooting/`에 저장한다.
-- `plan/`과 `troubleshooting/`는 프로젝트 컨테이너의 필수 디렉터리다.
-- 루트 워크스페이스 Git은 `project/*/...` 아래 내용을 추적하지 않는다.
 - `plan/`과 `troubleshooting/` 문서는 `YYYY-MM-DD_HHMM_<slug>.md` 형식을 기본으로 사용한다.
 - 같은 주제의 후속 수정은 새 파일보다 `_v2`, `_v3` 버전을 우선한다.
-- 프로젝트는 특정 프레임워크에 종속되지 않는다. 여러 프레임워크를 함께 써도 `project/<name>/` 하나로 관리한다.
+- 하네스 저장소 안으로 실제 프로젝트를 clone하거나 이동하지 않는다.
 
-프로젝트 컨테이너를 새로 만들 때는 다음 스크립트를 사용한다.
+예시:
+
+```text
+project/registry.yaml
+  -> miyou
+     repo_path: C:\Users\imdls\workspace\MIYOU_ai-voice-chat
+
+C:\Users\imdls\workspace\MIYOU_ai-voice-chat\
+  docs\
+  plan\
+  troubleshooting\
+  .git\
+```
+
+새 외부 프로젝트를 레지스트리에 등록할 때는 다음 스크립트를 사용한다.
 
 ```powershell
-.\scripts\init-project-container.ps1 -ProjectName <project-name> -RepoName <repo-name>
+.\scripts\register-project.ps1 -ProjectId <id> -DisplayName <name> -RepoPath <absolute-path>
 ```
 
 ## GitHub Rules

@@ -45,7 +45,7 @@ Use these mappings by default:
 - `기능 작업해서 PR까지` -> `implementation-delivery`
 - `요구사항부터 끝까지`, `설계부터 구현, 테스트, PR, 피드백까지`, `프롬프트 다시 안 쓰고 끝까지` -> `delivery-pipeline`
 - `버그 원인 분석해서 고치고 올려` -> `incident-response`
-- `프로젝트 기본 구조부터 만들어` -> `project-bootstrap`
+- `프로젝트 등록해`, `프로젝트 레지스트리에 추가해`, `프로젝트 기본 구조부터 만들어` -> `project-bootstrap`
 
 ## Supporting Skill Map
 
@@ -61,6 +61,7 @@ When the selected workflow needs sub-workflows, use these skills:
 ## Execution Rules
 
 - Start from repository and scope validation.
+- Treat `common/spec/workflow-catalog.md` as the single source of truth for registered `job` and `pipeline` membership and order.
 - Run prerequisite steps automatically when the workflow definition requires them.
 - Stop immediately on failed gates, missing prerequisites, or ambiguous repository boundaries.
 - If a workflow cannot finish because one required command is unknown, report the missing command instead of inventing it.

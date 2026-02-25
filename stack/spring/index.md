@@ -12,4 +12,4 @@ Spring 관련 컨벤션과 스펙 문서의 빠른 탐색용 인덱스다.
 
 ## Related
 
-- 실제 프로젝트 목록은 `../../project/index.md`에서 관리한다.
+- 실제 프로젝트 레지스트리는 `../../project/index.md`와 `../../project/registry.yaml`에서 관리한다.

@@ -19,7 +19,8 @@ Read only the context needed for the target spec:
 2. The nearest target `index.md`
 3. Existing related spec documents in the same scope
 4. The framework `index.md` when the spec is stack-specific
-5. `project/<name>/docs/index.md` when the spec is project-specific
+5. `project/index.md` and `project/registry.yaml` when the spec is project-specific
+6. The actual project `docs/index.md` after resolving `repo_path`
 
 ## Save Location
 
@@ -27,21 +28,21 @@ Choose the nearest scope that owns the spec:
 
 - workspace-wide spec: `common/spec/`
 - framework spec: `stack/<framework>/spec/`
-- project spec: `project/<name>/docs/`
+- project spec: `<project-root>/docs/`
 
-If one project accumulates multiple spec documents, group them under `project/<name>/docs/spec/` and keep `project/<name>/docs/index.md` as the top-level entry point.
+If one project accumulates multiple spec documents, group them under `<project-root>/docs/spec/` and keep `<project-root>/docs/index.md` as the top-level entry point.
 
 For project scope, prefer these destinations first:
 
-- API contract: `project/<name>/docs/api/`
-- data model or ERD: `project/<name>/docs/erd/`
-- domain technical spec: `project/<name>/docs/domain-tech-spec/`
-- system architecture: `project/<name>/docs/architecture/`
-- infrastructure or deployment: `project/<name>/docs/infrastructure/`
-- local environment setup: `project/<name>/docs/local-setup/`
-- security design or policy: `project/<name>/docs/security/`
-- stack rationale: `project/<name>/docs/stack-selection/`
-- external references: `project/<name>/docs/references/`
+- API contract: `<project-root>/docs/api/`
+- data model or ERD: `<project-root>/docs/erd/`
+- domain technical spec: `<project-root>/docs/domain-tech-spec/`
+- system architecture: `<project-root>/docs/architecture/`
+- infrastructure or deployment: `<project-root>/docs/infrastructure/`
+- local environment setup: `<project-root>/docs/local-setup/`
+- security design or policy: `<project-root>/docs/security/`
+- stack rationale: `<project-root>/docs/stack-selection/`
+- external references: `<project-root>/docs/references/`
 
 ## Recommended Structure
 
@@ -78,5 +79,5 @@ Use Mermaid only when it shortens the explanation.
 Whenever you add or move a spec document:
 
 - update the nearest `index.md`
-- if you create `project/<name>/docs/spec/`, update both `project/<name>/docs/spec/index.md` and `project/<name>/docs/index.md`
+- if you create `<project-root>/docs/spec/`, update both `<project-root>/docs/spec/index.md` and `<project-root>/docs/index.md`
 - keep index entries short enough to scan without opening the full document

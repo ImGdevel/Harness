@@ -8,7 +8,8 @@
 - 복합 요청이면 `common/spec/workflow-model.md`와 `common/spec/workflow-catalog.md`의 job/pipeline 후보를 먼저 본다.
 - 그다음 `stack/index.md`를 확인한다.
 - 그다음 대상 프레임워크의 `index.md`를 확인한다.
-- 실제 프로젝트 작업이면 `project/<name>/docs/index.md`까지 확인한다.
+- 실제 프로젝트 작업이면 `project/index.md`와 `project/registry.yaml`을 먼저 확인한다.
+- registry에서 실제 저장소 경로를 찾았으면 그 저장소의 `docs/index.md`까지 확인한다.
 
 ## Documentation Rules
 
@@ -17,22 +18,22 @@
 - 프레임워크 전용 규칙은 각 프레임워크 루트에 둔다.
 - 모든 프레임워크 스택은 `stack/` 아래에서 함께 관리한다.
 - 짧은 재사용 코드 예제는 각 프레임워크의 `snippets/`에 둔다.
-- 프로젝트 고유 규칙은 각 프로젝트 컨테이너의 `docs/`에 둔다.
+- 프로젝트 고유 규칙은 실제 프로젝트 저장소의 `docs/`에 둔다.
 - 프로젝트 `docs/`는 최소한 `api/`, `architecture/`, `convention/`, `domain-tech-spec/`, `erd/`, `infrastructure/`, `local-setup/`, `references/`, `security/`, `stack-selection/` 구조를 유지한다.
-- 프로젝트 계획은 각 프로젝트 컨테이너의 `plan/`에 저장한다.
-- 프로젝트 트러블슈팅은 각 프로젝트 컨테이너의 `troubleshooting/`에 저장한다.
+- 프로젝트 계획은 실제 프로젝트 저장소의 `plan/`에 저장한다.
+- 프로젝트 트러블슈팅은 실제 프로젝트 저장소의 `troubleshooting/`에 저장한다.
 - 관련 문서를 다시 작성할 때는 새 날짜 파일보다 `_v2`, `_v3` 버전을 우선 검토한다.
 - GitHub 이슈와 PR 본문은 `.github` 템플릿 구조를 우선한다.
 
 ## Project Handling
 
-- `project/<name>/`는 프로젝트 컨테이너로 간주한다.
-- 실제 Git 저장소는 `project/<name>/<repo-name>/` 아래에서 독립 저장소로 간주한다.
-- 루트 워크스페이스 Git에 `project/*/...` 아래 파일을 추가하지 않는다.
-- 실제 프로젝트를 수정할 때는 해당 저장소의 규칙과 컨테이너 문서를 우선한다.
-- 계획이나 트러블슈팅이 장기 가치가 있으면 프로젝트 폴더에 문서로 남긴다.
-- `plan/`과 `troubleshooting/`는 프로젝트 컨테이너의 필수 디렉터리로 본다.
-- 디렉터리가 없으면 먼저 생성한 뒤 문서를 기록한다.
+- 하네스 내부 `project/`는 registry와 요약 인덱스만 둔다.
+- 실제 Git 저장소는 registry의 `repo_path`가 가리키는 외부 경로다.
+- 루트 워크스페이스 Git에 실제 프로젝트 파일을 넣지 않는다.
+- 실제 프로젝트를 수정할 때는 registry로 경로를 찾은 뒤 해당 저장소의 규칙을 우선한다.
+- 계획이나 트러블슈팅이 장기 가치가 있으면 실제 프로젝트 저장소에 문서로 남긴다.
+- `plan/`과 `troubleshooting/`는 실제 프로젝트 저장소 안의 필수 디렉터리로 본다.
+- 디렉터리가 없으면 실제 프로젝트 저장소 안에 먼저 생성한 뒤 문서를 기록한다.
 
 ## Automation
 

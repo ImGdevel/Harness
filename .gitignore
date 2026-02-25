@@ -1,8 +1,7 @@
-# Embedded project containers are not tracked by the workspace repository.
-project/*/**
-
-# Keep tracked project index at the root.
+# Project registry keeps metadata only.
+project/*
 !project/index.md
+!project/registry.yaml
 
 # Local environment files
 .env

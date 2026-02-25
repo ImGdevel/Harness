@@ -16,6 +16,13 @@
 - `job`: 중단위 작업
 - `pipeline`: 대단위 통합 작업 흐름
 
+## Authoritative Source
+
+- 정확한 `job` 구성과 실행 순서는 `common/spec/workflow-catalog.md`의 `delivery-pipeline` 등록 항목만 따른다.
+- 이 문서는 장시간 실행 규칙, 중단 조건, 루프 정책, 산출물 원칙만 정의한다.
+- 여기서 별도의 `job`을 추가하거나 순서를 다시 정의하지 않는다.
+- 커밋, 푸시, PR 생성은 별도 `delivery job`이 아니라 `pr-delivery`에 포함된다.
+
 ## Long-Running Rule
 
 - `delivery pipeline`은 1시간 이상 걸려도 된다.
@@ -60,110 +67,31 @@
 - 의미 있는 단위마다 검증하고, 설명 가능한 단위마다 커밋한다.
 - 최종 PR 전에도 중간 커밋은 허용한다.
 
-## Pipeline Sequence
+## Runtime Semantics
 
-표준 `delivery pipeline`은 아래 순서를 기본으로 한다.
-
-1. `requirement-shaping`
-2. `context-discovery`
-3. `design-sync`
-4. `work-bootstrap`
-5. `implementation-cycle`
-6. `test-authoring`
-7. `quality-cycle`
-8. `requirements-implementation-sync`
-9. `full-test`
-10. `troubleshooting-record` if needed
-11. `implementation-doc-sync`
-12. `backlog-capture`
-13. `commit-delivery`
-14. `pr-delivery`
-15. `feedback-response`
-
-## Job Definition
-
-### `requirement-shaping`
-
-- 요구사항을 상세화한다.
-- 완료 기준, 비범위, 승인 기준을 정리한다.
-- 필요 시 관련 계획 문서 초안을 만든다.
-
-### `context-discovery`
-
-- 기존 문서, 스택 문서, 프로젝트 문서, 연관 코드, 참고 자료를 탐색한다.
-- 필요한 문서가 없으면 이후 단계에서 새로 만든다.
-
-### `design-sync`
-
-- 설계 문서 또는 기술 스펙 문서를 작성한다.
-- 설계 검토를 수행한다.
-- 검토 결과가 부적합이면 수정 후 재검토한다.
-- 외부 승인 게이트가 없다면 내부 검토로 계속 진행한다.
-
-### `work-bootstrap`
-
-- 필요한 이슈를 만든다.
-- 올바른 브랜치를 만든다.
-- 필요한 프로젝트 컨테이너 문서 구조를 만든다.
-
-### `implementation-cycle`
-
-- 설계 기준으로 구현한다.
-- 큰 작업은 하위 단위로 나눠 순차 구현한다.
-- 중간에 트러블슈팅이 발생하면 sidecar 흐름으로 처리한다.
-
-### `test-authoring`
-
-- 변경 범위에 필요한 테스트를 작성하거나 갱신한다.
-- 단위 테스트, 통합 테스트, 프론트엔드 테스트, E2E 중 필요한 것을 포함한다.
-
-### `quality-cycle`
-
-- 컴파일, 정적 검사, 테스트, 수동 검증, 리팩터링을 반복한다.
-- 리팩터링 후에는 같은 검증을 다시 수행한다.
-
-### `requirements-implementation-sync`
-
-- 요구사항 문서, 설계 문서, 구현 결과가 일치하는지 점검한다.
-- 설계와 구현이 어긋나면 둘 중 하나를 즉시 갱신한다.
-
-### `implementation-doc-sync`
-
-- 구현 결과를 프로젝트 `docs/`에 반영한다.
-- API, ERD, architecture, domain-tech-spec, local-setup, security 같은 관련 문서를 갱신한다.
-
-### `backlog-capture`
-
-- 이번 작업에서 남겨진 후속 작업, TODO, 제약, 운영 메모를 남긴다.
-- 같은 PR에서 하지 않을 항목도 문서로 남겨 추적 가능하게 한다.
-
-### `commit-delivery`
-
-- 설명 가능한 단위로 커밋을 나눈다.
-- 각 커밋은 하나의 의도만 담는다.
-- 검증 결과를 설명할 수 없는 커밋은 막는다.
-
-### `feedback-response`
-
-- PR 피드백이나 리뷰 코멘트를 반영한다.
-- 반영 후 필요한 검증과 문서 동기화를 다시 수행한다.
-- 모든 피드백이 정리되면 파이프라인을 종료한다.
+- 초반 구간에서는 요구사항 정리, 문맥 탐색, 계획 저장이 먼저 이뤄져야 한다.
+- 설계와 구현은 분리된 채로 오래 남아 있으면 안 되며, 구현 전에 설계 안정화 루프를 먼저 돈다.
+- 구현 이후에는 테스트 작성, 품질 검증, 요구사항-설계-구현 교차 검증이 이어져야 한다.
+- 트러블슈팅은 조건부 sidecar로 실행하고, 해결 후 원래 파이프라인으로 복귀한다.
+- 문서 동기화와 backlog 기록은 전달 직전에 몰아서 빼먹지 말고, 실제 변경 근거가 생긴 시점에 갱신한다.
+- 최종 전달 단계는 `pr-delivery`가 맡으며, 그 안에서 커밋, 푸시, PR 초안/생성이 함께 처리된다.
+- 피드백이 들어오면 `feedback-response` 이후 필요한 검증과 문서 동기화를 다시 수행한다.
 
 ## Documentation Outputs
 
 파이프라인 진행 중 필요하면 아래 문서를 같이 남긴다.
 
-- `project/<name>/plan/`
-- `project/<name>/troubleshooting/`
-- `project/<name>/docs/api/`
-- `project/<name>/docs/architecture/`
-- `project/<name>/docs/domain-tech-spec/`
-- `project/<name>/docs/erd/`
-- `project/<name>/docs/infrastructure/`
-- `project/<name>/docs/local-setup/`
-- `project/<name>/docs/security/`
-- `project/<name>/docs/stack-selection/`
-- `project/<name>/docs/references/`
+- `<project-root>/plan/`
+- `<project-root>/troubleshooting/`
+- `<project-root>/docs/api/`
+- `<project-root>/docs/architecture/`
+- `<project-root>/docs/domain-tech-spec/`
+- `<project-root>/docs/erd/`
+- `<project-root>/docs/infrastructure/`
+- `<project-root>/docs/local-setup/`
+- `<project-root>/docs/security/`
+- `<project-root>/docs/stack-selection/`
+- `<project-root>/docs/references/`
 
 ## Exit Criteria
 

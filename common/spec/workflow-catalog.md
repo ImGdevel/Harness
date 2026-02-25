@@ -54,18 +54,19 @@
 
 ### `work-bootstrap`
 
-- 목적: 구현 작업 전 브랜치, 이슈, 프로젝트 문서 구조를 준비한다.
+- 목적: 구현 작업 전 브랜치, 이슈, 실제 프로젝트 저장소 문서 구조를 준비한다.
 - 자동 트리거:
   - 실제 구현 착수 직전
-  - 프로젝트 컨테이너나 브랜치가 아직 없을 때
+  - 프로젝트 registry 항목이나 브랜치가 아직 정리되지 않았을 때
 - 포함 step:
+  - `resolve-project-path`
   - `create-issue`
   - `create-branch`
   - `ensure-project-doc-structure`
 - 출력물:
   - 작업 브랜치
   - 이슈 또는 작업 단위
-  - 준비된 프로젝트 컨테이너 구조
+  - 준비된 실제 프로젝트 저장소 문서 구조
 
 ### `implementation-cycle`
 
@@ -130,15 +131,16 @@
   - 프로젝트 범위가 커졌을 때
   - 사용자가 계획을 명시적으로 요청했을 때
 - 선행 조건:
-  - 대상 프로젝트 컨테이너가 식별되어야 한다.
-  - `project/<name>/plan/` 디렉터리가 준비되어야 한다.
+  - 대상 프로젝트가 registry에서 식별되어야 한다.
+  - 실제 프로젝트 저장소의 `<project-root>/plan/` 디렉터리가 준비되어야 한다.
 - 포함 step:
   - `select-project`
+  - `resolve-project-path`
   - `create-plan-directory`
   - `draft-plan`
   - `save-plan`
 - 출력물:
-  - `project/<name>/plan/YYYY-MM-DD_HHMM_<slug>.md`
+  - `<project-root>/plan/YYYY-MM-DD_HHMM_<slug>.md`
 
 ### `troubleshooting-record`
 
@@ -148,15 +150,15 @@
   - 장애 대응이 끝났을 때
   - 반복 방지 가치가 있는 수정이 끝났을 때
 - 선행 조건:
-  - 대상 프로젝트 컨테이너가 식별되어야 한다.
-  - `project/<name>/troubleshooting/` 디렉터리가 준비되어야 한다.
+  - 대상 프로젝트가 registry에서 식별되어야 한다.
+  - 실제 프로젝트 저장소의 `<project-root>/troubleshooting/` 디렉터리가 준비되어야 한다.
 - 포함 step:
   - `collect-symptoms`
   - `summarize-root-cause`
   - `record-fix`
   - `save-troubleshooting`
 - 출력물:
-  - `project/<name>/troubleshooting/YYYY-MM-DD_HHMM_<slug>.md`
+  - `<project-root>/troubleshooting/YYYY-MM-DD_HHMM_<slug>.md`
 
 ### `full-test`
 
@@ -275,6 +277,9 @@
 ### `delivery-pipeline`
 
 - 목적: 요구사항 상세화부터 설계, 구현, 검증, 문서화, PR, 피드백 반영까지 이어지는 대단위 전달 파이프라인이다.
+- 단일 진실 원천:
+  - 정확한 `job` 구성과 순서는 이 등록 항목이 기준이다.
+  - 지원 문서는 의도와 실행 규칙만 설명하며, 이 순서를 재정의하지 않는다.
 - 자동 트리거:
   - `요구사항부터 끝까지 처리해`
   - `설계부터 구현, 테스트, PR, 피드백까지 이어서 해`
@@ -295,6 +300,9 @@
   - `backlog-capture`
   - `pr-delivery`
   - `feedback-response`
+- 전달 규칙:
+  - 커밋, 푸시, PR 생성은 별도 `job`으로 분리하지 않고 `pr-delivery`에 포함한다.
+  - 계획 저장은 초반 `plan-sync`에서 처리한다.
 - 반복 조건:
   - 설계 재검토 필요
   - 검증 실패
@@ -332,17 +340,18 @@
 
 ### `project-bootstrap`
 
-- 목적: 새 프로젝트 컨테이너와 문서 기본 구조를 초기화한다.
+- 목적: 외부 프로젝트를 하네스 registry에 등록하고, 필요하면 해당 저장소의 기본 문서 구조를 정렬한다.
 - 자동 트리거:
-  - `새 프로젝트 컨테이너 만들어`
+  - `새 프로젝트 등록해`
+  - `프로젝트 레지스트리에 추가해`
   - `프로젝트 문서 구조부터 세팅해`
 - 포함 job:
-  - 프로젝트 컨테이너 생성
-  - `docs/` 기본 트리 생성
-  - `plan/`, `troubleshooting/` 생성
-  - 초기 인덱스 문서 작성
+  - registry entry 생성 또는 갱신
+  - 실제 프로젝트 경로 검증
+  - 실제 프로젝트 저장소의 `docs/`, `plan/`, `troubleshooting/` 정렬
+  - 필요한 초기 인덱스 문서 작성
 - 중단 조건:
-  - 프로젝트 이름 또는 저장소 이름이 없음
+  - 프로젝트 이름 또는 실제 저장소 경로가 없음
   - 경로 충돌
 
 ## Selection Guidance

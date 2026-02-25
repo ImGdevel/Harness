@@ -19,7 +19,8 @@ Before doing Git work, read:
 2. `common/convention/git-commit-conventions.md`
 3. `common/convention/git-branch-gitflow.md`
 4. If issue or PR work is involved, `common/convention/github-collaboration-conventions.md`
-5. If working in a real project, `project/<name>/docs/index.md`
+5. If working in a real project, `project/index.md` and `project/registry.yaml`
+6. After resolving the project path, the actual project `docs/index.md`
 
 If the task is still ambiguous, align scope first with `workspace-gatekeeper`.
 
@@ -65,6 +66,7 @@ Validate the current branch against the GitFlow document:
 
 - The workspace repository and each real project repository are separate Git contexts.
 - Confirm which repository you are operating on before branching or committing.
+- The harness `project/` directory is registry metadata only and is never the project Git target.
 - Project-specific Git rules override workspace defaults when documented.
 - If the task includes issue or PR authoring, hand off to `github-collaboration`.
 
