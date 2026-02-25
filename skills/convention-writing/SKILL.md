@@ -16,11 +16,12 @@ Document rules that future work can actually follow and verify.
 Read only the documents that affect the target rule:
 
 1. `common/index.md`
-2. The nearest target `index.md`
-3. Existing related convention documents in the same scope
-4. The framework `index.md` when the rule is stack-specific
-5. `project/index.md` and `project/registry.yaml` when the rule is project-specific
-6. The actual project `docs/index.md` after resolving `repo_path`
+2. `common/convention/documentation-governance.md`
+3. The nearest target `index.md`
+4. Existing related convention documents in the same scope
+5. The framework `index.md` when the rule is stack-specific
+6. `project/index.md` and `project/registry.yaml` when the rule is project-specific
+7. The actual project `docs/index.md` after resolving `repo_path`
 
 ## Save Location
 
@@ -67,5 +68,6 @@ Prefer this shape:
 Whenever you add or move a convention document:
 
 - update the nearest `index.md`
+- if the project scope is selected, resolve `<project-root>` from `project/registry.yaml` before editing any index
 - if you create `<project-root>/docs/convention/`, update both that folder's `index.md` and `<project-root>/docs/index.md`
 - keep the index entry short and operational

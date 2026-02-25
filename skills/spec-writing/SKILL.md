@@ -16,11 +16,12 @@ Turn implementation knowledge into a reusable, searchable spec document.
 Read only the context needed for the target spec:
 
 1. `common/index.md`
-2. The nearest target `index.md`
-3. Existing related spec documents in the same scope
-4. The framework `index.md` when the spec is stack-specific
-5. `project/index.md` and `project/registry.yaml` when the spec is project-specific
-6. The actual project `docs/index.md` after resolving `repo_path`
+2. `common/convention/documentation-governance.md`
+3. The nearest target `index.md`
+4. Existing related spec documents in the same scope
+5. The framework `index.md` when the spec is stack-specific
+6. `project/index.md` and `project/registry.yaml` when the spec is project-specific
+7. The actual project `docs/index.md` after resolving `repo_path`
 
 ## Save Location
 
@@ -79,5 +80,6 @@ Use Mermaid only when it shortens the explanation.
 Whenever you add or move a spec document:
 
 - update the nearest `index.md`
+- if the project scope is selected, resolve `<project-root>` from `project/registry.yaml` before editing any index
 - if you create `<project-root>/docs/spec/`, update both `<project-root>/docs/spec/index.md` and `<project-root>/docs/index.md`
 - keep index entries short enough to scan without opening the full document

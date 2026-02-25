@@ -24,6 +24,8 @@
 - `test-integration-backend`
 - `lint-frontend`
 - `test-playwright`
+- `sync-nearest-index`
+- `sync-parent-index`
 - `commit`
 - `push`
 - `open-pr`
@@ -38,6 +40,7 @@
 예시:
 
 - `full-test`
+- `index-sync`
 - `pr-delivery`
 - `plan-sync`
 - `troubleshooting-record`
@@ -98,6 +101,15 @@
 - 반복 조건
 - 재진입 지점
 - 승인 게이트
+
+## Documentation Index Rule
+
+문서를 새로 만들거나 이동하는 `step`, `job`, `pipeline`은 `index.md` 정렬 책임을 명시해야 한다.
+
+- 직접 `sync-nearest-index`, `sync-parent-index` 같은 `step`를 포함하거나
+- 별도 `index-sync` `job`을 같은 흐름에서 수행해야 한다.
+
+문서를 만들었는데 인덱스 정렬 책임이 워크플로우 정의에 없다면, 그 워크플로우는 불완전한 것으로 본다.
 
 ## Skill Relationship
 

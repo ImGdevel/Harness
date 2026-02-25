@@ -39,6 +39,7 @@ Do not force a pipeline when a job is enough.
 Use these mappings by default:
 
 - `전체 테스트`, `전체 검증`, `머지 전 검증` -> `full-test`
+- `문서 인덱스 갱신`, `index 맞춰`, `nearest index 업데이트`, `문서 구조 정리해` -> `index-sync`
 - `커밋하고 푸시`, `PR 올려`, `PR 준비` -> `pr-delivery`
 - `계획도 남겨`, `작업 시작 전에 계획 정리` -> `plan-sync`
 - `문제 정리해`, `트러블슈팅 문서 남겨` -> `troubleshooting-record`

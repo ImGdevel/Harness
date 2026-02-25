@@ -49,6 +49,8 @@
   - `re-review-design-doc`
 - 반복 조건:
   - 검토 결과가 불충분하거나 구현 가능성이 낮을 때
+- 인덱스 규칙:
+  - 새 설계 문서를 만들거나 문서 폴더를 추가했다면 같은 흐름에서 `index-sync`를 수행한다.
 - 출력물:
   - 설계 문서 또는 갱신된 스펙 문서
 
@@ -109,6 +111,26 @@
   - 구현 품질이 아직 정리되지 않았을 때
 - 출력물:
   - 안정화된 구현 상태
+
+### `index-sync`
+
+- 목적: 문서를 추가, 이동, 구조 변경한 뒤 가장 가까운 `index.md`와 필요한 부모 인덱스를 같은 상태로 맞춘다.
+- 자동 트리거:
+  - 새 문서를 만들었을 때
+  - 문서를 다른 폴더로 이동했을 때
+  - 새 문서 폴더를 만들었을 때
+  - 문서 구조 정리 후 탐색 경로가 바뀌었을 때
+- 선행 조건:
+  - 대상 문서 범위가 명확해야 한다.
+  - 수정된 문서 경로와 소유 범위를 알고 있어야 한다.
+- 포함 step:
+  - `detect-nearest-index`
+  - `update-nearest-index`
+  - `update-parent-index-if-needed`
+  - `verify-index-entry`
+- 출력물:
+  - 갱신된 `index.md`
+  - 정렬된 부모 인덱스
 
 ### `requirements-implementation-sync`
 
@@ -224,6 +246,8 @@
   - `update-architecture-docs`
   - `update-domain-tech-spec`
   - `update-local-setup-or-security-docs`
+- 인덱스 규칙:
+  - 새 문서를 만들거나 이동했다면 같은 흐름에서 `index-sync`를 이어서 수행한다.
 - 출력물:
   - 동기화된 프로젝트 문서
 
@@ -297,6 +321,7 @@
   - `full-test`
   - `troubleshooting-record` if needed
   - `implementation-doc-sync`
+  - `index-sync` if needed
   - `backlog-capture`
   - `pr-delivery`
   - `feedback-response`
@@ -358,6 +383,7 @@
 
 - PR까지 가는 흐름이 필요하면 `pr-delivery` 또는 `implementation-delivery`
 - 전체 검증이 목적이면 `full-test`
+- 문서를 추가하거나 이동한 뒤 인덱스만 정리해야 하면 `index-sync`
 - 디버깅 결과를 남겨야 하면 `troubleshooting-record` 또는 `incident-response`
 - 새 프로젝트 시작이면 `project-bootstrap`
 - 요구사항부터 피드백 반영까지 한 번에 이어야 하면 `delivery-pipeline`
