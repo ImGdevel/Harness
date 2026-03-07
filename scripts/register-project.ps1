@@ -30,8 +30,157 @@ function Quote-Yaml {
     return "'$escaped'"
 }
 
+function Expand-NormalizedList {
+    param([string[]]$Values)
+
+    return @(
+        $Values |
+            Where-Object { $_ -and $_.Trim() -ne "" } |
+            ForEach-Object { $_ -split ',' } |
+            ForEach-Object { $_.Trim() } |
+            Where-Object { $_ -ne "" } |
+            Select-Object -Unique
+    )
+}
+
+function Ensure-ProjectIndex {
+    param([string]$Path)
+
+    if (Test-Path -LiteralPath $Path) {
+        return
+    }
+
+    $content = @"
+# Project Registry Index
+
+이 디렉터리는 하네스가 참조하는 외부 프로젝트 레지스트리를 관리한다.
+
+## Authoritative Source
+
+- 단일 진실 원천은 `registry.yaml`이다.
+- 이 문서는 사람이 빠르게 찾기 위한 요약 인덱스다.
+- 실제 프로젝트 코드와 문서는 하네스 내부가 아니라 registry가 가리키는 외부 저장소에 있다.
+
+## Rule
+
+- 하네스 내부 `project/`에는 메타데이터만 둔다.
+- 실제 프로젝트 저장소를 이 디렉터리 아래에 clone하거나 이동하지 않는다.
+- 프로젝트 작업을 시작할 때는 먼저 `registry.yaml`에서 `repo_path`를 확인한다.
+- 프로젝트 전용 문서는 실제 저장소의 `<project-root>/docs/`에 둔다.
+- 계획 문서는 `<project-root>/plan/`에 둔다.
+- 트러블슈팅 문서는 `<project-root>/troubleshooting/`에 둔다.
+
+## Registered Projects
+
+| id | name | path | default branch | stacks | status |
+| --- | --- | --- | --- | --- | --- |
+"@
+
+    Set-Content -LiteralPath $Path -Value $content -Encoding utf8
+}
+
+function Update-ProjectIndex {
+    param(
+        [string]$IndexPath,
+        [string]$ProjectId,
+        [string]$DisplayName,
+        [string]$RepoPath,
+        [string]$DefaultBranch,
+        [string[]]$Stacks,
+        [string]$Status
+    )
+
+    Ensure-ProjectIndex -Path $IndexPath
+
+    $lines = [System.Collections.Generic.List[string]]::new()
+    foreach ($line in (Get-Content -LiteralPath $IndexPath -Encoding utf8)) {
+        $lines.Add($line)
+    }
+
+    $sectionIndex = -1
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        if ($lines[$i] -eq "## Registered Projects") {
+            $sectionIndex = $i
+            break
+        }
+    }
+
+    if ($sectionIndex -lt 0) {
+        if ($lines.Count -gt 0 -and $lines[$lines.Count - 1].Trim() -ne "") {
+            $lines.Add("")
+        }
+        $lines.Add("## Registered Projects")
+        $lines.Add("")
+        $lines.Add("| id | name | path | default branch | stacks | status |")
+        $lines.Add("| --- | --- | --- | --- | --- | --- |")
+        $sectionIndex = $lines.Count - 4
+    }
+
+    $headerIndex = -1
+    $separatorIndex = -1
+    for ($i = $sectionIndex + 1; $i -lt $lines.Count; $i++) {
+        if ($lines[$i] -eq "| id | name | path | default branch | stacks | status |") {
+            $headerIndex = $i
+            if (($i + 1) -lt $lines.Count -and $lines[$i + 1] -eq "| --- | --- | --- | --- | --- | --- |") {
+                $separatorIndex = $i + 1
+            }
+            break
+        }
+        if ($lines[$i] -match '^## ') {
+            break
+        }
+    }
+
+    if ($headerIndex -lt 0 -or $separatorIndex -lt 0) {
+        $insertAt = $sectionIndex + 1
+        if ($insertAt -lt $lines.Count -and $lines[$insertAt].Trim() -ne "") {
+            $lines.Insert($insertAt, "")
+            $insertAt++
+        }
+        $lines.Insert($insertAt, "| id | name | path | default branch | stacks | status |")
+        $lines.Insert($insertAt + 1, "| --- | --- | --- | --- | --- | --- |")
+        $headerIndex = $insertAt
+        $separatorIndex = $insertAt + 1
+    }
+
+    $code = [char]96
+    $stackSummary = if ($Stacks.Count -eq 0) {
+        "{0}unknown{0}" -f $code
+    } else {
+        ($Stacks | ForEach-Object { "{0}{1}{0}" -f $code, $_ }) -join ", "
+    }
+
+    $row = "| {0}{1}{0} | {0}{2}{0} | {0}{3}{0} | {0}{4}{0} | {5} | {0}{6}{0} |" -f $code, $ProjectId, $DisplayName, $RepoPath, $DefaultBranch, $stackSummary, $Status
+    $rowPattern = '^\|\s*' + [regex]::Escape([string]$code) + [regex]::Escape($ProjectId) + [regex]::Escape([string]$code) + '\s*\|'
+
+    $nextHeadingIndex = $lines.Count
+    for ($i = $separatorIndex + 1; $i -lt $lines.Count; $i++) {
+        if ($lines[$i] -match '^## ') {
+            $nextHeadingIndex = $i
+            break
+        }
+    }
+
+    $existingRowIndex = -1
+    for ($i = $separatorIndex + 1; $i -lt $nextHeadingIndex; $i++) {
+        if ($lines[$i] -match $rowPattern) {
+            $existingRowIndex = $i
+            break
+        }
+    }
+
+    if ($existingRowIndex -ge 0) {
+        $lines[$existingRowIndex] = $row
+    } else {
+        $lines.Insert($nextHeadingIndex, $row)
+    }
+
+    Set-Content -LiteralPath $IndexPath -Value $lines -Encoding utf8
+}
+
 $workspaceRoot = Split-Path -Parent $PSScriptRoot
 $registryPath = Join-Path $workspaceRoot "project\registry.yaml"
+$projectIndexPath = Join-Path $workspaceRoot "project\index.md"
 
 try {
     $resolvedRepoPath = (Resolve-Path -LiteralPath $RepoPath).Path
@@ -59,19 +208,8 @@ if (-not $DefaultBranch) {
     }
 }
 
-$normalizedStacks = @(
-    $Stacks |
-        Where-Object { $_ -and $_.Trim() -ne "" } |
-        ForEach-Object { $_.Trim() } |
-        Select-Object -Unique
-)
-
-$normalizedAliases = @(
-    @($Aliases + $ProjectId + $DisplayName) |
-        Where-Object { $_ -and $_.Trim() -ne "" } |
-        ForEach-Object { $_.Trim() } |
-        Select-Object -Unique
-)
+$normalizedStacks = Expand-NormalizedList -Values $Stacks
+$normalizedAliases = Expand-NormalizedList -Values @($Aliases + $ProjectId + $DisplayName)
 
 $lines = @()
 $lines += "  # BEGIN project:$ProjectId"
@@ -107,7 +245,7 @@ if (-not (Test-Path -LiteralPath $registryPath)) {
     Set-Content -LiteralPath $registryPath -Value $header -Encoding utf8
 }
 
-$content = Get-Content -LiteralPath $registryPath -Raw
+$content = Get-Content -LiteralPath $registryPath -Raw -Encoding utf8
 $pattern = "(?ms)^  # BEGIN project:$([regex]::Escape($ProjectId))\r?\n.*?^  # END project:$([regex]::Escape($ProjectId))\r?\n?"
 
 if ($content -match $pattern) {
@@ -118,7 +256,16 @@ if ($content -match $pattern) {
 
 Set-Content -LiteralPath $registryPath -Value $updated -Encoding utf8
 
+Update-ProjectIndex `
+    -IndexPath $projectIndexPath `
+    -ProjectId $ProjectId `
+    -DisplayName $DisplayName `
+    -RepoPath $resolvedRepoPath `
+    -DefaultBranch $DefaultBranch `
+    -Stacks $normalizedStacks `
+    -Status $Status
+
 Write-Output "Registered project id: $ProjectId"
 Write-Output "Repo path: $resolvedRepoPath"
 Write-Output "Registry: $registryPath"
-Write-Output "Update project/index.md in the same change if the human summary needs refresh."
+Write-Output "Project index: $projectIndexPath"

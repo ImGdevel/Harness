@@ -103,6 +103,24 @@
 - 추가 문서가 없으면 `현재 등록된 문서 없음.` 같은 상태를 적는다.
 - `index.md`가 있는 폴더에 `.gitkeep`를 함께 두지 않는다.
 
+## Audit Tool
+
+문서 구조 정렬 상태를 점검할 때는 아래 스크립트를 사용한다.
+
+```powershell
+.\scripts\audit-documentation-governance.ps1
+```
+
+이 스크립트는 최소한 아래를 검사한다.
+
+- 문서 디렉터리의 `index.md` 존재 여부
+- `index.md`가 있는 폴더의 `.gitkeep` 잔존 여부
+- 부모 `index.md`의 하위 디렉터리 참조 여부
+- nearest `index.md`의 Markdown 파일 등록 여부
+- 기본값으로는 현재 Git tracked 상태를 기준으로 검사한다.
+
+CI나 배치 검증에서 실패로 처리하려면 `-FailOnIssue`를 사용한다.
+
 ## Forbidden Patterns
 
 - `index.md` 없는 문서 폴더를 남기는 것

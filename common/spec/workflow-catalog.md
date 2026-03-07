@@ -128,6 +128,7 @@
   - `update-nearest-index`
   - `update-parent-index-if-needed`
   - `verify-index-entry`
+  - `run-documentation-governance-audit`
 - 출력물:
   - 갱신된 `index.md`
   - 정렬된 부모 인덱스

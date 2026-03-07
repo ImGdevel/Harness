@@ -1,4 +1,4 @@
-﻿version: 1
+version: 1
 projects:
   # BEGIN project:miyou
   - id: miyou
@@ -11,10 +11,10 @@ projects:
     troubleshooting_path: troubleshooting
     status: active
     stacks:
-      - spring,react
+      - spring
+      - react
     aliases:
-      - miyou,MIYOU_ai-voice-chat
+      - MIYOU_ai-voice-chat
       - miyou
       - MIYOU
   # END project:miyou
-

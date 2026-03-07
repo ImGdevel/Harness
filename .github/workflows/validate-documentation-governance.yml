@@ -1,0 +1,31 @@
+name: Validate Documentation Governance
+
+on:
+  pull_request:
+    paths:
+      - 'common/**'
+      - 'stack/**'
+      - 'project/**'
+      - 'scripts/audit-documentation-governance.ps1'
+      - '.github/workflows/validate-documentation-governance.yml'
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'common/**'
+      - 'stack/**'
+      - 'project/**'
+      - 'scripts/audit-documentation-governance.ps1'
+      - '.github/workflows/validate-documentation-governance.yml'
+
+jobs:
+  audit-documentation-governance:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Audit documentation governance
+        shell: pwsh
+        run: .\scripts\audit-documentation-governance.ps1 -FailOnIssue

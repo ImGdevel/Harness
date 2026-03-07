@@ -67,6 +67,8 @@
   -RepoPath C:\Users\imdls\workspace\MIYOU_ai-voice-chat
 ```
 
+이 스크립트는 `project/registry.yaml`과 `project/index.md`를 같은 변경에서 함께 갱신한다.
+
 등록이 끝나면 에이전트는 프로젝트 이름이나 alias를 보고 실제 저장소 위치를 해석할 수 있어야 한다.
 
 ## Where Work Actually Happens
