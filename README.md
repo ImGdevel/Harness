@@ -182,6 +182,8 @@
   외부 프로젝트를 registry에 등록하거나 갱신한다.
 - [scripts/audit-documentation-governance.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/audit-documentation-governance.ps1>)
   문서 인덱스와 배치 규칙 정합성을 점검한다.
+- [scripts/audit-project-registry.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/audit-project-registry.ps1>)
+  `project/registry.yaml`과 `project/index.md` 요약 정합성을 점검한다.
 
 ## GitHub Rules
 

@@ -1,0 +1,29 @@
+name: Validate Project Registry
+
+on:
+  pull_request:
+    paths:
+      - 'project/**'
+      - 'scripts/register-project.ps1'
+      - 'scripts/audit-project-registry.ps1'
+      - '.github/workflows/validate-project-registry.yml'
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'project/**'
+      - 'scripts/register-project.ps1'
+      - 'scripts/audit-project-registry.ps1'
+      - '.github/workflows/validate-project-registry.yml'
+
+jobs:
+  audit-project-registry:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Audit project registry
+        shell: pwsh
+        run: .\scripts\audit-project-registry.ps1 -FailOnIssue

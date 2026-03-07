@@ -26,6 +26,8 @@
 - `test-playwright`
 - `sync-nearest-index`
 - `sync-parent-index`
+- `sync-project-registry-summary`
+- `run-project-registry-audit`
 - `commit`
 - `push`
 - `open-pr`

@@ -40,6 +40,8 @@
 - PR 본문에 필수 섹션이 없거나 `Summary`, `Scope`, `Validation`이 비어 있으면 검사에 실패한다.
 - 문서 구조 강제는 `.github/workflows/validate-documentation-governance.yml`에서 처리한다.
 - `common/`, `stack/`, `project/` 변경으로 문서 거버넌스 규칙이 깨지면 검사에 실패한다.
+- 프로젝트 registry 정합성 강제는 `.github/workflows/validate-project-registry.yml`에서 처리한다.
+- `project/registry.yaml`, `project/index.md`, registry 관련 스크립트 변경으로 요약 정합성이 깨지면 검사에 실패한다.
 
 ## Agent Rule
 

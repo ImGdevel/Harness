@@ -373,9 +373,13 @@
   - `프로젝트 문서 구조부터 세팅해`
 - 포함 job:
   - registry entry 생성 또는 갱신
+  - `project/index.md` summary row 동기화
+  - registry/index 정합성 감사
   - 실제 프로젝트 경로 검증
   - 실제 프로젝트 저장소의 `docs/`, `plan/`, `troubleshooting/` 정렬
   - 필요한 초기 인덱스 문서 작성
+- 검증 규칙:
+  - `scripts/register-project.ps1`로 registry를 갱신했다면 같은 흐름에서 `scripts/audit-project-registry.ps1`를 통과해야 한다.
 - 중단 조건:
   - 프로젝트 이름 또는 실제 저장소 경로가 없음
   - 경로 충돌
