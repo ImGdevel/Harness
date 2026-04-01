@@ -31,8 +31,8 @@
   실제 문서는 `common/templates/troubleshooting-template.md`를 출발점으로 사용한다.
 
 - `git-workflow/`
-  브랜치 생성, GitFlow 전략 적용, 커밋 범위 분리, 커밋 메시지 규칙 적용 시 먼저 읽는 기본 스킬이다.
-  상세 기준은 `common/convention/git-commit-conventions.md`와 `common/convention/git-branch-gitflow.md`를 따른다.
+  브랜치 생성, 하네스 저장소 또는 실제 프로젝트 저장소의 Git 전략 판별, 커밋 범위 분리, 커밋 메시지 규칙 적용 시 먼저 읽는 기본 스킬이다.
+  상세 기준은 `common/convention/git-commit-conventions.md`, `common/convention/workspace-git-governance.md`, `common/convention/git-branch-gitflow.md`를 따른다.
 
 - `github-collaboration/`
   GitHub 이슈와 PR 본문을 템플릿 기준으로 작성하거나 수정할 때 사용하는 기본 스킬이다.

@@ -17,21 +17,24 @@ Before doing Git work, read:
 
 1. `common/index.md`
 2. `common/convention/git-commit-conventions.md`
-3. `common/convention/git-branch-gitflow.md`
-4. If issue or PR work is involved, `common/convention/github-collaboration-conventions.md`
-5. If working in a real project, `project/index.md` and `project/registry.yaml`
-6. After resolving the project path, the actual project `docs/index.md`
+3. `common/convention/workspace-git-governance.md`
+4. `common/convention/git-branch-gitflow.md`
+5. If issue or PR work is involved, `common/convention/github-collaboration-conventions.md`
+6. If working in a real project, `project/index.md` and `project/registry.yaml`
+7. After resolving the project path, the actual project `docs/index.md`
 
 If the task is still ambiguous, align scope first with `workspace-gatekeeper`.
 
 ## Branch Rules
 
-- Use GitFlow as the default strategy.
-- Check whether the work belongs on `feature/*`, `release/*`, or `hotfix/*`.
+- Determine first whether the selected Git target is the harness repository or a real project repository.
+- Use `workspace-git-governance.md` for the harness repository.
+- Use `git-branch-gitflow.md` for a real project repository unless that project documents a narrower rule.
+- Check whether the work belongs on the correct branch type for the selected repository.
 - Choose the correct base branch before creating a branch.
 - Do not continue unrelated work on an existing branch just because it already exists.
 - Do not include issue numbers in branch names by default.
-- Do not implement feature work directly on `main`, `develop`, or `master`.
+- Do not implement feature work directly on a long-lived base branch.
 
 ## Commit Rules
 
@@ -55,10 +58,11 @@ If one check fails, stop and fix that state before moving to the next step.
 
 ## Branch Validation
 
-Validate the current branch against the GitFlow document:
+Validate the current branch against the selected branch strategy document:
 
-- `feature/*`, `release/*` should start from `develop`
-- `hotfix/*` should start from `main`
+- harness repository: `feat/*`, `refactor/*`, `hotfix/*` should start from `main`
+- real project repository with GitFlow: `feature/*`, `release/*` should start from `develop`
+- real project repository with GitFlow: `hotfix/*` should start from `main`
 - `support/*` is exceptional and should exist only with a clear maintenance reason
 - long-lived branches with unrelated work should be replaced, not reused
 
@@ -67,6 +71,7 @@ Validate the current branch against the GitFlow document:
 - The workspace repository and each real project repository are separate Git contexts.
 - Confirm which repository you are operating on before branching or committing.
 - The harness `project/` directory is registry metadata only and is never the project Git target.
+- The harness repository uses `main` as its single long-lived branch.
 - Project-specific Git rules override workspace defaults when documented.
 - If the task includes issue or PR authoring, hand off to `github-collaboration`.
 

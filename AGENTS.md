@@ -22,6 +22,7 @@
 - 이슈와 PR을 다룰 때는 `.github` 템플릿과 공통 템플릿 구조를 따른다.
 - 요청이 등록된 `job` 또는 `pipeline`에 명확히 대응되면 세부 step을 다시 물어보지 말고 자동으로 수행한다.
 - `delivery-pipeline`에 해당하는 요청이면 요구사항, 설계, 구현, 검증, 문서화, PR, 피드백까지 연속적으로 전진한다.
+- 하네스 저장소 자체의 Git 작업은 `common/convention/workspace-git-governance.md`를 기준으로 `main`에서 분기한다.
 
 ## Documentation Rule
 
@@ -52,6 +53,7 @@
 - 파일명은 `YYYY-MM-DD_HHMM_<slug>.md` 형식을 기본으로 한다.
 - 기존 계획이나 같은 이슈의 후속 문서면 `_v2`, `_v3`처럼 버전을 올린다.
 - 공통 Git 규칙 문서는 기본적으로 실제 프로젝트 저장소 Git에 적용된다.
+- 하네스 저장소 자체는 `workspace-git-governance.md`를 따른다.
 - 하네스 저장소 Git은 별도 맥락이며 자동 기본 대상이 아니다.
 
 ## Workspace Conventions

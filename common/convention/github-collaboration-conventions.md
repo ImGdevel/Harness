@@ -24,6 +24,8 @@
 ## PR Rule
 
 - PR 본문은 `.github/PULL_REQUEST_TEMPLATE.md`를 기본으로 사용한다.
+- 하네스 저장소 PR의 기본 base branch는 `main`이다.
+- 실제 프로젝트 저장소 PR의 base branch는 해당 저장소 문서 기준을 따른다.
 - 다음 섹션은 항상 유지한다.
   - `## Summary`
   - `## Scope`

@@ -190,3 +190,19 @@
 - 이슈 템플릿은 `.github/ISSUE_TEMPLATE/`를 따른다.
 - PR 템플릿은 `.github/PULL_REQUEST_TEMPLATE.md`를 따른다.
 - PR 본문 필수 섹션 검증은 `.github/workflows/validate-pr-template.yml`에서 강제한다.
+
+## Harness Git Strategy
+
+이 하네스 저장소 자체는 `main`을 유일한 장기 브랜치로 사용한다.
+
+- 하네스 저장소 작업 브랜치는 `main`에서 분기한다.
+- 하네스 저장소 PR 기본 대상은 `main`이다.
+- 하네스 저장소는 `develop`을 기본 전제로 두지 않는다.
+
+반면 registry가 가리키는 실제 프로젝트 저장소는 별도 Git 맥락이다.
+그 저장소들은 필요하면 `main` + `develop` 기반 GitFlow를 따를 수 있다.
+
+기준 문서는 아래와 같다.
+
+- [common/convention/workspace-git-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/workspace-git-governance.md>)
+- [common/convention/git-branch-gitflow.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/git-branch-gitflow.md>)
