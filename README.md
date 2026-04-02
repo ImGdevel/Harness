@@ -180,6 +180,8 @@
 
 - [scripts/register-project.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/register-project.ps1>)
   외부 프로젝트를 registry에 등록하거나 갱신한다.
+- [scripts/bootstrap-project-docs.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/bootstrap-project-docs.ps1>)
+  registry를 기준으로 실제 프로젝트 저장소의 `docs/`, `plan/`, `troubleshooting/` 기본 구조를 정렬한다.
 - [scripts/audit-documentation-governance.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/audit-documentation-governance.ps1>)
   문서 인덱스와 배치 규칙 정합성을 점검한다.
 - [scripts/audit-project-registry.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/audit-project-registry.ps1>)
