@@ -1,22 +1,21 @@
 # Spring Test Convention Map
 
-Spring 테스트 관련 문서를 빠르게 찾기 위한 인덱스다.
+## Purpose
 
-## Layer
+Resolve the correct Spring test document fast.
 
-- [domain-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/domain-test-convention.md>)
-  순수 도메인 규칙과 정책 테스트의 범위를 정리한다.
-- [repository-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/repository-test-convention.md>)
-  JPA 중심 Repository 테스트의 역할과 금지 범위를 정리한다.
+## Rules
 
-## Shared Resource
+- Use [domain-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/domain-test-convention.md>) for `Entity` and `Policy` rule tests.
+- Use [repository-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/repository-test-convention.md>) for JPA mapping and query tests.
+- Use [service-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/service-test-convention.md>) for use-case orchestration tests.
+- Use [controller-webmvc-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/controller-webmvc-test-convention.md>) for HTTP contract tests.
+- Use [integration-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/integration-test-convention.md>) for end-to-end application flow tests.
+- Use [test-fixture-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/test-fixture-convention.md>) for fixture rules.
+- Use [test-double-writing-guide.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/test-double-writing-guide.md>) for double selection.
+- Use [validator-vs-policy-pattern.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/validator-vs-policy-pattern.md>) when domain rule and input validation boundaries are unclear.
 
-- [test-fixture-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/test-fixture-convention.md>)
-  fixture 작성과 레이어별 사용 규칙을 정리한다.
+## Checklist
 
-## Related
-
-- [../convention/code-formatting-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/code-formatting-convention.md>)
-  포맷터와 기본 코드 스타일 규칙
-- [../convention/layer-and-naming-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/layer-and-naming-convention.md>)
-  DTO, validator, policy, 패키지 네이밍 규칙
+- Did you pick the lowest-cost test layer?
+- Did you avoid re-testing the same concern in a higher layer?

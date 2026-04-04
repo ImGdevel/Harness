@@ -4,7 +4,8 @@ FastAPI 관련 컨벤션 문서 인덱스다.
 
 ## Documents
 
-- 현재 등록된 문서 없음.
+- `router-and-dependency-convention.md`
+  FastAPI 라우터 분리, dependency 주입, response model 경계 규칙을 정리한다.
 
 ## Rule
 

@@ -1,16 +1,10 @@
 # Project Doc Structure
 
-이 문서는 실제 프로젝트 Git 저장소 루트의 `docs/` 아래에 유지할 표준 문서 구조를 정의한다.
+## Purpose
 
-## Goal
+Use one predictable `docs/` tree for every project repository.
 
-- 프로젝트 문서를 빠르게 찾을 수 있게 한다.
-- 설계, 데이터, 인프라, 보안, 로컬 환경 정보를 한 곳에 정리한다.
-- 프로젝트마다 문서 위치가 달라지는 문제를 줄인다.
-
-## Required Baseline Tree
-
-실제 프로젝트 저장소의 `docs/`는 최소한 아래 구조를 가진다.
+## Tree
 
 ```text
 <project-root>/docs/
@@ -37,48 +31,35 @@
     index.md
 ```
 
-## Section Purpose
+## Rules
 
-- `api/`
-  HTTP, gRPC, event, webhook, external contract 문서를 둔다.
-- `architecture/`
-  시스템 구조, 계층, 모듈 경계, 런타임 흐름 문서를 둔다.
-- `convention/`
-  프로젝트 고유 코드 규칙, 브랜치 운영 예외, 네이밍 규칙 같은 프로젝트 전용 규칙 문서를 둔다.
-- `domain-tech-spec/`
-  도메인별 기술 스펙, 핵심 유스케이스, 상태 전이, 정책 문서를 둔다.
-- `erd/`
-  엔티티 관계, 테이블 구조, 데이터 모델, 저장소 관점 문서를 둔다.
-- `infrastructure/`
-  배포 구조, 네트워크, 클라우드 리소스, 운영 인프라 문서를 둔다.
-- `local-setup/`
-  로컬 개발 환경 구성, 필수 도구, 실행 순서, 환경 변수 규칙 문서를 둔다.
-- `references/`
-  외부 서비스, 도메인 참고자료, 링크 모음, 운영 참고 문서를 둔다.
-- `security/`
-  인증/인가, 비밀값 처리, 권한 모델, 보안 점검 기준 문서를 둔다.
-- `stack-selection/`
-  기술 스택 선정 근거, 대안 비교, 채택 이유, 제외 이유를 둔다.
+- Keep this baseline tree in every project repository.
+- When starting from a registered project, prefer `scripts/bootstrap-project-docs.ps1` to create the baseline tree.
+- Keep one `index.md` in every document directory.
+- Use `api/` for API contract docs.
+- Use `architecture/` for module boundary, runtime flow, system shape.
+- Use `convention/` for project-only rules.
+- Use `domain-tech-spec/` for use case, policy, state, domain behavior.
+- Use `erd/` for table and relation docs.
+- Use `infrastructure/` for deploy and cloud docs.
+- Use `local-setup/` for local environment setup.
+- Use `references/` for external references and supporting links.
+- Use `security/` for auth, authz, secret handling, security checks.
+- Use `stack-selection/` for stack choice and trade-off records.
+- Add optional folders only when needed.
+- If a new folder is added, update `docs/index.md` in the same change.
+- Do not duplicate the same doc across folders.
+- Keep plans in `<project-root>/plan/`.
+- Keep troubleshooting records in `<project-root>/troubleshooting/`.
 
-## Index Rule
+## Checklist
 
-- `docs/index.md`는 전체 프로젝트 문서의 진입점이다.
-- 각 하위 폴더도 `index.md`를 가져야 한다.
-- 하위 `index.md`는 문서 목록과 한 줄 설명 중심으로 유지한다.
-- 공통 문서 거버넌스와 범위 우선순위 규칙은 `documentation-governance.md`를 따른다.
+- Does the project keep the baseline tree?
+- Does every document directory have `index.md`?
+- Is each doc in the nearest matching section?
+- If a new section was added, was `docs/index.md` updated?
 
-## Optional Extensions
+## References
 
-프로젝트 특성에 따라 아래 폴더를 추가할 수 있다.
-
-- `decisions/`: ADR, 중요한 설계 결정 기록
-- `integration/`: 외부 시스템 연동 상세
-- `operations/`: 운영 절차, 장애 대응, 배치/스케줄 문서
-
-추가 폴더를 만들면 `docs/index.md`에도 같이 등록한다.
-
-## Placement Rules
-
-- 문서는 가장 가까운 의미의 폴더에 둔다.
-- 같은 문서를 여러 폴더에 중복 저장하지 않는다.
-- 프로젝트 공통 규칙은 `docs/convention/`, 유지보수 기록은 `<project-root>/troubleshooting/`, 계획은 `<project-root>/plan/`으로 분리한다.
+- [documentation-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/documentation-governance.md>)
+- [project-artifact-conventions.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-artifact-conventions.md>)

@@ -12,3 +12,8 @@ React 관련 컨벤션과 스펙 문서의 빠른 탐색용 인덱스다.
 ## Related
 
 - 실제 프로젝트 레지스트리는 `../../project/index.md`와 `../../project/registry.yaml`에서 관리한다.
+
+## Current State
+
+- `convention/`에는 기본 운영 규칙 문서가 들어가 있다.
+- `spec/`, `test/`, `snippets/`는 프로젝트 사례 축적에 맞춰 계속 확장한다.

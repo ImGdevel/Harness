@@ -4,7 +4,8 @@ React 관련 컨벤션 문서 인덱스다.
 
 ## Documents
 
-- 현재 등록된 문서 없음.
+- `component-and-state-convention.md`
+  React 컴포넌트 순수성, 상태 소유권, Effect 사용 시점 규칙을 정리한다.
 
 ## Rule
 

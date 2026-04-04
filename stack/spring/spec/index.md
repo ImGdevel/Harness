@@ -4,7 +4,8 @@ Spring 관련 스펙 문서 인덱스다.
 
 ## Documents
 
-- 현재 등록된 문서 없음.
+- `clean-architecture-guide.md`
+  Spring 프로젝트의 clean architecture 레이어와 의존성 방향을 정리한다.
 
 ## Rule
 

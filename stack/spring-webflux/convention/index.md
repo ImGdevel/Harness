@@ -4,7 +4,8 @@ Spring WebFlux 관련 컨벤션 문서 인덱스다.
 
 ## Documents
 
-- 현재 등록된 문서 없음.
+- `reactive-controller-and-service-convention.md`
+  WebFlux controller/service 경계와 blocking 금지 규칙을 정리한다.
 
 ## Rule
 

@@ -1,82 +1,27 @@
 # Spring Domain Test Convention
 
-Tasteam 백엔드 위키의 도메인 테스트 문서를 Spring 공통 하네스용으로 일반화한 문서다.
-대상은 순수 도메인 규칙을 검증하는 Entity / Policy 테스트다.
+## Purpose
 
-## Role
+Test pure domain rule, invariant, and state transition only.
 
-도메인 테스트는 아래만 본다.
+## Rules
 
-- 생성 팩토리 규칙
-- 불변식
-- 상태 전이
-- 정책의 허용/거부/예외 판단
+- Keep domain tests free from Spring context.
+- Test factory rule, default state, invariant, and state transition.
+- Test `Policy` allow, deny, and expected exception code.
+- Keep JPA, HTTP, security, and infrastructure out of domain tests.
+- Use real factory methods for the target entity when possible.
+- Use fixture only for supporting objects when it improves readability.
+- Add explicit boundary-case tests for null, blank, limit, and count edges.
+- Do not force tests for trivial setter-like methods with no rule or guard.
 
-DB, HTTP, 스프링 빈 설정은 다른 레이어가 맡는다.
+## Checklist
 
-## Entity Test Scope
+- Is the test purely domain-focused?
+- Are success, failure, and boundary cases covered?
+- Are JPA or service concerns excluded?
+- Does the test name describe domain behavior?
 
-다음 항목을 우선 검증한다.
+## References
 
-- 정적 팩토리 또는 생성자 규칙
-- 기본값과 초기 상태
-- 도메인 메서드의 상태 전이
-- 길이, null, 범위 같은 guard 조건
-- 카운터/플래그 경계값
-- soft delete / restore 같은 상태 전이
-
-## Policy Test Scope
-
-정책 테스트는 아래를 검증한다.
-
-- 특정 조건에서 허용되는가
-- 특정 조건에서 거부되는가
-- 어떤 예외 코드를 던지는가
-- 외부 의존성이 있으면 그 결과에 따라 정책 판단이 달라지는가
-
-## What Domain Tests Do Not Cover
-
-- JPA 매핑/쿼리/트랜잭션
-- 서비스 오케스트레이션
-- 컨트롤러 요청/응답 계약
-- 보안 필터/인프라 설정
-
-## Writing Pattern
-
-### Factory Test
-
-- 정상 입력으로 생성 성공 검증
-- 필수값 누락/빈 값/길이 초과 같은 실패 케이스 검증
-
-### State Transition Test
-
-- 유효 입력으로 상태가 기대대로 바뀌는지 검증
-- 잘못된 입력이면 즉시 예외를 던지는지 검증
-
-### Boundary Test
-
-- 허용 최대 길이, 0 경계, null 처리 등 경계값을 명시적으로 검증
-
-## Setter Rule
-
-다음 중 하나면 테스트 대상으로 본다.
-
-- 검증이나 guard 로직이 있다
-- 파생 계산이 있다
-- 의미 있는 상태 전이를 표현한다
-- 과거 장애가 있었거나 회귀 위험이 크다
-
-정말 단순한 대입 메서드라면 도메인 테스트를 강제하지 않는다.
-
-## Fixture Rule
-
-- 테스트 대상 엔티티 자체는 가능하면 실제 팩토리로 생성한다.
-- 협력 엔티티는 fixture를 사용해도 된다.
-- Policy 테스트는 primitive 값과 mock 조합이 더 명확하면 fixture를 억지로 쓰지 않는다.
-
-## Review Checklist
-
-- 이 테스트가 순수 도메인 규칙만 검증하는가
-- JPA나 서비스 책임이 섞이지 않았는가
-- 정상/실패/경계값 케이스가 분리되어 있는가
-- 테스트 이름이 구현 방식보다 도메인 규칙을 설명하는가
+- [entity-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/entity/entity-design-convention.md>)

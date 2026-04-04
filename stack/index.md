@@ -13,6 +13,17 @@
 - `react/`
   React 기반 문서와 스니핏을 관리한다.
 
+## Coverage Snapshot
+
+- `spring/`
+  convention, spec, test, entity 영역에 실질 문서가 들어가 있는 가장 성숙한 스택이다.
+- `fastapi/`
+  convention 기준 문서부터 채우기 시작한 상태다.
+- `react/`
+  convention 기준 문서부터 채우기 시작한 상태다.
+- `spring-webflux/`
+  reactive controller/service 기준 문서부터 채우기 시작한 상태다.
+
 ## Rule
 
 - 프레임워크 공통 탐색의 시작점은 이 인덱스다.
