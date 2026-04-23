@@ -27,3 +27,4 @@
 | id | name | path | default branch | stacks | status |
 | --- | --- | --- | --- | --- | --- |
 | `miyou` | `MIYOU` | `C:\Users\imdls\workspace\MIYOU_ai-voice-chat` | `develop` | `spring`, `react` | `active` |
+| `finops-integration-platform` | `FinOps Integration Platform` | `C:\Users\imdls\workspace\finops-integration-platform` | `main` | `spring`, `react` | `active` |

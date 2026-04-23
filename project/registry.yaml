@@ -1,5 +1,23 @@
 version: 1
 projects:
+  # BEGIN project:finops-integration-platform
+  - id: finops-integration-platform
+    name: FinOps Integration Platform
+    repo_path: 'C:\Users\imdls\workspace\finops-integration-platform'
+    repo_url: ''
+    default_branch: main
+    docs_path: docs
+    plan_path: plan
+    troubleshooting_path: troubleshooting
+    status: active
+    stacks:
+      - spring
+      - react
+    aliases:
+      - finops-integration-platform
+      - AI 기반 금융 IT 인터페이스 통합 및 리스크 평가 운영 플랫폼
+      - FinOps Integration Platform
+  # END project:finops-integration-platform
   # BEGIN project:miyou
   - id: miyou
     name: MIYOU
