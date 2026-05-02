@@ -101,12 +101,35 @@ public record PostSummaryQueryDto(
 Page<PostSearchQueryDto> searchByFullText(@Param("keyword") String keyword, Pageable pageable);
 ```
 
+## Reference Lookup Snippet
+
+```java
+public Post createPost(Long memberId, String title, String content) {
+    Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND));
+
+    Post post = Post.create(member, title, content);
+    return postRepository.save(post);
+}
+```
+
+```java
+public Post createPostFromTrustedBatch(Long memberId, String title, String content) {
+    Member memberRef = memberRepository.getReferenceById(memberId);
+    Post post = Post.create(memberRef, title, content);
+    return postRepository.save(post);
+}
+```
+
 ## Rules
 
 - 기본 repository는 `JpaRepository<Entity, Long>`을 상속한다.
 - QueryDSL/custom query 계약이 필요하면 `*QueryRepository`를 함께 상속한다.
 - 단건 조회는 `Optional<T>`를 반환한다.
 - 부재 시 예외 변환은 Service에서 처리한다.
+- 외부 요청 ID는 `getReferenceById`보다 `findById`로 존재/권한을 확인한다.
+- `getReferenceById`는 대상 존재가 보장된 내부 처리와 FK 연결 최적화에만 제한적으로 사용한다.
+- 운영 목록 API에서 무제한 `findAll()`은 사용하지 않는다.
 - JPQL `@Query` 파라미터는 `@Param` 이름 기반으로 작성한다.
 - pagination JPQL/native query에서 count가 무거우면 `countQuery`를 별도로 작성한다.
 - projection은 `*QueryDto`, `*Projection`처럼 조회 목적을 드러낸다.

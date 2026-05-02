@@ -108,6 +108,67 @@ public class PostRepositoryImpl implements PostQueryRepository {
 }
 ```
 
+## In-memory Join Snippet
+
+```java
+public PageResponse<PostListResponse> getPostPage(PostSearchCondition condition, Pageable pageable) {
+    Page<PostSummaryQueryDto> page = postRepository.search(condition, pageable);
+    List<Long> postIds = page.getContent().stream()
+            .map(PostSummaryQueryDto::id)
+            .toList();
+
+    if (postIds.isEmpty()) {
+        return PageResponse.of(List.of(), page);
+    }
+
+    Map<Long, Long> commentCountMap = commentRepository.countByPostIds(postIds);
+    Map<Long, List<TagQueryDto>> tagMap = tagRepository.findByPostIds(postIds);
+
+    List<PostListResponse> items = page.getContent().stream()
+            .map(post -> PostListResponse.of(
+                    post,
+                    commentCountMap.getOrDefault(post.id(), 0L),
+                    tagMap.getOrDefault(post.id(), List.of())
+            ))
+            .toList();
+
+    return PageResponse.of(items, page);
+}
+```
+
+```java
+public Map<Long, Long> countByPostIds(List<Long> postIds) {
+    List<Tuple> rows = queryFactory
+            .select(comment.post.id, comment.count())
+            .from(comment)
+            .where(comment.post.id.in(postIds))
+            .groupBy(comment.post.id)
+            .fetch();
+
+    return rows.stream()
+            .collect(Collectors.toMap(
+                    row -> row.get(comment.post.id),
+                    row -> row.get(comment.count())
+            ));
+}
+```
+
+## Batch Size Snippet
+
+```java
+@BatchSize(size = 50)
+@OneToMany(mappedBy = "post")
+private List<Comment> comments = new ArrayList<>();
+```
+
+```yaml
+spring:
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 50
+```
+
 ## Sort Utility Shape
 
 ```java
@@ -136,6 +197,8 @@ public final class QueryDslOrderUtil {
 - 동적 정렬은 whitelist 방식으로만 허용한다.
 - 목록 API는 entity보다 `*QueryDto` projection을 우선 검토한다.
 - collection fetch join과 pagination을 함께 사용하지 않는다.
+- page root 목록과 collection/count 보조 데이터는 in-memory join으로 결합한다.
+- batch size는 반복 lazy access 완화용이며 projection이나 2-step query를 대체하지 않는다.
 
 ## References
 
