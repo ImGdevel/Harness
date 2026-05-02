@@ -12,6 +12,12 @@
   FastAPI 기반 문서와 스니핏을 관리한다.
 - `react/`
   React 기반 문서와 스니핏을 관리한다.
+- `nextjs/`
+  Next.js 기반 문서와 스니핏을 관리한다.
+- `unity/`
+  Unity 기반 게임 프로젝트의 사전기획, 스택 선택, 초기 의사결정 문서를 관리한다.
+- `image-generation/`
+  이미지 생성 중심 워크스페이스의 브리프, 레퍼런스, 워크플로우, 산출물 관리 기준을 둔다.
 
 ## Coverage Snapshot
 
@@ -21,8 +27,14 @@
   convention 기준 문서부터 채우기 시작한 상태다.
 - `react/`
   convention 기준 문서부터 채우기 시작한 상태다.
+- `nextjs/`
+  App Router와 렌더링 경계 규칙부터 채우기 시작한 상태다.
 - `spring-webflux/`
   reactive controller/service 기준 문서부터 채우기 시작한 상태다.
+- `unity/`
+  프로젝트 생성 전에 확정해야 할 Unity 사전기획 기준 문서부터 채우기 시작한 상태다.
+- `image-generation/`
+  이미지 생성 작업을 재현 가능하게 관리하기 위한 기본 인덱스부터 채운 상태다.
 
 ## Rule
 
