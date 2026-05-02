@@ -10,7 +10,7 @@
 이 하네스는 아래 일을 한다.
 
 - 공통 문서 규칙과 Git 규칙을 제공한다.
-- Spring, WebFlux, FastAPI, React 같은 스택 지식을 축적한다.
+- Spring, WebFlux, FastAPI, React, Next.js 같은 스택 지식을 축적한다.
 - 반복 작업을 `step`, `job`, `pipeline`으로 정리한다.
 - 실제 프로젝트 이름을 실제 저장소 경로에 연결한다.
 - 에이전트가 어느 저장소에서 작업해야 하는지 빠르게 판단하게 만든다.
@@ -46,7 +46,7 @@
 1. 하네스가 `project/registry.yaml`에서 `miyou`를 찾는다.
 2. `repo_path`가 `C:\Users\imdls\workspace\MIYOU_ai-voice-chat`인지 확인한다.
 3. 필요하면 `common/`과 `stack/` 문서를 읽는다.
-4. 실제 코드 수정, 테스트, plan, troubleshooting, Git 작업은 `MIYOU_ai-voice-chat` 저장소에서 진행한다.
+4. 실제 코드 수정, 테스트, docs/plan, docs/troubleshooting, Git 작업은 `MIYOU_ai-voice-chat` 저장소에서 진행한다.
 
 ## Registering A Project
 
@@ -80,8 +80,8 @@
 ```text
 <project-root>/
   docs/
-  plan/
-  troubleshooting/
+    plan/
+    troubleshooting/
   .git/
 ```
 
@@ -89,9 +89,9 @@
 
 - `<project-root>/docs/`
   프로젝트 전용 설계, API, ERD, 인프라, 보안, 로컬 셋업 문서
-- `<project-root>/plan/`
+- `<project-root>/docs/plan/`
   구현 계획 문서
-- `<project-root>/troubleshooting/`
+- `<project-root>/docs/troubleshooting/`
   재발 방지 가치가 있는 문제 해결 기록
 - `<project-root>/.git/`
   실제 Git 작업 대상
@@ -133,6 +133,7 @@
 - `spring-webflux/`
 - `fastapi/`
 - `react/`
+- `nextjs/`
 
 각 스택 루트에는 보통 아래가 있다.
 
@@ -181,11 +182,16 @@
 - [scripts/register-project.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/register-project.ps1>)
   외부 프로젝트를 registry에 등록하거나 갱신한다.
 - [scripts/bootstrap-project-docs.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/bootstrap-project-docs.ps1>)
-  registry를 기준으로 실제 프로젝트 저장소의 `docs/`, `plan/`, `troubleshooting/` 기본 구조를 정렬한다.
+  registry를 기준으로 실제 프로젝트 저장소의 `docs/`, `docs/plan/`, `docs/troubleshooting/` 기본 구조를 정렬한다.
 - [scripts/audit-documentation-governance.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/audit-documentation-governance.ps1>)
   문서 인덱스와 배치 규칙 정합성을 점검한다.
 - [scripts/audit-project-registry.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/audit-project-registry.ps1>)
   `project/registry.yaml`과 `project/index.md` 요약 정합성을 점검한다.
+
+## Tools
+
+- [tools/discord-codex-remote-control](</C:/Users/imdls/workspace/Project Workspace/tools/discord-codex-remote-control>)
+  Discord slash command와 webhook으로 원격 작업 요청 큐와 주요 작업 완료 알림을 처리한다.
 
 ## GitHub Rules
 
