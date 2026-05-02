@@ -303,12 +303,14 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - `apply-change`
   - `re-validate`
   - `re-sync-docs`
-  - `reply-or-resolve-review-thread`
+  - `resolve-accepted-review-thread`
+  - `reply-to-rejected-review-thread`
 - 반복 조건:
   - 미해결 피드백이 남아 있을 때
 - 출력물:
   - 반영된 수정과 갱신된 검증 상태
-  - 수용/반려한 리뷰 댓글 목록과 처리 근거
+  - 수용한 리뷰 thread resolve 목록
+  - 반려한 리뷰 thread 대댓글과 처리 근거
 
 ## Registered Pipelines
 
