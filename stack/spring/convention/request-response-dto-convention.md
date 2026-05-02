@@ -205,6 +205,7 @@ DTO 내부에 둔다:
 - public/admin/internal 응답이 같은 source를 서로 다른 정책으로 가공한다.
 - locale, timezone, currency, masking, signed URL 생성 같은 presentation policy가 들어간다.
 - N+1을 피하기 위해 projection, in-memory join, batch 조회 결과를 조합해야 한다.
+- JSON parse/serialize, enum/date parsing처럼 format 변환이나 실패 처리 정책이 들어간다.
 - 변환 코드가 DTO 하나의 책임을 넘어 30줄 이상으로 커진다.
 
 MapStruct 같은 mapping library는 기본 선택이 아니다.
@@ -383,3 +384,4 @@ public Post createPost(@RequestBody PostCreateRequest request) {
 - [controller-writing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/controller-writing-convention.md>)
 - [swagger-documentation-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/swagger-documentation-convention.md>)
 - [repository-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/repository-design-convention.md>)
+- [serialization-and-parsing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/serialization-and-parsing-convention.md>)

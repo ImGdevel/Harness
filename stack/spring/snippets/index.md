@@ -30,6 +30,8 @@ Spring reusable snippet index.
   `*Docs` interface, frontend-friendly operation description, realistic success examples
 - `swagger-custom-error-response-snippet.md`
   custom error annotation, endpoint error group, error code examples
+- `serialization-and-parsing-snippet.md`
+  `JsonCodec`, feature-specific parser, string/enum parser, assembler usage examples
 
 ## Rules
 

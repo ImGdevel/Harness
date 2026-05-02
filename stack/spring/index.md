@@ -10,6 +10,11 @@ Spring 관련 컨벤션과 스펙 문서의 빠른 탐색용 인덱스다.
 - `entity/`: 엔티티, 매핑, 영속성 관련 규칙
 - `snippets/`: 짧게 재사용하는 Spring 코드 예제와 패턴
 
+## Current Highlights
+
+- `convention/serialization-and-parsing-convention.md`: Jackson `ObjectMapper` 재사용, JSON codec, parser/normalizer 공통화 후보, 실패 처리 기준
+- `snippets/serialization-and-parsing-snippet.md`: `JsonCodec`, feature-specific parser, string/enum parser 예시
+
 ## Related
 
 - 실제 프로젝트 레지스트리는 `../../project/index.md`와 `../../project/registry.yaml`에서 관리한다.
