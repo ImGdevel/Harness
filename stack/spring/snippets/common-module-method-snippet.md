@@ -141,6 +141,7 @@ public final class StringNormalizer {
 package com.example.common.collection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -148,6 +149,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -165,7 +167,7 @@ public final class CollectionSupport {
     }
 
     public static <T, K> Predicate<T> distinctByKey(Function<T, K> keyExtractor) {
-        Set<K> seen = new LinkedHashSet<>();
+        Set<K> seen = ConcurrentHashMap.newKeySet();
         return value -> seen.add(keyExtractor.apply(value));
     }
 
@@ -189,10 +191,10 @@ public final class CollectionSupport {
         }
         for (T value : values) {
             K key = keyExtractor.apply(value);
-            T previous = result.putIfAbsent(key, value);
-            if (previous != null) {
+            if (result.containsKey(key)) {
                 throw new IllegalArgumentException("중복 key가 존재합니다. key=" + key);
             }
+            result.put(key, value);
         }
         return result;
     }
@@ -217,9 +219,11 @@ public final class CollectionSupport {
         }
         List<List<T>> chunks = new ArrayList<>((values.size() + chunkSize - 1) / chunkSize);
         for (int start = 0; start < values.size(); start += chunkSize) {
-            chunks.add(List.copyOf(values.subList(start, Math.min(start + chunkSize, values.size()))));
+            chunks.add(Collections.unmodifiableList(new ArrayList<>(
+                    values.subList(start, Math.min(start + chunkSize, values.size()))
+            )));
         }
-        return List.copyOf(chunks);
+        return Collections.unmodifiableList(chunks);
     }
 
     public static <T> Map<Boolean, List<T>> partition(Collection<T> values, Predicate<T> predicate) {
@@ -421,7 +425,15 @@ public final class UrlSupport {
     }
 
     public static URI parseHttpUri(String value, String fieldName) {
-        URI uri = URI.create(value);
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(fieldName + "은 비어 있을 수 없습니다.");
+        }
+        URI uri;
+        try {
+            uri = URI.create(value);
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalArgumentException(fieldName + " 형식이 올바르지 않습니다.", exception);
+        }
         String scheme = uri.getScheme();
         if (scheme == null || (!scheme.equalsIgnoreCase("http") && !scheme.equalsIgnoreCase("https"))) {
             throw new IllegalArgumentException(fieldName + "은 http 또는 https URL이어야 합니다.");
@@ -453,18 +465,29 @@ public final class UrlSupport {
     }
 
     public static String normalizeUrl(String value) {
-        URI uri = parseHttpUri(removeTrailingSlash(value), "url");
-        String origin = extractOrigin(uri.toString());
+        URI uri = parseHttpUri(value, "url");
+        int port = uri.getPort();
+        String portPart = port < 0 ? "" : ":" + port;
+        String origin = uri.getScheme().toLowerCase(Locale.ROOT)
+                + "://"
+                + uri.getHost().toLowerCase(Locale.ROOT)
+                + portPart;
         String path = uri.getRawPath() == null ? "" : removeTrailingSlash(uri.getRawPath());
         String query = uri.getRawQuery() == null ? "" : "?" + uri.getRawQuery();
         return origin + path + query;
     }
 
     public static String urlEncode(String value) {
+        if (value == null) {
+            return null;
+        }
         return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 
     public static String urlDecode(String value) {
+        if (value == null) {
+            return null;
+        }
         return URLDecoder.decode(value, StandardCharsets.UTF_8);
     }
 
@@ -499,12 +522,16 @@ public final class SlugAndIdSupport {
     private static final Pattern MULTI_DASH = Pattern.compile("-+");
     private static final Pattern EDGE_DASH = Pattern.compile("^-|-$");
     private static final Pattern DIACRITICS = Pattern.compile("\\p{M}");
+    private static final Pattern SLUG_PATTERN = Pattern.compile("^[a-z0-9]+(?:-[a-z0-9]+)*$");
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private SlugAndIdSupport() {
     }
 
     public static String slugify(String value) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException("slug 원본 값은 비어 있을 수 없습니다.");
+        }
         String ascii = DIACRITICS.matcher(Normalizer.normalize(value, Normalizer.Form.NFD))
                 .replaceAll("")
                 .toLowerCase(Locale.ROOT)
@@ -514,7 +541,7 @@ public final class SlugAndIdSupport {
     }
 
     public static void validateSlug(String slug) {
-        if (slug == null || !slug.matches("^[a-z0-9]+(?:-[a-z0-9]+)*$")) {
+        if (slug == null || !SLUG_PATTERN.matcher(slug).matches()) {
             throw new IllegalArgumentException("slug 형식이 올바르지 않습니다.");
         }
     }
@@ -588,6 +615,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import com.example.common.serialization.JsonCodec;
+import com.example.common.serialization.JsonSerializationException;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -604,10 +632,13 @@ public class CursorSupport {
     }
 
     public <T> T cursorDecode(String cursor, Class<T> cursorType) {
+        if (cursor == null || cursor.isBlank()) {
+            throw new IllegalArgumentException("cursor는 비어 있을 수 없습니다.");
+        }
         try {
             byte[] decoded = Base64.getUrlDecoder().decode(cursor);
             return jsonCodec.fromJson(new String(decoded, StandardCharsets.UTF_8), cursorType);
-        } catch (IllegalArgumentException exception) {
+        } catch (IllegalArgumentException | JsonSerializationException exception) {
             throw new IllegalArgumentException("cursor 형식이 올바르지 않습니다.", exception);
         }
     }
@@ -620,6 +651,7 @@ public class CursorSupport {
 package com.example.common.security;
 
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
@@ -632,6 +664,9 @@ public final class CryptoAndMaskingSupport {
     }
 
     public static String hashSha256(String value) {
+        if (value == null) {
+            throw new IllegalArgumentException("hash 대상 값은 null일 수 없습니다.");
+        }
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             return HexFormat.of().formatHex(digest.digest(value.getBytes(StandardCharsets.UTF_8)));
@@ -641,11 +676,14 @@ public final class CryptoAndMaskingSupport {
     }
 
     public static String hmacSha256(String secret, String value) {
+        if (secret == null || value == null) {
+            throw new IllegalArgumentException("HMAC secret과 value는 null일 수 없습니다.");
+        }
         try {
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
             return HexFormat.of().formatHex(mac.doFinal(value.getBytes(StandardCharsets.UTF_8)));
-        } catch (Exception exception) {
+        } catch (GeneralSecurityException exception) {
             throw new IllegalStateException("HMAC-SHA256 생성에 실패했습니다.", exception);
         }
     }
@@ -693,7 +731,10 @@ public final class CryptoAndMaskingSupport {
 ```java
 package com.example.common.security;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -708,20 +749,43 @@ public final class PayloadRedactor {
             "access_token",
             "refresh_token"
     );
+    private static final int MAX_DEPTH = 5;
 
     private PayloadRedactor() {
     }
 
     public static Map<String, Object> redactPayload(Map<String, Object> payload) {
+        return redactMap(payload, 0);
+    }
+
+    private static Map<String, Object> redactMap(Map<?, ?> payload, int depth) {
         Map<String, Object> redacted = new LinkedHashMap<>();
         if (payload == null) {
             return redacted;
         }
         payload.forEach((key, value) -> {
-            String normalizedKey = key == null ? "" : key.toLowerCase(Locale.ROOT);
-            redacted.put(key, SENSITIVE_KEYS.contains(normalizedKey) ? "***" : value);
+            String keyName = key == null ? "" : key.toString();
+            String normalizedKey = keyName.toLowerCase(Locale.ROOT);
+            redacted.put(keyName, SENSITIVE_KEYS.contains(normalizedKey) ? "***" : redactValue(value, depth + 1));
         });
         return redacted;
+    }
+
+    private static Object redactValue(Object value, int depth) {
+        if (value == null || depth > MAX_DEPTH) {
+            return depth > MAX_DEPTH ? "...(max-depth)" : null;
+        }
+        if (value instanceof Map<?, ?> map) {
+            return redactMap(map, depth);
+        }
+        if (value instanceof Collection<?> collection) {
+            List<Object> redacted = new ArrayList<>(collection.size());
+            for (Object item : collection) {
+                redacted.add(redactValue(item, depth + 1));
+            }
+            return redacted;
+        }
+        return value;
     }
 }
 ```
@@ -737,6 +801,9 @@ public final class SafeLogFormatter {
     }
 
     public static String truncatePayload(String value, int maxLength) {
+        if (maxLength < 0) {
+            throw new IllegalArgumentException("maxLength는 0 이상이어야 합니다.");
+        }
         if (value == null) {
             return null;
         }
@@ -783,8 +850,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 public final class FileSupport {
+
+    private static final Pattern UNSAFE_FILE_NAME_CHARS = Pattern.compile("[\\r\\n\\t\\u0000]");
 
     private FileSupport() {
     }
@@ -804,7 +874,7 @@ public final class FileSupport {
         }
         String name = fileName.replace("\\", "/");
         name = name.substring(name.lastIndexOf('/') + 1);
-        name = name.replaceAll("[\\r\\n\\t\\u0000]", "_");
+        name = UNSAFE_FILE_NAME_CHARS.matcher(name).replaceAll("_");
         if (name.equals(".") || name.equals("..") || name.isBlank()) {
             throw new IllegalArgumentException("파일명이 올바르지 않습니다.");
         }
@@ -812,9 +882,15 @@ public final class FileSupport {
     }
 
     public static void validateContentType(String contentType, Set<String> allowedTypes) {
-        if (contentType == null || !allowedTypes.contains(contentType.toLowerCase(Locale.ROOT))) {
+        if (contentType == null || allowedTypes == null) {
             throw new IllegalArgumentException("허용되지 않은 content type입니다.");
         }
+        for (String allowedType : allowedTypes) {
+            if (allowedType != null && allowedType.equalsIgnoreCase(contentType)) {
+                return;
+            }
+        }
+        throw new IllegalArgumentException("허용되지 않은 content type입니다.");
     }
 
     public static void validateFileSize(long size, long maxSize) {
@@ -824,6 +900,9 @@ public final class FileSupport {
     }
 
     public static byte[] readBytesWithLimit(InputStream inputStream, int maxBytes) throws IOException {
+        if (maxBytes < 0) {
+            throw new IllegalArgumentException("maxBytes는 0 이상이어야 합니다.");
+        }
         ByteArrayOutputStream output = new ByteArrayOutputStream(Math.min(maxBytes, 8192));
         byte[] buffer = new byte[8192];
         int total = 0;
@@ -919,14 +998,15 @@ public final class HttpSupport {
 package com.example.common.error;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public final class ErrorAndRepositorySupport {
 
     private ErrorAndRepositorySupport() {
     }
 
-    public static <T> T requireFound(Optional<T> value, RuntimeException exception) {
-        return value.orElseThrow(() -> exception);
+    public static <T> T requireFound(Optional<T> value, Supplier<? extends RuntimeException> exceptionSupplier) {
+        return value.orElseThrow(exceptionSupplier);
     }
 
     public static Throwable unwrapRootCause(Throwable throwable) {
@@ -950,18 +1030,20 @@ public final class ErrorAndRepositorySupport {
 ```java
 package com.example.common.key;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 public final class KeySupport {
 
     private KeySupport() {
     }
 
     public static String cacheKeyOf(String prefix, Object... parts) {
-        return prefix + ":" + Arrays.stream(parts)
-                .map(KeySupport::normalizeCachePart)
-                .collect(Collectors.joining(":"));
+        StringBuilder builder = new StringBuilder(prefix);
+        if (parts == null) {
+            return builder.toString();
+        }
+        for (Object part : parts) {
+            builder.append(':').append(normalizeCachePart(part));
+        }
+        return builder.toString();
     }
 
     public static String normalizeCachePart(Object value) {
@@ -1094,6 +1176,9 @@ public final class MoneyNumberSupport {
     }
 
     public static BigDecimal safeDivide(BigDecimal numerator, BigDecimal denominator, int scale) {
+        if (numerator == null) {
+            return BigDecimal.ZERO.setScale(scale, RoundingMode.HALF_UP);
+        }
         if (denominator == null || denominator.signum() == 0) {
             return BigDecimal.ZERO.setScale(scale, RoundingMode.HALF_UP);
         }
@@ -1107,6 +1192,9 @@ public final class MoneyNumberSupport {
     }
 
     public static BigDecimal roundHalfUp(BigDecimal value, int scale) {
+        if (value == null) {
+            return null;
+        }
         return value.setScale(scale, RoundingMode.HALF_UP);
     }
 
@@ -1202,7 +1290,10 @@ java.net.URI uri = org.springframework.web.util.UriComponentsBuilder
 ```java
 // Apache Commons Codec: SHA-256/HMAC helper
 String sha256 = org.apache.commons.codec.digest.DigestUtils.sha256Hex("payload");
-String hmac = org.apache.commons.codec.digest.HmacUtils.hmacSha256Hex("secret".getBytes(), "payload");
+String hmac = org.apache.commons.codec.digest.HmacUtils.hmacSha256Hex(
+        "secret".getBytes(java.nio.charset.StandardCharsets.UTF_8),
+        "payload"
+);
 ```
 
 ```java
@@ -1230,8 +1321,10 @@ try (org.apache.commons.csv.CSVParser parser = org.apache.commons.csv.CSVParser.
 ```
 
 ```java
-// Apache Tika: content 기반 MIME detection
-String mimeType = new org.apache.tika.Tika().detect(file);
+// Apache Tika: content 기반 MIME detection. Spring bean으로 만들어 재사용한다.
+private final org.apache.tika.Tika tika = new org.apache.tika.Tika();
+
+String mimeType = tika.detect(file);
 ```
 
 ```java
@@ -1258,6 +1351,7 @@ package com.example.common.benchmark;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.example.common.collection.CollectionSupport;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
