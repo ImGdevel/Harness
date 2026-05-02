@@ -14,6 +14,8 @@ Spring reusable snippet index.
   `ErrorCode` and `BusinessException`
 - `common-api-dto-snippet.md`
   common list/page/slice/error/field error DTO examples
+- `request-response-dto-snippet.md`
+  feature request/response DTO, internal mapper, assembler split examples
 - `controller-and-error-snippet.md`
   Spring MVC controller, query request DTO, error response, global exception handler example
 - `security-entrypoint-and-access-denied-snippet.md`

@@ -14,6 +14,8 @@ Spring 관련 컨벤션 문서 인덱스다.
   Spring API 설계 시 요청/응답/에러/페이징 규약을 정리한다.
 - `common-api-dto-convention.md`
   Spring API 공통 DTO, 목록/page/cursor/error/field error 응답 shape와 DTO 네이밍 기준을 정리한다.
+- `request-response-dto-convention.md`
+  기능별 request/response DTO의 이름, 패키지, 내부 mapper, 별도 assembler 분리 기준, validation/Swagger 작성 기준을 정리한다.
 - `controller-writing-convention.md`
   Spring MVC Controller 작성, request binding, null/default, Binder, response, pagination, WebMvc test 기준을 정리한다.
 - `error-handling-convention.md`
