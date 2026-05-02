@@ -202,4 +202,4 @@ public final class QueryDslOrderUtil {
 
 ## References
 
-- [repository-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/repository-design-convention.md>)
+- [repository-design-convention.md](../convention/repository-design-convention.md)

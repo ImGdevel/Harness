@@ -446,16 +446,16 @@ Optional automation:
 
 ## References
 
-- [api-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/api-design-convention.md>)
-- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
-- [request-response-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/request-response-dto-convention.md>)
-- [controller-writing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/controller-writing-convention.md>)
-- [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)
-- [security-exception-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/security-exception-convention.md>)
-- [swagger-config-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/swagger-config-snippet.md>)
-- [swagger-docs-interface-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/swagger-docs-interface-snippet.md>)
-- [swagger-custom-error-response-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/swagger-custom-error-response-snippet.md>)
+- [api-design-convention.md](api-design-convention.md)
+- [common-api-dto-convention.md](common-api-dto-convention.md)
+- [request-response-dto-convention.md](request-response-dto-convention.md)
+- [controller-writing-convention.md](controller-writing-convention.md)
+- [error-handling-convention.md](error-handling-convention.md)
+- [security-exception-convention.md](security-exception-convention.md)
+- [swagger-config-snippet.md](../snippets/swagger-config-snippet.md)
+- [swagger-docs-interface-snippet.md](../snippets/swagger-docs-interface-snippet.md)
+- [swagger-custom-error-response-snippet.md](../snippets/swagger-custom-error-response-snippet.md)
 - [springdoc-openapi](https://springdoc.org/)
 - [Swagger Core Annotations](https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations)
-- Source: [Devon SWAGGER_CUSTOM_EXCEPTION.md](</C:/Users/imdls/workspace/KakaobootTechCamp/3-devon-woo-community/docs/SWAGGER_CUSTOM_EXCEPTION.md>)
-- Source: [Devon SwaggerConfig.java](</C:/Users/imdls/workspace/KakaobootTechCamp/3-devon-woo-community/src/main/java/com/kakaotechbootcamp/community/common/swagger/SwaggerConfig.java>)
+- Source: Devon Community `docs/SWAGGER_CUSTOM_EXCEPTION.md`
+- Source: Devon Community `src/main/java/com/kakaotechbootcamp/community/common/swagger/SwaggerConfig.java`

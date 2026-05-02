@@ -7,9 +7,8 @@ Repository는 영속성 기술을 숨기되, 쿼리 의도, 반환 타입, pagin
 
 ## 참고 구현
 
-하네스 문서를 작성할 때는 다음 레퍼런스 저장소의 실제 구현과 문서를 함께 확인한다.
+하네스 문서를 작성할 때는 Devon Community 레퍼런스 저장소의 실제 구현과 문서를 함께 확인한다.
 
-- `C:\Users\imdls\workspace\KakaobootTechCamp\3-devon-woo-community`
 - `docs/QUERYDSL_USAGE.md`
 - `docs/QUERYDSL_ADVANCED_USAGE.md`
 - `docs/PAGINATION_CONVENTION.md`
@@ -726,7 +725,7 @@ Page<PostSummaryQueryDto> result = postRepository.findAllActiveWithMemberAsDto(r
 
 ## References
 
-- [repository-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/repository-test-convention.md>)
-- [layer-and-naming-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/layer-and-naming-convention.md>)
-- [repository-interface-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/repository-interface-snippet.md>)
-- [querydsl-repository-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/querydsl-repository-snippet.md>)
+- [repository-test-convention.md](../test/repository-test-convention.md)
+- [layer-and-naming-convention.md](layer-and-naming-convention.md)
+- [repository-interface-snippet.md](../snippets/repository-interface-snippet.md)
+- [querydsl-repository-snippet.md](../snippets/querydsl-repository-snippet.md)

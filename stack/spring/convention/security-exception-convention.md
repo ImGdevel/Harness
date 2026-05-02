@@ -25,5 +25,5 @@ Keep Security filter chain errors aligned with the project JSON error contract.
 
 ## References
 
-- [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)
+- [error-handling-convention.md](error-handling-convention.md)
 - [3-devon-woo-community-BE docs/security](https://github.com/100-hours-a-week/3-devon-woo-community-BE/tree/main/docs/security)

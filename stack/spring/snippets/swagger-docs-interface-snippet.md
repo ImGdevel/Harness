@@ -187,5 +187,5 @@ public record PublicPostListItemResponse(
 
 ## References
 
-- [swagger-documentation-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/swagger-documentation-convention.md>)
-- [swagger-custom-error-response-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/swagger-custom-error-response-snippet.md>)
+- [swagger-documentation-convention.md](../convention/swagger-documentation-convention.md)
+- [swagger-custom-error-response-snippet.md](swagger-custom-error-response-snippet.md)

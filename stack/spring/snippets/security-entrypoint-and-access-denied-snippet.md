@@ -60,4 +60,4 @@ public class JsonAccessDeniedHandler implements AccessDeniedHandler {
 
 ## References
 
-- [security-exception-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/security-exception-convention.md>)
+- [security-exception-convention.md](../convention/security-exception-convention.md)

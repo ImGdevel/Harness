@@ -380,8 +380,8 @@ public Post createPost(@RequestBody PostCreateRequest request) {
 
 ## References
 
-- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
-- [controller-writing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/controller-writing-convention.md>)
-- [swagger-documentation-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/swagger-documentation-convention.md>)
-- [repository-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/repository-design-convention.md>)
-- [serialization-and-parsing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/serialization-and-parsing-convention.md>)
+- [common-api-dto-convention.md](common-api-dto-convention.md)
+- [controller-writing-convention.md](controller-writing-convention.md)
+- [swagger-documentation-convention.md](swagger-documentation-convention.md)
+- [repository-design-convention.md](repository-design-convention.md)
+- [serialization-and-parsing-convention.md](serialization-and-parsing-convention.md)

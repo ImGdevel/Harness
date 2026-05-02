@@ -337,7 +337,7 @@ Rules:
 
 ## References
 
-- [serialization-and-parsing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/serialization-and-parsing-convention.md>)
-- [request-response-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/request-response-dto-convention.md>)
-- [repository-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/repository-design-convention.md>)
-- [common-module-method-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/common-module-method-snippet.md>)
+- [serialization-and-parsing-convention.md](serialization-and-parsing-convention.md)
+- [request-response-dto-convention.md](request-response-dto-convention.md)
+- [repository-design-convention.md](repository-design-convention.md)
+- [common-module-method-snippet.md](../snippets/common-module-method-snippet.md)

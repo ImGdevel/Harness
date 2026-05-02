@@ -131,7 +131,7 @@ Rules:
 
 ## References
 
-- [api-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/api-design-convention.md>)
-- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
-- [controller-writing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/controller-writing-convention.md>)
-- [security-exception-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/security-exception-convention.md>)
+- [api-design-convention.md](api-design-convention.md)
+- [common-api-dto-convention.md](common-api-dto-convention.md)
+- [controller-writing-convention.md](controller-writing-convention.md)
+- [security-exception-convention.md](security-exception-convention.md)

@@ -229,4 +229,4 @@ public class PublicPostSummaryAssembler {
 
 ## References
 
-- [serialization-and-parsing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/serialization-and-parsing-convention.md>)
+- [serialization-and-parsing-convention.md](../convention/serialization-and-parsing-convention.md)

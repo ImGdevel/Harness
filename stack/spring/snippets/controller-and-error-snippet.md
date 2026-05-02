@@ -160,7 +160,7 @@ public class GlobalExceptionHandler {
 
 ## References
 
-- [controller-writing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/controller-writing-convention.md>)
-- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
-- [common-api-dto-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/common-api-dto-snippet.md>)
-- [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)
+- [controller-writing-convention.md](../convention/controller-writing-convention.md)
+- [common-api-dto-convention.md](../convention/common-api-dto-convention.md)
+- [common-api-dto-snippet.md](common-api-dto-snippet.md)
+- [error-handling-convention.md](../convention/error-handling-convention.md)

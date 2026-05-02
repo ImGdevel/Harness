@@ -25,4 +25,4 @@ Keep test setup short without hiding test intent.
 
 ## References
 
-- [test-double-writing-guide.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/test-double-writing-guide.md>)
+- [test-double-writing-guide.md](test-double-writing-guide.md)

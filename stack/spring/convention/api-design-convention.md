@@ -39,6 +39,6 @@ Fix request, response, error, and pagination rules for Spring HTTP APIs.
 
 ## References
 
-- [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)
-- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
-- [security-exception-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/security-exception-convention.md>)
+- [error-handling-convention.md](error-handling-convention.md)
+- [common-api-dto-convention.md](common-api-dto-convention.md)
+- [security-exception-convention.md](security-exception-convention.md)

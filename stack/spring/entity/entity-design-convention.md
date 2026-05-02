@@ -178,6 +178,6 @@ public void removeComment(Comment comment) {
 
 ## References
 
-- [erd-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/entity/erd-design-convention.md>)
-- [table-definition-writing-guide.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/entity/table-definition-writing-guide.md>)
-- [business-exception-and-error-code-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/business-exception-and-error-code-snippet.md>)
+- [erd-design-convention.md](erd-design-convention.md)
+- [table-definition-writing-guide.md](table-definition-writing-guide.md)
+- [business-exception-and-error-code-snippet.md](../snippets/business-exception-and-error-code-snippet.md)

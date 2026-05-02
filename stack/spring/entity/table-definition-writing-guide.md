@@ -30,4 +30,4 @@ Keep table definition docs readable, comparable, and reviewable.
 
 ## References
 
-- [erd-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/entity/erd-design-convention.md>)
+- [erd-design-convention.md](erd-design-convention.md)

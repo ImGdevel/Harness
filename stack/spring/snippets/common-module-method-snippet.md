@@ -1388,5 +1388,5 @@ public class CollectionSupportBenchmark {
 
 ## References
 
-- [common-module-method-candidates.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-module-method-candidates.md>)
-- [serialization-and-parsing-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/serialization-and-parsing-snippet.md>)
+- [common-module-method-candidates.md](../convention/common-module-method-candidates.md)
+- [serialization-and-parsing-snippet.md](serialization-and-parsing-snippet.md)

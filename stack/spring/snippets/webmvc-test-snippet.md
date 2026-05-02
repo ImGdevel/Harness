@@ -43,4 +43,4 @@ class PostControllerTest {
 
 ## References
 
-- [controller-webmvc-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/controller-webmvc-test-convention.md>)
+- [controller-webmvc-test-convention.md](../test/controller-webmvc-test-convention.md)

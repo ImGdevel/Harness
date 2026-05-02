@@ -110,6 +110,9 @@ public record CompanySubscriptionAddRequest(
     }
 
     private static List<String> normalizeCompanySlugs(List<String> values) {
+        if (values == null) {
+            return List.of();
+        }
         return values.stream()
                 .filter(value -> value != null && !value.isBlank())
                 .map(String::trim)
@@ -254,5 +257,5 @@ public class PublicPostDetailResponseAssembler {
 
 ## References
 
-- [request-response-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/request-response-dto-convention.md>)
-- [common-api-dto-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/common-api-dto-snippet.md>)
+- [request-response-dto-convention.md](../convention/request-response-dto-convention.md)
+- [common-api-dto-snippet.md](common-api-dto-snippet.md)

@@ -273,7 +273,7 @@ Rules:
 
 ## References
 
-- [request-response-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/request-response-dto-convention.md>)
-- [api-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/api-design-convention.md>)
-- [controller-writing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/controller-writing-convention.md>)
-- [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)
+- [request-response-dto-convention.md](request-response-dto-convention.md)
+- [api-design-convention.md](api-design-convention.md)
+- [controller-writing-convention.md](controller-writing-convention.md)
+- [error-handling-convention.md](error-handling-convention.md)

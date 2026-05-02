@@ -25,5 +25,5 @@ Test end-to-end application flow with real Spring wiring.
 
 ## References
 
-- [controller-webmvc-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/controller-webmvc-test-convention.md>)
-- [repository-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/repository-test-convention.md>)
+- [controller-webmvc-test-convention.md](controller-webmvc-test-convention.md)
+- [repository-test-convention.md](repository-test-convention.md)

@@ -319,7 +319,7 @@ Do not use MapStruct when:
 
 ## References
 
-- [request-response-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/request-response-dto-convention.md>)
-- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
-- [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)
-- [serialization-and-parsing-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/serialization-and-parsing-snippet.md>)
+- [request-response-dto-convention.md](request-response-dto-convention.md)
+- [common-api-dto-convention.md](common-api-dto-convention.md)
+- [error-handling-convention.md](error-handling-convention.md)
+- [serialization-and-parsing-snippet.md](../snippets/serialization-and-parsing-snippet.md)

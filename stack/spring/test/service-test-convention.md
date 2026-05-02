@@ -24,5 +24,5 @@ Test use-case orchestration and service branching without Spring context.
 
 ## References
 
-- [domain-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/domain-test-convention.md>)
-- [test-double-writing-guide.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/test-double-writing-guide.md>)
+- [domain-test-convention.md](domain-test-convention.md)
+- [test-double-writing-guide.md](test-double-writing-guide.md)
