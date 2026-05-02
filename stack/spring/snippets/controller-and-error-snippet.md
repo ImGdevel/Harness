@@ -6,6 +6,7 @@
 - query request DTO 기본값/검증 처리
 - service 위임
 - 공통 error response와 `GlobalExceptionHandler` 작성
+- 공통 DTO는 `common-api-dto-snippet.md`를 우선 참고
 
 ## Controller
 
@@ -160,4 +161,6 @@ public class GlobalExceptionHandler {
 ## References
 
 - [controller-writing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/controller-writing-convention.md>)
+- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
+- [common-api-dto-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/common-api-dto-snippet.md>)
 - [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)

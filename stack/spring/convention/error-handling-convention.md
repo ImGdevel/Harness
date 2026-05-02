@@ -10,6 +10,7 @@ Keep Spring API error contracts stable and machine-readable.
 - Treat `message` as display text, not contract key.
 - Keep HTTP status and domain `code` separate.
 - Use one error payload shape across the project.
+- Use the project common `ErrorResponse` and `FieldErrorResponse` DTOs for every API error.
 - Return field-level `Validation` errors as a list.
 - Separate expected business errors from unexpected system errors.
 - Define `ErrorCode` as the source of status, code, default message.
@@ -131,5 +132,6 @@ Rules:
 ## References
 
 - [api-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/api-design-convention.md>)
+- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
 - [controller-writing-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/controller-writing-convention.md>)
 - [security-exception-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/security-exception-convention.md>)

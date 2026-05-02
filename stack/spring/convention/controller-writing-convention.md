@@ -13,6 +13,7 @@ Controller는 request mapping, binding, validation, response status를 소유하
 - Bean Validation
 - `@InitBinder`, `WebDataBinder`
 - response DTO, pagination DTO
+- common API DTO
 - controller-level exception mapping
 - `@WebMvcTest`
 
@@ -186,6 +187,8 @@ void initBinder(WebDataBinder binder) {
 
 - response body는 DTO 또는 공통 envelope로 반환한다.
 - JPA entity를 반환하지 않는다.
+- 반복되는 목록, page, cursor, error 응답은 프로젝트 공통 DTO를 사용한다.
+- Spring Data `Page`를 그대로 반환하지 않고 `PageResponse<T>`로 변환한다.
 - `ResponseEntity`는 status/header를 동적으로 제어해야 할 때만 사용한다.
 - 단순 `200 OK`는 DTO를 직접 반환한다.
 - create는 `201 Created`, body가 없으면 `204 No Content`를 사용한다.
@@ -209,6 +212,7 @@ void initBinder(WebDataBinder binder) {
 - sort field는 whitelist만 허용한다.
 - invalid sort field는 validation error로 처리하거나 무시한다. 프로젝트에서 하나로 고정한다.
 - 목록 response에는 `page`, `size`, `totalElements`, `totalPages`, `items`를 명시한다.
+- 단순 목록은 `ListResponse<T>`, offset page는 `PageResponse<T>`, cursor feed는 `SliceResponse<T>` 또는 `CursorResponse<T>`로 구분한다.
 
 ## Magic Number Rule
 
@@ -238,5 +242,6 @@ void initBinder(WebDataBinder binder) {
 ## References
 
 - [api-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/api-design-convention.md>)
+- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
 - [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)
 - [controller-webmvc-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/controller-webmvc-test-convention.md>)

@@ -20,6 +20,8 @@ Fix request, response, error, and pagination rules for Spring HTTP APIs.
 - Use `code`, `message`, optional `errors`, optional `traceId` for error payloads.
 - Separate HTTP status from domain `error.code`.
 - Use either `Page` or `Cursor` in one API. Do not mix them.
+- Do not expose Spring Data `Page` directly. Convert it to the project's common `PageResponse<T>`.
+- Use common DTOs such as `ListResponse<T>`, `PageResponse<T>`, `SliceResponse<T>`, `ErrorResponse`, and `FieldErrorResponse` when the response shape repeats.
 - Keep query parameters explicit. Do not pack JSON into query parameters.
 - Document the default sort rule.
 - Add a stable tie-breaker for `Cursor` pagination.
@@ -38,4 +40,5 @@ Fix request, response, error, and pagination rules for Spring HTTP APIs.
 ## References
 
 - [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)
+- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
 - [security-exception-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/security-exception-convention.md>)
