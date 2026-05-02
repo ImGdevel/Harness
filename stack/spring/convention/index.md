@@ -24,6 +24,8 @@ Spring 관련 컨벤션 문서 인덱스다.
   Spring Boot Gradle wrapper, dependency management, build tool 예외 기준을 정리한다.
 - `configuration-file-convention.md`
   Spring Boot 설정 파일 포맷 선택, 기록, 혼용 금지 기준을 정리한다.
+- `repository-design-convention.md`
+  Spring Data JPA Repository interface, query method, projection, custom repository 작성 기준을 정리한다.
 
 ## Rule
 

@@ -5,7 +5,9 @@ Spring reusable snippet index.
 ## Documents
 
 - `entity-factory-and-guard-snippet.md`
-  `Entity` factory, state change, local guard
+  `Entity` factory, state change, local guard, relationship helper example
+- `repository-interface-snippet.md`
+  Spring Data JPA repository interface, query method, projection, custom repository example
 - `business-exception-and-error-code-snippet.md`
   `ErrorCode` and `BusinessException`
 - `security-entrypoint-and-access-denied-snippet.md`
