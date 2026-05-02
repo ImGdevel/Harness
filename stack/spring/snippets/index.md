@@ -23,11 +23,11 @@ Spring reusable snippet index.
 - `service-test-snippet.md`
   service unit test template
 - `swagger-config-snippet.md`
-  shared `OpenAPI`, security scheme, tag sort, `OperationCustomizer`
+  shared `OpenAPI`, grouped APIs, security scheme, tag sort, `OperationCustomizer`
 - `swagger-docs-interface-snippet.md`
-  `*Docs` interface and controller implementation split
+  `*Docs` interface, frontend-friendly operation description, realistic success examples
 - `swagger-custom-error-response-snippet.md`
-  custom error annotation and `ErrorCode` group enum
+  custom error annotation, endpoint error group, error code examples
 
 ## Rules
 

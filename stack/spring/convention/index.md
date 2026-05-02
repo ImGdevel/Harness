@@ -21,7 +21,7 @@ Spring 관련 컨벤션 문서 인덱스다.
 - `security-exception-convention.md`
   Spring Security filter chain 예외를 JSON 응답으로 일관 처리하는 규칙을 정리한다.
 - `swagger-documentation-convention.md`
-  `springdoc-openapi`, docs interface, shared error response 문서화 규칙을 정리한다.
+  `springdoc-openapi`, docs interface, DTO schema, 현실적인 example, endpoint별 error response 문서화 규칙을 정리한다.
 - `flyway-convention.md`
   Flyway migration 디렉터리, 파일명, 버전 전략, 리뷰 체크리스트를 정리한다.
 - `gradle-build-convention.md`
