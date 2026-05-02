@@ -22,6 +22,7 @@
 - `wiki_path`: `docs_source: wiki`일 때 로컬 Wiki 저장소 경로
 
 `docs_source: wiki` 프로젝트는 실제 repo 안 `docs/` 대신 Wiki를 문서 원천으로 사용한다. 이 경우 작업 전 Wiki의 `Home.md`와 문서 정책 페이지를 먼저 확인한다.
+GitHub Actions 같은 원격 CI는 개발자 로컬 절대경로의 존재 여부를 검증하지 않는다. CI에서는 registry 필드와 인덱스 정합성만 검증하고, `repo_path`, `wiki_path`의 실제 로컬 존재 여부는 작업 시작 전 로컬 검증 스크립트에서 확인한다.
 
 GitFlow 프로젝트에서 GitHub default branch는 `develop`을 권장한다. `main`은 production 기준으로 유지하되 일반 기능 PR의 기본 base는 `develop`이어야 한다.
 

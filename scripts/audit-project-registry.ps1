@@ -1,6 +1,7 @@
 param(
     [string]$WorkspaceRoot = (Split-Path -Parent $PSScriptRoot),
-    [switch]$FailOnIssue
+    [switch]$FailOnIssue,
+    [switch]$SkipLocalPathExistenceCheck
 )
 
 function Add-Issue {
@@ -299,7 +300,7 @@ foreach ($project in $registryProjects) {
     if ($project.DocsSource -eq "wiki") {
         if (-not $project.WikiPath) {
             Add-Issue -Issues $issues -Type "missing-registry-field" -Path "project\\registry.yaml" -Message ("Registry project '{0}' uses docs_source=wiki but is missing 'wiki_path'." -f $project.MarkerId)
-        } elseif (-not (Test-Path -LiteralPath $project.WikiPath)) {
+        } elseif (-not $SkipLocalPathExistenceCheck -and -not (Test-Path -LiteralPath $project.WikiPath)) {
             Add-Issue -Issues $issues -Type "missing-wiki-path" -Path $project.WikiPath -Message ("Registry project '{0}' wiki_path does not exist." -f $project.MarkerId)
         }
     }
