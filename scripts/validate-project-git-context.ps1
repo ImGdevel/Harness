@@ -146,6 +146,27 @@ function Test-RemoteBranch {
     return $result.ExitCode -eq 0
 }
 
+function Resolve-OriginHeadBranch {
+    param([string]$RepoPath)
+
+    $symbolicRef = Invoke-Git -RepoPath $RepoPath -GitArgs @("symbolic-ref", "--quiet", "--short", "refs/remotes/origin/HEAD") -AllowFailure
+    if ($symbolicRef.ExitCode -eq 0 -and $symbolicRef.Output) {
+        $refName = $symbolicRef.Output.Trim()
+        if ($refName -match '^origin/(.+)$') {
+            return $Matches[1]
+        }
+
+        return $refName
+    }
+
+    $lsRemote = Invoke-Git -RepoPath $RepoPath -GitArgs @("ls-remote", "--symref", "origin", "HEAD") -AllowFailure
+    if ($lsRemote.ExitCode -eq 0 -and $lsRemote.Output -match 'ref:\s+refs/heads/([^\s]+)\s+HEAD') {
+        return $Matches[1]
+    }
+
+    return ""
+}
+
 function Test-IsAncestor {
     param(
         [string]$RepoPath,
@@ -193,9 +214,8 @@ if ($issues.Count -eq 0) {
         Add-Issue -Issues $issues -Type "missing-remote-integration-branch" -Message "origin/$integrationBranch does not exist."
     }
 
-    $remoteShow = Invoke-Git -RepoPath $project.RepoPath -GitArgs @("remote", "show", "origin") -AllowFailure
-    if ($remoteShow.ExitCode -eq 0 -and $remoteShow.Output -match 'HEAD branch:\s*(.+)') {
-        $remoteHead = $Matches[1].Trim()
+    $remoteHead = Resolve-OriginHeadBranch -RepoPath $project.RepoPath
+    if ($remoteHead) {
         if ($remoteHead -ne $defaultBranch) {
             Add-Issue -Issues $issues -Type "remote-head-mismatch" -Message "origin HEAD points to '$remoteHead', expected '$defaultBranch'."
         }

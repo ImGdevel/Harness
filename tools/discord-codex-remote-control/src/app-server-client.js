@@ -23,7 +23,7 @@ class CodexAppServerClient extends EventEmitter {
   start() {
     const command = process.platform === 'win32' ? 'powershell.exe' : this.config.codexExecutable;
     const args = process.platform === 'win32'
-      ? ['-NoProfile', '-NonInteractive', '-Command', '& $env:CODEX_RUNNER_EXECUTABLE app-server']
+      ? ['-NoProfile', '-NonInteractive', '-Command', '& "$env:CODEX_RUNNER_EXECUTABLE" app-server']
       : ['app-server'];
 
     this.child = spawn(command, args, {
@@ -103,7 +103,7 @@ class CodexAppServerClient extends EventEmitter {
 
     const id = this.nextId;
     this.nextId += 1;
-    const payload = { id, method, params };
+    const payload = { jsonrpc: '2.0', id, method, params };
 
     return new Promise((resolve, reject) => {
       this.pending.set(id, { resolve, reject });
@@ -120,7 +120,7 @@ class CodexAppServerClient extends EventEmitter {
     if (!this.child || !this.child.stdin.writable) {
       throw new Error('codex app-server is not running');
     }
-    this.child.stdin.write(`${JSON.stringify({ method, params })}\n`);
+    this.child.stdin.write(`${JSON.stringify({ jsonrpc: '2.0', method, params })}\n`);
   }
 
   async initialize() {

@@ -272,7 +272,7 @@ function runCodex(config, state, entry, { forceNewThread = false } = {}) {
         "  $codexArgs += @('--json', '--cd', $env:CODEX_RUNNER_WORKSPACE_ROOT, '-s', $env:CODEX_RUNNER_SANDBOX)",
         "}",
         "if ($env:CODEX_RUNNER_MODEL) { $codexArgs += @('-m', $env:CODEX_RUNNER_MODEL) }",
-        '& $env:CODEX_RUNNER_EXECUTABLE @codexArgs',
+        '& "$env:CODEX_RUNNER_EXECUTABLE" @codexArgs',
       ].join('; ');
       const command = process.platform === 'win32' ? 'powershell.exe' : config.codexExecutable;
       const args = process.platform === 'win32'

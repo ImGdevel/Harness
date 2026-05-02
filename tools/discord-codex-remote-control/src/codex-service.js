@@ -85,6 +85,57 @@ function appendAgentText(agentText, event) {
   }
 }
 
+function createTurnCompletion(client, timeoutMs) {
+  let timeout;
+  let settled = false;
+
+  const cleanup = () => {
+    clearTimeout(timeout);
+    client.off('notification', onNotification);
+    client.off('close', onClose);
+  };
+
+  const settle = (fn, value) => {
+    if (settled) {
+      return;
+    }
+    settled = true;
+    cleanup();
+    fn(value);
+  };
+
+  const onNotification = (event) => {
+    if (event.method === 'turn/completed') {
+      settle(resolveCompletion, undefined);
+    }
+  };
+
+  const onClose = (code) => {
+    settle(rejectCompletion, new Error(`codex app-server closed before turn completed: ${code}`));
+  };
+
+  let resolveCompletion;
+  let rejectCompletion;
+  const promise = new Promise((resolve, reject) => {
+    resolveCompletion = resolve;
+    rejectCompletion = reject;
+    timeout = setTimeout(
+      () => settle(rejectCompletion, new Error('Timed out waiting for turn/completed')),
+      timeoutMs,
+    );
+    client.on('notification', onNotification);
+    client.on('close', onClose);
+  });
+
+  return {
+    promise,
+    cancel() {
+      cleanup();
+      promise.catch(() => {});
+    },
+  };
+}
+
 async function withAppServer(config, fn) {
   const client = new CodexAppServerClient(config);
   try {
@@ -114,6 +165,7 @@ async function runCodexTask(config, state, task, { forceNewThread = false } = {}
   let turnStatus = 'unknown';
   let threadId = forceNewThread ? undefined : getThreadId(config, state);
   const usedResume = config.codexResumeEnabled && Boolean(threadId);
+  let completion;
 
   client.on('notification', (event) => {
     appendAgentText(agentText, event);
@@ -144,19 +196,7 @@ async function runCodexTask(config, state, task, { forceNewThread = false } = {}
       throw new Error('codex app-server did not return a thread id');
     }
 
-    const completion = new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error('Timed out waiting for turn/completed')), config.appServerTurnTimeoutMs);
-      client.on('notification', (event) => {
-        if (event.method === 'turn/completed') {
-          clearTimeout(timeout);
-          resolve();
-        }
-      });
-      client.on('close', (code) => {
-        clearTimeout(timeout);
-        reject(new Error(`codex app-server closed before turn completed: ${code}`));
-      });
-    });
+    completion = createTurnCompletion(client, config.appServerTurnTimeoutMs);
 
     const turn = await client.request('turn/start', {
       threadId,
@@ -170,7 +210,7 @@ async function runCodexTask(config, state, task, { forceNewThread = false } = {}
     });
     turnId = turn?.turn?.id || turnId;
 
-    await completion;
+    await completion.promise;
 
     const summary = (agentText.completed.length ? agentText.completed.join('\n\n') : agentText.deltas.join('')).trim();
     return {
@@ -185,6 +225,9 @@ async function runCodexTask(config, state, task, { forceNewThread = false } = {}
       engine: 'app-server',
     };
   } catch (error) {
+    if (completion) {
+      completion.cancel();
+    }
     return {
       ok: false,
       code: 1,
