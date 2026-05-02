@@ -17,8 +17,9 @@
 - 실제 프로젝트 문서 골격 정렬은 `scripts/bootstrap-project-docs.ps1`를 기준으로 한다.
 - 프로젝트 작업을 시작할 때는 먼저 `registry.yaml`에서 `repo_path`를 확인한다.
 - 프로젝트 전용 문서는 실제 저장소의 `<project-root>/docs/`에 둔다.
-- 계획 문서는 `<project-root>/plan/`에 둔다.
-- 트러블슈팅 문서는 `<project-root>/troubleshooting/`에 둔다.
+- 계획 문서는 기본적으로 `<project-root>/docs/plan/`에 둔다.
+- 트러블슈팅 문서는 기본적으로 `<project-root>/docs/troubleshooting/`에 둔다.
+- 정확한 위치는 registry의 `plan_path`, `troubleshooting_path`를 따른다.
 - 파일명과 버전 규칙은 `common/convention/project-artifact-conventions.md`를 따른다.
 - `docs/` 표준 구조는 `common/convention/project-doc-structure.md`를 따른다.
 
@@ -28,3 +29,6 @@
 | --- | --- | --- | --- | --- | --- |
 | `miyou` | `MIYOU` | `C:\Users\imdls\workspace\MIYOU_ai-voice-chat` | `develop` | `spring`, `react` | `active` |
 | `finops-integration-platform` | `FinOps Integration Platform` | `C:\Users\imdls\workspace\finops-integration-platform` | `main` | `spring`, `react` | `active` |
+| `techlog-hub` | `Techlog Hub` | `C:\Users\imdls\workspace\techlog-hub` | `main` | `nextjs`, `spring` | `active` |
+| `apocalypse-city-state` | `Apocalypse City-State` | `C:\Users\imdls\workspace\apocalypse-city-state` | `main` | `unity` | `active` |
+| `image-generation-workspace` | `Image Generation Workspace` | `C:\Users\imdls\workspace\image-generation-workspace` | `main` | `image-generation` | `active` |

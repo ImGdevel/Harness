@@ -1,5 +1,60 @@
 version: 1
 projects:
+  # BEGIN project:image-generation-workspace
+  - id: image-generation-workspace
+    name: Image Generation Workspace
+    repo_path: 'C:\Users\imdls\workspace\image-generation-workspace'
+    repo_url: ''
+    default_branch: main
+    docs_path: docs
+    plan_path: docs/plan
+    troubleshooting_path: docs/troubleshooting
+    status: active
+    stacks:
+      - image-generation
+    aliases:
+      - 이미지 생성 워크스페이스
+      - 이미지 생성
+      - AIGen workspace
+      - image-generation-workspace
+      - Image Generation Workspace
+  # END project:image-generation-workspace
+  # BEGIN project:apocalypse-city-state
+  - id: apocalypse-city-state
+    name: Apocalypse City-State
+    repo_path: 'C:\Users\imdls\workspace\apocalypse-city-state'
+    repo_url: ''
+    default_branch: main
+    docs_path: docs
+    plan_path: docs/plan
+    troubleshooting_path: docs/troubleshooting
+    status: active
+    stacks:
+      - unity
+    aliases:
+      - 아포칼립스 도시 운영 게임
+      - 문명 프로스트펑크 스타일 도시 운영 게임
+      - apocalypse-city-state
+      - Apocalypse City-State
+  # END project:apocalypse-city-state
+  # BEGIN project:techlog-hub
+  - id: techlog-hub
+    name: Techlog Hub
+    repo_path: 'C:\Users\imdls\workspace\techlog-hub'
+    repo_url: ''
+    default_branch: main
+    docs_path: docs
+    plan_path: docs/plan
+    troubleshooting_path: docs/troubleshooting
+    status: active
+    stacks:
+      - nextjs
+      - spring
+    aliases:
+      - techlog-hub
+      - Techlog Hub
+      - 기술 블로그 모음집
+  # END project:techlog-hub
   # BEGIN project:finops-integration-platform
   - id: finops-integration-platform
     name: FinOps Integration Platform
@@ -36,3 +91,7 @@ projects:
       - miyou
       - MIYOU
   # END project:miyou
+
+
+
+
