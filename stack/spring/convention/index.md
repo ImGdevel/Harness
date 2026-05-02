@@ -19,7 +19,7 @@ Spring 관련 컨벤션 문서 인덱스다.
 - `controller-writing-convention.md`
   Spring MVC Controller 작성, request binding, null/default, Binder, response, pagination, WebMvc test 기준을 정리한다.
 - `error-handling-convention.md`
-  Spring API 예외 응답, validation 에러, 비즈니스 오류와 시스템 오류 분리 규칙을 정리한다.
+  Spring API `ErrorCode`, custom exception 사용 기준, validation/binding/type mismatch 처리, 프론트 노출 경계, Swagger 문서화와 테스트 기준을 정리한다.
 - `security-exception-convention.md`
   Spring Security filter chain 예외를 JSON 응답으로 일관 처리하는 규칙을 정리한다.
 - `swagger-documentation-convention.md`

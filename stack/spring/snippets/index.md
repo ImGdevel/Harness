@@ -11,7 +11,7 @@ Spring reusable snippet index.
 - `querydsl-repository-snippet.md`
   QueryDSL custom repository, dynamic condition, dynamic sort, pagination count split example
 - `business-exception-and-error-code-snippet.md`
-  `ErrorCode` and `BusinessException`
+  `ErrorCode`, `BusinessException`, `ErrorResponse`, `FieldErrorMapper`, `GlobalExceptionHandler` common example
 - `common-api-dto-snippet.md`
   common list/page/slice/error/field error DTO examples
 - `request-response-dto-snippet.md`

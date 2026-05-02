@@ -5,7 +5,7 @@
 - Spring MVC `@RestController` 작성
 - query request DTO 기본값/검증 처리
 - service 위임
-- 공통 error response와 `GlobalExceptionHandler` 작성
+- 공통 error response와 `GlobalExceptionHandler` 연결
 - 공통 DTO는 `common-api-dto-snippet.md`를 우선 참고
 
 ## Controller
@@ -67,87 +67,10 @@ public record PublicPostSearchRequest(
 }
 ```
 
-## Error Code
+## Error Handling Reference
 
-```java
-public interface ErrorCode {
-    HttpStatus httpStatus();
-    String code();
-    String message();
-}
-```
-
-```java
-@Getter
-@RequiredArgsConstructor
-public enum CommonErrorCode implements ErrorCode {
-    INVALID_REQUEST(HttpStatus.BAD_REQUEST, "INVALID_REQUEST", "요청 값이 올바르지 않습니다."),
-    INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_ERROR", "예상하지 못한 오류가 발생했습니다.");
-
-    private final HttpStatus httpStatus;
-    private final String code;
-    private final String message;
-}
-```
-
-## Error Response
-
-```java
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public record ErrorResponse(
-        String code,
-        String message,
-        List<FieldErrorResponse> errors
-) {
-    public static ErrorResponse of(ErrorCode errorCode) {
-        return new ErrorResponse(errorCode.code(), errorCode.message(), List.of());
-    }
-
-    public static ErrorResponse of(ErrorCode errorCode, List<FieldErrorResponse> errors) {
-        return new ErrorResponse(errorCode.code(), errorCode.message(), errors);
-    }
-}
-```
-
-```java
-public record FieldErrorResponse(
-        String field,
-        String reason
-) {
-}
-```
-
-## Global Exception Handler
-
-```java
-@RestControllerAdvice
-public class GlobalExceptionHandler {
-
-    @ExceptionHandler(BusinessException.class)
-    ResponseEntity<ErrorResponse> handleBusinessException(BusinessException exception) {
-        ErrorCode errorCode = exception.getErrorCode();
-        return ResponseEntity
-                .status(errorCode.httpStatus())
-                .body(ErrorResponse.of(errorCode));
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
-        List<FieldErrorResponse> errors = exception.getBindingResult().getFieldErrors().stream()
-                .map(error -> new FieldErrorResponse(error.getField(), error.getDefaultMessage()))
-                .toList();
-        return ResponseEntity.badRequest().body(ErrorResponse.of(CommonErrorCode.INVALID_REQUEST, errors));
-    }
-
-    @ExceptionHandler(BindException.class)
-    ResponseEntity<ErrorResponse> handleBindException(BindException exception) {
-        List<FieldErrorResponse> errors = exception.getBindingResult().getFieldErrors().stream()
-                .map(error -> new FieldErrorResponse(error.getField(), error.getDefaultMessage()))
-                .toList();
-        return ResponseEntity.badRequest().body(ErrorResponse.of(CommonErrorCode.INVALID_REQUEST, errors));
-    }
-}
-```
+Controller 예제에는 error handling 구현을 중복 작성하지 않는다.
+공통 `ErrorCode`, `BusinessException`, `ErrorResponse`, `FieldErrorMapper`, `GlobalExceptionHandler`는 [business-exception-and-error-code-snippet.md](business-exception-and-error-code-snippet.md)를 사용한다.
 
 ## Rules
 
@@ -164,3 +87,4 @@ public class GlobalExceptionHandler {
 - [common-api-dto-convention.md](../convention/common-api-dto-convention.md)
 - [common-api-dto-snippet.md](common-api-dto-snippet.md)
 - [error-handling-convention.md](../convention/error-handling-convention.md)
+- [business-exception-and-error-code-snippet.md](business-exception-and-error-code-snippet.md)
