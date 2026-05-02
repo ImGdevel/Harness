@@ -230,7 +230,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
 
 ### `pr-delivery`
 
-- 목적: 현재 변경을 PR 가능한 상태까지 끌고 간다.
+- 목적: 현재 변경을 PR 작성 완료 상태까지 끌고 간다.
 - 자동 트리거:
   - `커밋하고 푸시해`
   - `PR 올려`
@@ -259,7 +259,8 @@ Use this file as the runtime registry for `job` and `pipeline`.
 - 출력물:
   - 커밋
   - 원격 브랜치
-  - PR 본문 또는 PR URL
+  - PR URL
+  - PR 생성이 불가능한 경우에는 blocker와 재시도 명령
 
 ### `implementation-doc-sync`
 
@@ -310,7 +311,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
 
 ### `implementation-delivery`
 
-- 목적: 구현 시작부터 PR 준비까지 이어지는 기본 전달 파이프라인이다.
+- 목적: 구현 시작부터 PR 작성 완료까지 이어지는 기본 전달 파이프라인이다.
 - 자동 트리거:
   - `이 기능 작업해서 PR까지`
   - `구현하고 검증해서 올려`
@@ -324,10 +325,11 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 계획 저장 실패
   - 테스트 실패
   - 브랜치/저장소 전략 충돌
+  - PR 생성 실패
 
 ### `delivery-pipeline`
 
-- 목적: 요구사항 상세화부터 설계, 구현, 검증, 문서화, PR, 피드백 반영까지 이어지는 대단위 전달 파이프라인이다.
+- 목적: 요구사항 상세화부터 설계, 구현, 검증, 문서화, PR 작성, 피드백 반영까지 이어지는 대단위 전달 파이프라인이다.
 - 단일 진실 원천:
   - 정확한 `job` 구성과 순서는 이 등록 항목이 기준이다.
   - 지원 문서는 의도와 실행 규칙만 설명하며, 이 순서를 재정의하지 않는다.
@@ -354,6 +356,8 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - `feedback-response`
 - 전달 규칙:
   - 커밋, 푸시, PR 생성은 별도 `job`으로 분리하지 않고 `pr-delivery`에 포함한다.
+  - 구현 작업의 정상 종료 기준은 PR URL 생성이다.
+  - PR을 만들 수 없으면 작업 완료로 보고하지 않고 blocker로 보고한다.
   - 계획 저장은 초반 `plan-sync`에서 처리한다.
 - 반복 조건:
   - 설계 재검토 필요
@@ -371,7 +375,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 테스트 및 검증 결과
   - 트러블슈팅 문서
   - 구현 문서
-  - 커밋/PR/피드백 반영 결과
+  - 커밋/푸시/PR URL/피드백 반영 결과
 
 ### `incident-response`
 
