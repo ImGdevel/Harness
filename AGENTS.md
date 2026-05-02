@@ -9,7 +9,9 @@
 2. `stack/index.md`
 3. 대상 프레임워크의 `index.md`
 4. 실제 프로젝트가 있다면 `project/index.md`와 `project/registry.yaml`
-5. registry에서 경로를 찾았으면 실제 프로젝트의 `docs/index.md`
+5. registry에서 경로를 찾았으면 실제 프로젝트 문서 원천
+   - repo 문서 원천이면 실제 프로젝트의 `docs/index.md`
+   - Wiki 문서 원천이면 Wiki의 `Home.md`와 문서 정책
 
 ## Core Rules
 
@@ -49,11 +51,13 @@
 - 실제 프로젝트 계획 문서는 기본적으로 `<project-root>/docs/plan/`에 둔다.
 - 실제 프로젝트 트러블슈팅 문서는 기본적으로 `<project-root>/docs/troubleshooting/`에 둔다.
 - 실제 프로젝트의 정확한 문서 경로는 registry의 `docs_path`, `plan_path`, `troubleshooting_path`를 따른다.
+- registry 또는 프로젝트 정책이 `docs_source: wiki`를 명시하면 Wiki가 실제 프로젝트 `docs/` 역할을 대신한다.
 - `docs/plan/`과 `docs/troubleshooting/`는 실제 프로젝트 저장소 안의 필수 디렉터리로 간주한다.
 - 프로젝트 문서 경로가 없다면 실제 프로젝트 저장소 안에 만든다.
 - 파일명은 `YYYY-MM-DD_HHMM_<slug>.md` 형식을 기본으로 한다.
 - 기존 계획이나 같은 이슈의 후속 문서면 `_v2`, `_v3`처럼 버전을 올린다.
 - 공통 Git 규칙 문서는 기본적으로 실제 프로젝트 저장소 Git에 적용된다.
+- 실제 프로젝트 구현, 커밋, 푸시, PR 전에는 `scripts/validate-project-git-context.ps1`로 원격 기준 브랜치와 문서 원천을 검증한다.
 - 하네스 저장소 자체는 `workspace-git-governance.md`를 따른다.
 - 하네스 저장소 Git은 별도 맥락이며 자동 기본 대상이 아니다.
 

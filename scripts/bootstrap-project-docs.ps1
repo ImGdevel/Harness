@@ -26,6 +26,8 @@ function Get-RegistryProject {
                 DocsPath            = "docs"
                 PlanPath            = "docs/plan"
                 TroubleshootingPath = "docs/troubleshooting"
+                DocsSource          = "repo"
+                WikiPath            = ""
                 Stacks              = [System.Collections.Generic.List[string]]::new()
             }
             $currentList = $null
@@ -45,6 +47,8 @@ function Get-RegistryProject {
                     DocsPath            = $current.DocsPath
                     PlanPath            = $current.PlanPath
                     TroubleshootingPath = $current.TroubleshootingPath
+                    DocsSource          = $current.DocsSource
+                    WikiPath            = $current.WikiPath
                     Stacks              = @($current.Stacks)
                 }
             }
@@ -71,6 +75,8 @@ function Get-RegistryProject {
                 "docs_path" { $current.DocsPath = $value }
                 "plan_path" { $current.PlanPath = $value }
                 "troubleshooting_path" { $current.TroubleshootingPath = $value }
+                "docs_source" { $current.DocsSource = $value }
+                "wiki_path" { $current.WikiPath = $value }
                 "stacks" { $currentList = "Stacks" }
             }
 
@@ -287,6 +293,27 @@ if (-not (Test-Path -LiteralPath $project.RepoPath)) {
 
 if (-not (Test-Path -LiteralPath (Join-Path $project.RepoPath ".git"))) {
     throw "Repository path is not a Git repository: $($project.RepoPath)"
+}
+
+if ($project.DocsSource -eq "wiki") {
+    if (-not $project.WikiPath) {
+        throw "Project '$($project.Id)' uses docs_source=wiki but wiki_path is empty."
+    }
+
+    if (-not (Test-Path -LiteralPath (Join-Path $project.WikiPath ".git"))) {
+        throw "Wiki path is not a Git repository: $($project.WikiPath)"
+    }
+
+    if (-not (Test-Path -LiteralPath (Join-Path $project.WikiPath "Home.md"))) {
+        throw "Wiki Home.md not found: $($project.WikiPath)"
+    }
+
+    Write-Output "Bootstrapped project id: $($project.Id)"
+    Write-Output "Repository path: $($project.RepoPath)"
+    Write-Output "Docs source: wiki"
+    Write-Output "Wiki path: $($project.WikiPath)"
+    Write-Output "No repo docs bootstrap was required."
+    exit 0
 }
 
 $createdItems = [System.Collections.Generic.List[string]]::new()

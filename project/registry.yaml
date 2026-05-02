@@ -43,6 +43,10 @@ projects:
     repo_path: 'C:\Users\imdls\workspace\techlog-hub'
     repo_url: ''
     default_branch: main
+    integration_branch: develop
+    branch_strategy: gitflow
+    docs_source: wiki
+    wiki_path: 'C:\Users\imdls\workspace\TlogHub.wiki'
     docs_path: docs
     plan_path: docs/plan
     troubleshooting_path: docs/troubleshooting

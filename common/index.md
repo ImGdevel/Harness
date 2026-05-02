@@ -10,6 +10,7 @@
 
 ## Current Highlights
 
+- `convention/project-git-governance.md`: 실제 프로젝트 원격 기준 브랜치, 작업 브랜치, 문서 원천 사전 검증 기준
 - `convention/figma-mcp-usage-conventions.md`: Figma MCP plan/seat 제한을 고려한 호출 최소화와 fallback 기준
 - `templates/game-requirements-template.md`: 게임 프로젝트 요구사항과 MVP 범위를 정의하는 템플릿
 - `templates/game-concept-art-brief-template.md`: 컨셉아트 브리프와 이미지 생성 입력 기준 템플릿

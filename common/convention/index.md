@@ -14,6 +14,8 @@
   커밋 범위, 커밋 시점, 커밋 메시지 형식을 정의한다.
 - `workspace-git-governance.md`
   하네스 저장소 자체의 `main` 중심 브랜치 전략과 PR 기준을 정의한다.
+- `project-git-governance.md`
+  실제 프로젝트 저장소의 원격 기준 브랜치, 작업 브랜치, 문서 원천 사전 검증 기준을 정의한다.
 - `git-branch-gitflow.md`
   실제 프로젝트 저장소 기본값으로 쓰는 GitFlow 브랜치 생성, 이름 규칙, 병합 대상을 정의한다.
 - `github-collaboration-conventions.md`

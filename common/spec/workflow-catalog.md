@@ -71,9 +71,17 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 프로젝트 registry 항목이나 브랜치가 아직 정리되지 않았을 때
 - 포함 step:
   - `resolve-project-path`
+  - `read-project-registry`
+  - `validate-project-git-context`
+  - `validate-doc-source`
   - `create-issue`
   - `create-branch`
   - `ensure-project-doc-structure`
+- 중단 조건:
+  - 실제 프로젝트 원격에 `main` 또는 GitFlow의 `develop`이 없음
+  - 원격 HEAD가 registry의 `default_branch`와 다름
+  - 현재 브랜치가 작업 의도와 다른 기존 브랜치임
+  - 프로젝트 문서 원천이 repo인지 Wiki인지 확인되지 않음
 - 출력물:
   - 작업 브랜치
   - 이슈 또는 작업 단위
@@ -235,12 +243,19 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 필요한 검증이 통과하거나, 왜 건너뛰는지 설명 가능해야 한다.
 - 포함 step:
   - `validate-repo-context`
+  - `validate-project-git-context`
   - `validate-branch`
   - `run-required-checks`
   - `commit`
   - `push`
   - `draft-pr`
   - `open-pr`
+- 중단 조건:
+  - 원격 기준 브랜치가 없거나 원격 HEAD가 잘못됨
+  - 현재 브랜치가 보호 브랜치이거나 이름 규칙을 위반함
+  - 현재 브랜치가 기대 base branch에서 시작하지 않음
+  - 현재 브랜치가 통합되지 않은 다른 feature 브랜치 위에 쌓임
+  - staged 변경이 둘 이상의 의도를 포함함
 - 출력물:
   - 커밋
   - 원격 브랜치

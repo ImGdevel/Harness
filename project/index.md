@@ -15,7 +15,9 @@
 - `scripts/register-project.ps1`는 `registry.yaml`과 이 요약 인덱스를 같은 변경에서 함께 갱신해야 한다.
 - registry와 요약 인덱스 정합성 검증은 `scripts/audit-project-registry.ps1`를 기준으로 한다.
 - 실제 프로젝트 문서 골격 정렬은 `scripts/bootstrap-project-docs.ps1`를 기준으로 한다.
+- `docs_source: wiki` 프로젝트는 repo `docs/`를 만들지 않고 Wiki를 문서 원천으로 사용한다.
 - 프로젝트 작업을 시작할 때는 먼저 `registry.yaml`에서 `repo_path`를 확인한다.
+- 실제 프로젝트 구현, 커밋, 푸시, PR 전에는 `scripts/validate-project-git-context.ps1`를 실행한다.
 - 프로젝트 전용 문서는 실제 저장소의 `<project-root>/docs/`에 둔다.
 - 계획 문서는 기본적으로 `<project-root>/docs/plan/`에 둔다.
 - 트러블슈팅 문서는 기본적으로 `<project-root>/docs/troubleshooting/`에 둔다.
