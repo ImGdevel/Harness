@@ -20,8 +20,8 @@ Spring 관련 컨벤션 문서 인덱스다.
   `springdoc-openapi`, docs interface, shared error response 문서화 규칙을 정리한다.
 - `flyway-convention.md`
   Flyway migration 디렉터리, 파일명, 버전 전략, 리뷰 체크리스트를 정리한다.
-- `maven-dependency-convention.md`
-  Spring Boot Maven 의존성 버전, 출처, scope, override 기준을 정리한다.
+- `gradle-build-convention.md`
+  Spring Boot Gradle wrapper, dependency management, build tool 예외 기준을 정리한다.
 - `configuration-file-convention.md`
   Spring Boot 설정 파일 포맷 선택, 기록, 혼용 금지 기준을 정리한다.
 
