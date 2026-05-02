@@ -14,6 +14,8 @@ Spring 관련 컨벤션과 스펙 문서의 빠른 탐색용 인덱스다.
 
 - `convention/serialization-and-parsing-convention.md`: Jackson `ObjectMapper` 재사용, JSON codec, parser/normalizer 공통화 후보, 실패 처리 기준
 - `snippets/serialization-and-parsing-snippet.md`: `JsonCodec`, feature-specific parser, string/enum parser 예시
+- `convention/common-module-method-candidates.md`: 공통 모듈 메서드 후보와 라이브러리 선택 기준
+- `snippets/common-module-method-snippet.md`: 공통 메서드 코드 스니펫과 성능 테스트 prefix 예시
 
 ## Related
 

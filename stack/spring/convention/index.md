@@ -34,6 +34,8 @@ Spring 관련 컨벤션 문서 인덱스다.
   Spring Data JPA Repository, JPQL/native query, QueryDSL, pagination/count 작성 기준을 정리한다.
 - `serialization-and-parsing-convention.md`
   Jackson `ObjectMapper`, JSON codec, parser/normalizer 공통화 후보와 실패 처리 기준을 정리한다.
+- `common-module-method-candidates.md`
+  Spring 공통 모듈 메서드 후보, 라이브러리 선택 기준, 성능/테스트 prefix 기준을 정리한다.
 
 ## Rule
 

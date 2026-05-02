@@ -32,6 +32,8 @@ Spring reusable snippet index.
   custom error annotation, endpoint error group, error code examples
 - `serialization-and-parsing-snippet.md`
   `JsonCodec`, feature-specific parser, string/enum parser, assembler usage examples
+- `common-module-method-snippet.md`
+  Guard, String/Collection/Enum/Date/URL/Security/File/HTTP 공통 메서드와 성능 테스트 prefix 예시
 
 ## Rules
 
