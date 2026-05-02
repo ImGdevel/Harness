@@ -8,6 +8,8 @@ Spring reusable snippet index.
   `Entity` factory, state change, local guard, relationship helper example
 - `repository-interface-snippet.md`
   Spring Data JPA repository interface, query method, projection, custom repository example
+- `querydsl-repository-snippet.md`
+  QueryDSL custom repository, dynamic condition, dynamic sort, pagination count split example
 - `business-exception-and-error-code-snippet.md`
   `ErrorCode` and `BusinessException`
 - `security-entrypoint-and-access-denied-snippet.md`
