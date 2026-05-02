@@ -27,7 +27,11 @@ Before writing, read only the relevant context:
 
 For real project issues, save the document in:
 
-`<project-root>/troubleshooting/`
+registry `troubleshooting_path`
+
+Default path:
+
+`<project-root>/docs/troubleshooting/`
 
 For project issues with reuse or prevention value, this is mandatory.
 Do not leave the troubleshooting result only in chat.
@@ -39,7 +43,7 @@ Use the filename format:
 If the document is a revision or direct continuation of the same issue, keep the same base name and use `_v2`, `_v3`, and so on.
 
 Resolve `<project-root>` from `project/registry.yaml` first.
-If `<project-root>/troubleshooting/` does not exist yet, create it inside the actual project repository before writing the document.
+If `<project-root>/docs/troubleshooting/` does not exist yet, create it inside the actual project repository before writing the document unless registry overrides the path.
 
 ## Required Content
 

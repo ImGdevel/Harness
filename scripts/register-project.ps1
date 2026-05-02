@@ -11,8 +11,8 @@ param(
     [string]$RepoUrl,
     [string]$DefaultBranch,
     [string]$DocsPath = "docs",
-    [string]$PlanPath = "plan",
-    [string]$TroubleshootingPath = "troubleshooting",
+    [string]$PlanPath = "docs/plan",
+    [string]$TroubleshootingPath = "docs/troubleshooting",
     [string[]]$Stacks = @(),
     [string[]]$Aliases = @(),
     [ValidateSet("active", "paused", "archived")]
@@ -67,8 +67,8 @@ function Ensure-ProjectIndex {
 - 실제 프로젝트 저장소를 이 디렉터리 아래에 clone하거나 이동하지 않는다.
 - 프로젝트 작업을 시작할 때는 먼저 `registry.yaml`에서 `repo_path`를 확인한다.
 - 프로젝트 전용 문서는 실제 저장소의 `<project-root>/docs/`에 둔다.
-- 계획 문서는 `<project-root>/plan/`에 둔다.
-- 트러블슈팅 문서는 `<project-root>/troubleshooting/`에 둔다.
+- 계획 문서는 기본적으로 `<project-root>/docs/plan/`에 둔다.
+- 트러블슈팅 문서는 기본적으로 `<project-root>/docs/troubleshooting/`에 둔다.
 
 ## Registered Projects
 

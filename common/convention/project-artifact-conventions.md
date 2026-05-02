@@ -9,11 +9,12 @@ Keep project-owned docs in the project repository, not in the harness repository
 - Resolve `<project-root>` from harness `project/registry.yaml`.
 - Treat harness `project/` as registry metadata only.
 - Store project docs in `<project-root>/docs/`.
-- Store project plans in `<project-root>/plan/`.
-- Store project troubleshooting records in `<project-root>/troubleshooting/`.
-- Create `docs/`, `plan/`, `troubleshooting/` if missing.
+- Store project plans in `<project-root>/docs/plan/` by default.
+- Store project troubleshooting records in `<project-root>/docs/troubleshooting/` by default.
+- Resolve the exact plan and troubleshooting paths from registry `plan_path` and `troubleshooting_path` when present.
+- Create `docs/`, `docs/plan/`, `docs/troubleshooting/` if missing.
 - When bootstrapping a registered project, prefer `scripts/bootstrap-project-docs.ps1`.
-- Treat `plan/` and `troubleshooting/` as required directories.
+- Treat the registry-resolved plan and troubleshooting directories as required directories.
 - Use `YYYY-MM-DD_HHMM_<slug>.md`.
 - Use local time.
 - Use lowercase hyphen slug.

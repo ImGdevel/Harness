@@ -46,9 +46,10 @@
 - 사용자가 프로젝트 이름을 말하면 먼저 registry에서 `repo_path`를 찾는다.
 - 프로젝트 전용 규칙과 스펙은 실제 저장소의 `<project-root>/docs/`에 둔다.
 - 프로젝트 `docs/`는 최소한 `api/`, `architecture/`, `convention/`, `domain-tech-spec/`, `erd/`, `infrastructure/`, `local-setup/`, `references/`, `security/`, `stack-selection/` 구조를 유지한다.
-- 실제 프로젝트 계획 문서는 `<project-root>/plan/`에 둔다.
-- 실제 프로젝트 트러블슈팅 문서는 `<project-root>/troubleshooting/`에 둔다.
-- `plan/`과 `troubleshooting/`는 실제 프로젝트 저장소 안의 필수 디렉터리로 간주한다.
+- 실제 프로젝트 계획 문서는 기본적으로 `<project-root>/docs/plan/`에 둔다.
+- 실제 프로젝트 트러블슈팅 문서는 기본적으로 `<project-root>/docs/troubleshooting/`에 둔다.
+- 실제 프로젝트의 정확한 문서 경로는 registry의 `docs_path`, `plan_path`, `troubleshooting_path`를 따른다.
+- `docs/plan/`과 `docs/troubleshooting/`는 실제 프로젝트 저장소 안의 필수 디렉터리로 간주한다.
 - 프로젝트 문서 경로가 없다면 실제 프로젝트 저장소 안에 만든다.
 - 파일명은 `YYYY-MM-DD_HHMM_<slug>.md` 형식을 기본으로 한다.
 - 기존 계획이나 같은 이슈의 후속 문서면 `_v2`, `_v3`처럼 버전을 올린다.

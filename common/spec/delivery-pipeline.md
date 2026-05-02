@@ -28,9 +28,9 @@ Run one end-to-end delivery flow from requirement to handoff.
 
 ## Outputs
 
-- `<project-root>/plan/`
-- `<project-root>/troubleshooting/`
 - `<project-root>/docs/...`
+- `<project-root>/docs/plan/`
+- `<project-root>/docs/troubleshooting/`
 - commits, pushes, PR, or requested handoff artifact
 
 ## Exit Criteria

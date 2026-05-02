@@ -34,7 +34,8 @@ Choose the plan scope first:
 - `project`: a registered external project repository resolved from `project/registry.yaml`
 
 Save the plan in the nearest relevant documentation area, not at the workspace root.
-If the scope is `project`, save the plan under `<project-root>/plan/`.
+If the scope is `project`, save the plan under the registry-resolved `plan_path`.
+The default path is `<project-root>/docs/plan/`.
 
 For project work, this is mandatory, not optional.
 Do not leave a project plan only in chat when the plan has execution value.
@@ -51,9 +52,9 @@ Do not leave a project plan only in chat when the plan has execution value.
 ## Persistence Rules
 
 - When the user asks for a plan, do not leave it only in chat if it should be retained.
-- For real project work, persist the plan as a Markdown file in the project `plan/` directory.
+- For real project work, persist the plan as a Markdown file in the registry-resolved project plan directory.
 - Resolve the actual project root from `project/registry.yaml` before writing.
-- If `<project-root>/plan/` does not exist yet, create it inside the actual project repository before writing the plan.
+- If `<project-root>/docs/plan/` does not exist yet, create it inside the actual project repository before writing the plan unless registry overrides the path.
 - Use the filename format `YYYY-MM-DD_HHMM_<slug>.md`.
 - If the plan is a revision or continuation of the same topic, reuse the same base filename and add `_v2`, `_v3`, and so on.
 - Keep old plan versions as history; do not overwrite silently.

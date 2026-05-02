@@ -18,8 +18,8 @@ Show where the design system lives, how a frontend session should read it, and h
 
 - Keep framework-default design rules in `stack/react/design/`.
 - Keep project-owned design overrides in `<project-root>/docs/convention/`.
-- Keep project design plans in `<project-root>/plan/` when the work is exploratory, staged, or migration-driven.
-- Keep troubleshooting and deviation history in `<project-root>/troubleshooting/` when a system rule was broken or intentionally bypassed.
+- Keep project design plans in `<project-root>/docs/plan/` when the work is exploratory, staged, or migration-driven.
+- Keep troubleshooting and deviation history in `<project-root>/docs/troubleshooting/` when a system rule was broken or intentionally bypassed.
 
 ### Runtime Code Placement
 

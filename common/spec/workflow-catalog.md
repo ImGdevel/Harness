@@ -164,7 +164,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 사용자가 계획을 명시적으로 요청했을 때
 - 선행 조건:
   - 대상 프로젝트가 registry에서 식별되어야 한다.
-  - 실제 프로젝트 저장소의 `<project-root>/plan/` 디렉터리가 준비되어야 한다.
+  - 실제 프로젝트 저장소의 registry `plan_path` 디렉터리가 준비되어야 한다.
 - 포함 step:
   - `select-project`
   - `resolve-project-path`
@@ -172,7 +172,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - `draft-plan`
   - `save-plan`
 - 출력물:
-  - `<project-root>/plan/YYYY-MM-DD_HHMM_<slug>.md`
+  - 기본 경로 기준 `<project-root>/docs/plan/YYYY-MM-DD_HHMM_<slug>.md`
 
 ### `troubleshooting-record`
 
@@ -183,14 +183,14 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 반복 방지 가치가 있는 수정이 끝났을 때
 - 선행 조건:
   - 대상 프로젝트가 registry에서 식별되어야 한다.
-  - 실제 프로젝트 저장소의 `<project-root>/troubleshooting/` 디렉터리가 준비되어야 한다.
+  - 실제 프로젝트 저장소의 registry `troubleshooting_path` 디렉터리가 준비되어야 한다.
 - 포함 step:
   - `collect-symptoms`
   - `summarize-root-cause`
   - `record-fix`
   - `save-troubleshooting`
 - 출력물:
-  - `<project-root>/troubleshooting/YYYY-MM-DD_HHMM_<slug>.md`
+  - 기본 경로 기준 `<project-root>/docs/troubleshooting/YYYY-MM-DD_HHMM_<slug>.md`
 
 ### `full-test`
 
@@ -388,11 +388,11 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - registry/index 정합성 감사
   - 실제 프로젝트 경로 검증
   - `scripts/bootstrap-project-docs.ps1` 실행
-  - 실제 프로젝트 저장소의 `docs/`, `plan/`, `troubleshooting/` 정렬
+  - 실제 프로젝트 저장소의 `docs/`, `docs/plan/`, `docs/troubleshooting/` 정렬
   - 필요한 초기 인덱스 문서 작성
 - 검증 규칙:
   - `scripts/register-project.ps1`로 registry를 갱신했다면 같은 흐름에서 `scripts/audit-project-registry.ps1`를 통과해야 한다.
-  - 프로젝트 문서 골격을 정렬했다면 실제 프로젝트 저장소에 `docs/index.md`, `plan/index.md`, `troubleshooting/index.md`가 생겨야 한다.
+  - 프로젝트 문서 골격을 정렬했다면 실제 프로젝트 저장소에 `docs/index.md`, `docs/plan/index.md`, `docs/troubleshooting/index.md`가 생겨야 한다.
 - 중단 조건:
   - 프로젝트 이름 또는 실제 저장소 경로가 없음
   - 경로 충돌

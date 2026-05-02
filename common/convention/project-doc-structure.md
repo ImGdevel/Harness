@@ -23,11 +23,15 @@ Use one predictable `docs/` tree for every project repository.
     index.md
   local-setup/
     index.md
+  plan/
+    index.md
   references/
     index.md
   security/
     index.md
   stack-selection/
+    index.md
+  troubleshooting/
     index.md
 ```
 
@@ -49,8 +53,8 @@ Use one predictable `docs/` tree for every project repository.
 - Add optional folders only when needed.
 - If a new folder is added, update `docs/index.md` in the same change.
 - Do not duplicate the same doc across folders.
-- Keep plans in `<project-root>/plan/`.
-- Keep troubleshooting records in `<project-root>/troubleshooting/`.
+- Keep plans in `<project-root>/docs/plan/` by default.
+- Keep troubleshooting records in `<project-root>/docs/troubleshooting/` by default.
 
 ## Checklist
 

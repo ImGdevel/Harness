@@ -9,7 +9,10 @@ Keep docs searchable with minimum token cost.
 - Store each doc in the nearest owner scope.
 - Use `common/` for cross-project rules, specs, templates.
 - Use `stack/<framework>/` for framework-specific docs.
-- Use `<project-root>/docs/`, `<project-root>/plan/`, `<project-root>/troubleshooting/` for project-owned docs.
+- Use `<project-root>/docs/` as the project-owned docs root.
+- Keep project plans in `<project-root>/docs/plan/` by default.
+- Keep project troubleshooting records in `<project-root>/docs/troubleshooting/` by default.
+- If a project registry entry overrides those paths, follow `plan_path` and `troubleshooting_path`.
 - Use harness `project/` for registry metadata only.
 - Every doc directory must have `index.md`.
 - Update the nearest `index.md` in the same change.

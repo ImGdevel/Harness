@@ -24,8 +24,8 @@ function Get-RegistryProject {
                 Name                = ""
                 RepoPath            = ""
                 DocsPath            = "docs"
-                PlanPath            = "plan"
-                TroubleshootingPath = "troubleshooting"
+                PlanPath            = "docs/plan"
+                TroubleshootingPath = "docs/troubleshooting"
                 Stacks              = [System.Collections.Generic.List[string]]::new()
             }
             $currentList = $null
@@ -121,9 +121,11 @@ function Get-SectionDescription {
         "erd" { return "ERD, 테이블 정의, 관계 설계 문서를 모아두는 영역이다." }
         "infrastructure" { return "배포, 클라우드, 런타임 인프라 문서를 모아두는 영역이다." }
         "local-setup" { return "로컬 개발 환경 설치와 실행 문서를 모아두는 영역이다." }
+        "plan" { return "프로젝트 실행 계획 문서를 모아두는 영역이다." }
         "references" { return "외부 레퍼런스와 보조 자료를 모아두는 영역이다." }
         "security" { return "인증, 인가, 시크릿, 보안 점검 문서를 모아두는 영역이다." }
         "stack-selection" { return "스택 선택과 기술 트레이드오프 기록을 모아두는 영역이다." }
+        "troubleshooting" { return "프로젝트 트러블슈팅 기록을 모아두는 영역이다." }
         default { return "프로젝트 전용 문서를 모아두는 영역이다." }
     }
 }
@@ -132,7 +134,9 @@ function New-ProjectDocsIndexContent {
     param(
         [string]$ProjectName,
         [string[]]$SectionNames,
-        [string[]]$ExtraDirectoryNames
+        [string[]]$ExtraDirectoryNames,
+        [bool]$IncludePlanSection,
+        [bool]$IncludeTroubleshootingSection
     )
 
     $lines = [System.Collections.Generic.List[string]]::new()
@@ -147,6 +151,16 @@ function New-ProjectDocsIndexContent {
     foreach ($sectionName in $SectionNames) {
         $lines.Add(("- {0}{1}/{0}" -f $code, $sectionName)) | Out-Null
         $lines.Add(("  {0}" -f (Get-SectionDescription -SectionName $sectionName))) | Out-Null
+    }
+
+    if ($IncludePlanSection) {
+        $lines.Add(("- {0}plan/{0}" -f $code)) | Out-Null
+        $lines.Add(("  {0}" -f (Get-SectionDescription -SectionName "plan"))) | Out-Null
+    }
+
+    if ($IncludeTroubleshootingSection) {
+        $lines.Add(("- {0}troubleshooting/{0}" -f $code)) | Out-Null
+        $lines.Add(("  {0}" -f (Get-SectionDescription -SectionName "troubleshooting"))) | Out-Null
     }
 
     if ($ExtraDirectoryNames.Count -gt 0) {
@@ -165,7 +179,11 @@ function New-ProjectDocsIndexContent {
     $lines.Add("") | Out-Null
     $lines.Add(("- 새 문서를 추가하면 가장 가까운 {0}index.md{0}를 같은 변경에서 갱신한다." -f $code)) | Out-Null
     $lines.Add("- 새 문서 디렉터리를 추가하면 이 루트 인덱스도 같이 갱신한다.") | Out-Null
-    $lines.Add(("- {0}plan/{0}과 {0}troubleshooting/{0}는 프로젝트 루트에서 별도 관리한다." -f $code)) | Out-Null
+    if ($IncludePlanSection -or $IncludeTroubleshootingSection) {
+        $lines.Add(("- {0}plan/{0}과 {0}troubleshooting/{0}도 이 {0}docs/{0} 트리 안에서 함께 관리한다." -f $code)) | Out-Null
+    } else {
+        $lines.Add("- 계획과 트러블슈팅 경로는 registry가 가리키는 별도 문서 경로를 따른다.") | Out-Null
+    }
 
     return $lines -join "`r`n"
 }
@@ -216,7 +234,8 @@ function New-PlanIndexContent {
         "## Rule",
         "",
         ("- 계획 문서는 {0}YYYY-MM-DD_HHMM_<slug>.md{0} 형식을 기본으로 사용한다." -f $code),
-        ("- 같은 주제 후속 계획이면 {0}_v2{0}, {0}_v3{0}로 버전을 올린다." -f $code)
+        ("- 같은 주제 후속 계획이면 {0}_v2{0}, {0}_v3{0}로 버전을 올린다." -f $code),
+        ("- 상위 {0}../index.md{0}와 함께 탐색 경로를 유지한다." -f $code)
     ) -join "`r`n"
 }
 
@@ -236,8 +255,26 @@ function New-TroubleshootingIndexContent {
         "## Rule",
         "",
         "- 재사용 가치가 있는 장애, 버그, 환경 이슈만 기록한다.",
-        ("- 파일명은 {0}YYYY-MM-DD_HHMM_<slug>.md{0} 형식을 기본으로 사용한다." -f $code)
+        ("- 파일명은 {0}YYYY-MM-DD_HHMM_<slug>.md{0} 형식을 기본으로 사용한다." -f $code),
+        ("- 상위 {0}../index.md{0}와 함께 탐색 경로를 유지한다." -f $code)
     ) -join "`r`n"
+}
+
+function Get-NormalizedPath {
+    param([string]$Path)
+
+    return ([System.IO.Path]::GetFullPath($Path)).TrimEnd('\')
+}
+
+function Test-IsDirectDocsChild {
+    param(
+        [string]$DocsRoot,
+        [string]$CandidateRoot,
+        [string]$ExpectedDirectoryName
+    )
+
+    $expectedPath = Join-Path (Get-NormalizedPath -Path $DocsRoot) $ExpectedDirectoryName
+    return (Get-NormalizedPath -Path $CandidateRoot) -eq (Get-NormalizedPath -Path $expectedPath)
 }
 
 $workspaceRoot = Split-Path -Parent $PSScriptRoot
@@ -256,6 +293,8 @@ $createdItems = [System.Collections.Generic.List[string]]::new()
 $docsRoot = Join-Path $project.RepoPath $project.DocsPath
 $planRoot = Join-Path $project.RepoPath $project.PlanPath
 $troubleshootingRoot = Join-Path $project.RepoPath $project.TroubleshootingPath
+$planInsideDocs = Test-IsDirectDocsChild -DocsRoot $docsRoot -CandidateRoot $planRoot -ExpectedDirectoryName "plan"
+$troubleshootingInsideDocs = Test-IsDirectDocsChild -DocsRoot $docsRoot -CandidateRoot $troubleshootingRoot -ExpectedDirectoryName "troubleshooting"
 
 $standardSections = @(
     "api",
@@ -274,9 +313,20 @@ Ensure-Directory -Path $docsRoot -CreatedItems $createdItems
 
 $existingExtraDirectories = @()
 if (Test-Path -LiteralPath $docsRoot) {
+    $excludedDocDirectories = @()
+    if ($planInsideDocs) {
+        $excludedDocDirectories += "plan"
+    }
+    if ($troubleshootingInsideDocs) {
+        $excludedDocDirectories += "troubleshooting"
+    }
+
     $existingExtraDirectories = @(
         Get-ChildItem -LiteralPath $docsRoot -Directory |
-            Where-Object { $standardSections -notcontains $_.Name } |
+            Where-Object {
+                $standardSections -notcontains $_.Name -and
+                $excludedDocDirectories -notcontains $_.Name
+            } |
             Select-Object -ExpandProperty Name
     )
 }
@@ -284,7 +334,7 @@ if (Test-Path -LiteralPath $docsRoot) {
 $docsIndexPath = Join-Path $docsRoot "index.md"
 Ensure-File `
     -Path $docsIndexPath `
-    -Content (New-ProjectDocsIndexContent -ProjectName $project.Name -SectionNames $standardSections -ExtraDirectoryNames $existingExtraDirectories) `
+    -Content (New-ProjectDocsIndexContent -ProjectName $project.Name -SectionNames $standardSections -ExtraDirectoryNames $existingExtraDirectories -IncludePlanSection $planInsideDocs -IncludeTroubleshootingSection $troubleshootingInsideDocs) `
     -CreatedItems $createdItems
 
 foreach ($sectionName in $standardSections) {
