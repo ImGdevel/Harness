@@ -18,3 +18,5 @@
   실제 프로젝트 저장소 기본값으로 쓰는 GitFlow 브랜치 생성, 이름 규칙, 병합 대상을 정의한다.
 - `github-collaboration-conventions.md`
   GitHub 이슈 템플릿, PR 템플릿, 자동 검증 기반 강제 규칙을 정의한다.
+- `husky-git-hooks-convention.md`
+  프로젝트 저장소의 Husky v9 local Git hook 구성, hook 책임, CI 우회 기준을 정의한다.
