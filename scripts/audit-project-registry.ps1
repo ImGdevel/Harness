@@ -95,6 +95,7 @@ function Get-RegistryProjects {
                 RepoPath             = ""
                 RepoUrl              = ""
                 DefaultBranch        = ""
+                ProductionBranch     = ""
                 DocsPath             = ""
                 PlanPath             = ""
                 TroubleshootingPath  = ""
@@ -127,6 +128,7 @@ function Get-RegistryProjects {
                     RepoPath            = $current.RepoPath
                     RepoUrl             = $current.RepoUrl
                     DefaultBranch       = $current.DefaultBranch
+                    ProductionBranch    = $current.ProductionBranch
                     DocsPath            = $current.DocsPath
                     PlanPath            = $current.PlanPath
                     TroubleshootingPath = $current.TroubleshootingPath
@@ -163,6 +165,7 @@ function Get-RegistryProjects {
                 "repo_path" { $current.RepoPath = $value }
                 "repo_url" { $current.RepoUrl = $value }
                 "default_branch" { $current.DefaultBranch = $value }
+                "production_branch" { $current.ProductionBranch = $value }
                 "docs_path" { $current.DocsPath = $value }
                 "plan_path" { $current.PlanPath = $value }
                 "troubleshooting_path" { $current.TroubleshootingPath = $value }

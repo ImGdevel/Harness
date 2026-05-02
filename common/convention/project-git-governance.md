@@ -15,12 +15,15 @@
 프로젝트 항목은 기본 필드에 더해 아래 필드를 둘 수 있다.
 
 - `branch_strategy`: 기본 `gitflow`
-- `default_branch`: production branch. 기본 `main`
+- `default_branch`: GitHub default branch. GitFlow 프로젝트 기본 `develop`
+- `production_branch`: production branch. GitFlow 프로젝트 기본 `main`
 - `integration_branch`: integration branch. GitFlow 기본 `develop`
 - `docs_source`: `repo` 또는 `wiki`. 기본 `repo`
 - `wiki_path`: `docs_source: wiki`일 때 로컬 Wiki 저장소 경로
 
 `docs_source: wiki` 프로젝트는 실제 repo 안 `docs/` 대신 Wiki를 문서 원천으로 사용한다. 이 경우 작업 전 Wiki의 `Home.md`와 문서 정책 페이지를 먼저 확인한다.
+
+GitFlow 프로젝트에서 GitHub default branch는 `develop`을 권장한다. `main`은 production 기준으로 유지하되 일반 기능 PR의 기본 base는 `develop`이어야 한다.
 
 ## Branch Rules
 
@@ -44,7 +47,7 @@
 
 - registry의 `repo_path`가 실제 Git 저장소인지 확인
 - `origin/<default_branch>` 존재 확인
-- GitFlow 프로젝트는 `origin/<integration_branch>` 존재 확인
+- GitFlow 프로젝트는 `origin/<production_branch>`와 `origin/<integration_branch>` 존재 확인
 - 원격 HEAD가 `default_branch`와 일치하는지 확인
 - 현재 브랜치가 `feat/*`, `refactor/*`, `hotfix/*` 형식인지 확인
 - 현재 브랜치가 기대 base branch를 포함하는지 확인
@@ -56,7 +59,7 @@
 아래 중 하나라도 확인되면 다음 단계로 진행하지 않는다.
 
 - 원격 `main` 또는 GitFlow의 `develop`이 없다.
-- 원격 HEAD가 feature 브랜치를 가리킨다.
+- 원격 HEAD가 registry의 `default_branch`와 다르다.
 - 현재 브랜치가 보호 브랜치다.
 - 현재 브랜치 이름이 규칙과 다르다.
 - 현재 브랜치가 기대 base branch를 포함하지 않는다.

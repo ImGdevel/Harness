@@ -42,7 +42,8 @@ projects:
     name: Techlog Hub
     repo_path: 'C:\Users\imdls\workspace\techlog-hub'
     repo_url: ''
-    default_branch: main
+    default_branch: develop
+    production_branch: main
     integration_branch: develop
     branch_strategy: gitflow
     docs_source: wiki

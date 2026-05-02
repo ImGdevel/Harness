@@ -58,7 +58,8 @@ function Get-RegistryProject {
                 Id                  = ""
                 Name                = ""
                 RepoPath            = ""
-                DefaultBranch       = "main"
+                DefaultBranch       = "develop"
+                ProductionBranch    = "main"
                 IntegrationBranch   = "develop"
                 BranchStrategy      = "gitflow"
                 DocsSource          = "repo"
@@ -78,6 +79,7 @@ function Get-RegistryProject {
                     Name              = $current.Name
                     RepoPath          = $current.RepoPath
                     DefaultBranch     = $current.DefaultBranch
+                    ProductionBranch  = $current.ProductionBranch
                     IntegrationBranch = $current.IntegrationBranch
                     BranchStrategy    = $current.BranchStrategy
                     DocsSource        = $current.DocsSource
@@ -102,6 +104,7 @@ function Get-RegistryProject {
                 "name" { $current.Name = $value }
                 "repo_path" { $current.RepoPath = $value }
                 "default_branch" { if ($value) { $current.DefaultBranch = $value } }
+                "production_branch" { if ($value) { $current.ProductionBranch = $value } }
                 "integration_branch" { if ($value) { $current.IntegrationBranch = $value } }
                 "branch_strategy" { if ($value) { $current.BranchStrategy = $value } }
                 "docs_source" { if ($value) { $current.DocsSource = $value } }
@@ -175,10 +178,15 @@ if ($issues.Count -eq 0) {
     $currentBranch = (Invoke-Git -RepoPath $project.RepoPath -GitArgs @("branch", "--show-current")).Output
     $branchStrategy = $project.BranchStrategy.ToLowerInvariant()
     $defaultBranch = $project.DefaultBranch
+    $productionBranch = $project.ProductionBranch
     $integrationBranch = $project.IntegrationBranch
 
     if (-not (Test-RemoteBranch -RepoPath $project.RepoPath -BranchName $defaultBranch)) {
         Add-Issue -Issues $issues -Type "missing-remote-default-branch" -Message "origin/$defaultBranch does not exist."
+    }
+
+    if ($branchStrategy -eq "gitflow" -and -not (Test-RemoteBranch -RepoPath $project.RepoPath -BranchName $productionBranch)) {
+        Add-Issue -Issues $issues -Type "missing-remote-production-branch" -Message "origin/$productionBranch does not exist."
     }
 
     if ($branchStrategy -eq "gitflow" -and -not (Test-RemoteBranch -RepoPath $project.RepoPath -BranchName $integrationBranch)) {
@@ -197,14 +205,14 @@ if ($issues.Count -eq 0) {
 
     if (-not $currentBranch) {
         Add-Issue -Issues $issues -Type "detached-head" -Message "Current branch is empty or detached."
-    } elseif (@($defaultBranch, $integrationBranch, "master") -contains $currentBranch) {
+    } elseif (@($defaultBranch, $productionBranch, $integrationBranch, "master") -contains $currentBranch) {
         Add-Issue -Issues $issues -Type "protected-branch" -Message "Do not work directly on protected branch '$currentBranch'."
     } elseif ($currentBranch -notmatch '^(feat|refactor|hotfix)/[a-z0-9]+(-[a-z0-9]+)*$') {
         Add-Issue -Issues $issues -Type "invalid-branch-name" -Message "Current branch '$currentBranch' must match feat|refactor|hotfix lowercase-kebab format."
     } else {
         $branchType = ($currentBranch -split '/', 2)[0]
         $expectedBase = if ($branchType -eq "hotfix") {
-            $defaultBranch
+            $productionBranch
         } elseif ($branchStrategy -eq "gitflow") {
             $integrationBranch
         } else {
@@ -257,6 +265,7 @@ Write-Output "project: $($project.Id)"
 Write-Output "repo: $($project.RepoPath)"
 Write-Output "branch_strategy: $($project.BranchStrategy)"
 Write-Output "default_branch: $($project.DefaultBranch)"
+Write-Output "production_branch: $($project.ProductionBranch)"
 Write-Output "integration_branch: $($project.IntegrationBranch)"
 Write-Output "docs_source: $($project.DocsSource)"
 

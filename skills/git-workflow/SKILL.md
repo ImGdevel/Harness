@@ -51,7 +51,7 @@ Before creating a branch or commit, check in this order:
 1. selected repository path
 2. current branch name
 3. branch type and expected base branch
-4. remote default branch and integration branch
+4. remote default branch, production branch, and integration branch
 5. remote HEAD branch
 6. staged scope or working tree scope
 7. available validation commands
@@ -68,7 +68,8 @@ Validate the current branch against the selected branch strategy document:
 - `support/*` is exceptional and should exist only with a clear maintenance reason
 - long-lived branches with unrelated work should be replaced, not reused
 - run `scripts/validate-project-git-context.ps1 -ProjectId <id> -FailOnIssue` when the project is registered in the harness
-- stop if `origin/main`, GitFlow `origin/develop`, or remote HEAD is not aligned
+- stop if GitFlow `origin/main`, `origin/develop`, or remote HEAD is not aligned
+- for GitFlow projects, GitHub default branch may be `develop` while production branch remains `main`
 - stop if the current branch contains an unintegrated remote work branch unless stacked branch dependency is explicitly approved
 
 ## Workspace vs Project Repo
@@ -78,7 +79,7 @@ Validate the current branch against the selected branch strategy document:
 - The harness `project/` directory is registry metadata only and is never the project Git target.
 - The harness repository uses `main` as its single long-lived branch.
 - Project-specific Git rules override workspace defaults when documented.
-- Project registry fields such as `branch_strategy`, `integration_branch`, `docs_source`, and `wiki_path` define project-specific runtime checks.
+- Project registry fields such as `branch_strategy`, `production_branch`, `integration_branch`, `docs_source`, and `wiki_path` define project-specific runtime checks.
 - If the task includes issue or PR authoring, hand off to `github-collaboration`.
 
 ## Execution Rules

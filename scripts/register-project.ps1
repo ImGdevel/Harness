@@ -10,6 +10,7 @@ param(
 
     [string]$RepoUrl,
     [string]$DefaultBranch,
+    [string]$ProductionBranch,
     [string]$DocsPath = "docs",
     [string]$PlanPath = "docs/plan",
     [string]$TroubleshootingPath = "docs/troubleshooting",
@@ -218,6 +219,9 @@ $lines += "    name: $DisplayName"
 $lines += "    repo_path: $(Quote-Yaml $resolvedRepoPath)"
 $lines += "    repo_url: $(Quote-Yaml $RepoUrl)"
 $lines += "    default_branch: $DefaultBranch"
+if ($ProductionBranch) {
+    $lines += "    production_branch: $ProductionBranch"
+}
 $lines += "    docs_path: $DocsPath"
 $lines += "    plan_path: $PlanPath"
 $lines += "    troubleshooting_path: $TroubleshootingPath"
