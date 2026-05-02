@@ -299,13 +299,16 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - PR 리뷰 피드백이 들어왔을 때
 - 포함 step:
   - `analyze-feedback`
+  - `classify-feedback-against-requirements-and-conventions`
   - `apply-change`
   - `re-validate`
   - `re-sync-docs`
+  - `reply-or-resolve-review-thread`
 - 반복 조건:
   - 미해결 피드백이 남아 있을 때
 - 출력물:
   - 반영된 수정과 갱신된 검증 상태
+  - 수용/반려한 리뷰 댓글 목록과 처리 근거
 
 ## Registered Pipelines
 
