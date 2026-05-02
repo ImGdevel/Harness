@@ -32,6 +32,7 @@ Husky 세팅은 하네스 공통 문서 `common/convention/husky-git-hooks-conve
 
 ```text
 package.json
+.gitattributes
 .husky/
   pre-commit
   commit-msg
@@ -51,6 +52,127 @@ npx husky init
 
 `npx husky init`은 `.husky/pre-commit`을 만들고 `package.json`에 `prepare` script를 추가한다.
 초기화 후에는 이 문서의 `package.json`, `.husky/pre-commit`, `.husky/commit-msg` 스니펫으로 내용을 정리한다.
+
+## OS 공통 기준
+
+macOS와 Windows에서 같은 hook이 동작해야 하므로 hook 파일에는 OS별 shell 명령을 직접 많이 넣지 않는다.
+hook은 `npm run ...`만 호출하고, 실제 로직은 Node.js 스크립트로 작성한다.
+
+공통 규칙은 다음과 같다.
+
+- `.husky/*` 파일은 POSIX shell 호환 문법으로 작성한다.
+- hook 파일 안에서 Bash 전용 문법은 피한다.
+- Windows 전용 `.cmd`, PowerShell 문법은 hook 파일에 직접 넣지 않는다.
+- 경로 처리는 Node.js 스크립트에서 `node:path`을 사용한다.
+- hook 파일과 shell script는 LF line ending으로 고정한다.
+- Windows에서는 Git for Windows와 Git Bash가 설치되어 있어야 한다.
+
+## .gitattributes 스니펫
+
+Windows에서 CRLF가 hook 파일에 들어가면 shell 실행 오류가 날 수 있다.
+repository root에 `.gitattributes`를 두고 hook 관련 파일의 line ending을 LF로 고정한다.
+
+```gitattributes
+.husky/* text eol=lf
+*.sh text eol=lf
+*.mjs text eol=lf
+```
+
+이미 CRLF로 들어간 파일이 있다면 다음 명령으로 다시 정규화한다.
+
+```sh
+git add --renormalize .husky scripts
+```
+
+## macOS 세팅
+
+macOS에서는 일반적으로 아래 순서로 충분하다.
+
+```sh
+npm install --save-dev husky
+npx husky init
+npm run prepare
+git config core.hooksPath
+```
+
+hook 파일 실행 권한 문제가 있으면 다음 명령으로 Git index에 실행 권한을 기록한다.
+
+```sh
+git update-index --chmod=+x .husky/pre-commit .husky/commit-msg
+```
+
+## Windows 세팅
+
+Windows에서는 PowerShell에서 세팅해도 되지만, hook 실행은 Git for Windows가 제공하는 shell 환경을 전제로 한다.
+먼저 Git for Windows와 Node.js가 설치되어 있어야 한다.
+
+PowerShell 기준 세팅 명령은 다음과 같다.
+
+```powershell
+npm install --save-dev husky
+npx husky init
+npm run prepare
+git config core.hooksPath
+```
+
+`git config core.hooksPath` 결과가 `.husky/_`가 아니면 Husky가 제대로 설치되지 않은 상태다.
+이 경우 `npm run prepare`를 다시 실행한다.
+
+Windows에서 hook 파일을 작성할 때는 다음을 지킨다.
+
+- `.husky/pre-commit`과 `.husky/commit-msg`에는 `npm run ...`만 둔다.
+- `./gradlew`, `grep`, `sed`, `awk` 같은 Unix 명령을 hook 파일에 직접 넣지 않는다.
+- Windows 경로인 `C:\...`를 hook 파일에 직접 넣지 않는다.
+- 긴 검증 로직은 `.mjs` 파일로 옮긴다.
+
+Windows에서 임시로 Husky를 끄는 명령은 shell마다 다르다.
+
+```powershell
+# PowerShell
+$env:HUSKY = "0"
+git commit -m "hotfix: 긴급 수정"
+Remove-Item Env:HUSKY
+```
+
+```cmd
+:: Command Prompt
+set HUSKY=0 && git commit -m "hotfix: 긴급 수정"
+```
+
+```sh
+# Git Bash
+HUSKY=0 git commit -m "hotfix: 긴급 수정"
+```
+
+## Windows Git Bash와 Yarn 오류 대응
+
+Windows 10, Git Bash, Yarn 조합에서 `stdin is not a tty` 오류가 발생할 수 있다.
+이 경우 사용자별 Husky 초기화 파일에 공식 우회 스크립트를 둔다.
+
+Windows 경로:
+
+```text
+C:\Users\<username>\.config\husky\init.sh
+```
+
+`init.sh` 내용:
+
+```sh
+command_exists () {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if command_exists winpty && test -t 1; then
+  exec < /dev/tty
+fi
+```
+
+특정 PC에서 Husky를 항상 비활성화해야 하면 같은 파일에 다음 값을 둘 수 있다.
+다만 프로젝트 검증을 우회하는 설정이므로 기본값으로 사용하지 않는다.
+
+```sh
+export HUSKY=0
+```
 
 ## package.json 스니펫
 
@@ -249,15 +371,19 @@ git commit --no-verify -m "hotfix: 긴급 수정"
 HUSKY=0 git commit -m "hotfix: 긴급 수정"
 ```
 
+Windows PowerShell에서는 inline `HUSKY=0` 문법을 사용할 수 없으므로 `Windows 세팅` 섹션의 PowerShell 예시를 따른다.
+
 ## 세팅 체크리스트
 
 - [ ] `npm install --save-dev husky`를 실행했다.
 - [ ] `npx husky init`을 실행했다.
+- [ ] `.gitattributes`로 `.husky/*`의 LF line ending을 고정했다.
 - [ ] `package.json`에 `prepare`, `validate:repo`, `validate:commit-message`가 있다.
 - [ ] `.husky/pre-commit`이 `npm run validate:repo`를 실행한다.
 - [ ] `.husky/commit-msg`가 `npm run validate:commit-message -- "$1"`을 실행한다.
 - [ ] `scripts/validate-repo.mjs`가 staged 변경만 검증한다.
 - [ ] `scripts/validate-commit-message.mjs`가 프로젝트 커밋 메시지 규칙을 검증한다.
+- [ ] Windows에서도 `git config core.hooksPath`가 `.husky/_`를 출력한다.
 - [ ] CI에 `HUSKY=0`이 설정되어 있다.
 - [ ] CI가 Husky hook에 의존하지 않고 검증 스크립트를 직접 실행한다.
 
@@ -267,3 +393,4 @@ HUSKY=0 git commit -m "hotfix: 긴급 수정"
 - Husky v9 prepare script: `prepare: husky`
 - Husky v9 CI bypass: `HUSKY=0`
 - Husky v9 commit-msg parameter: `$1`
+- Husky v9 startup file: `~/.config/husky/init.sh`
