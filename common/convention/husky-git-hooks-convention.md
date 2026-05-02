@@ -260,7 +260,8 @@ if (forbiddenFiles.length > 0) {
 
 ## validate-commit-message.mjs 스니펫
 
-커밋 메시지 제목은 gitmoji와 한국어 요약을 함께 작성하고, 본문에는 변경 내용과 근거를 남긴다.
+커밋 메시지 제목은 gitmoji와 한국어 명사형 요약을 함께 작성하고, 본문에는 변경 내용과 근거를 남긴다.
+제목 요약은 `~한다` 같은 서술형이 아니라 `추가`, `보강`, `수정`처럼 간결한 명사형으로 작성한다.
 
 ```js
 import { readFileSync } from "node:fs";
@@ -291,7 +292,7 @@ if (/^(Merge|Revert|fixup!|squash!)/.test(subject)) {
 
 const gitmoji = [...gitmojiByType.values()].find((emoji) => subject.startsWith(`${emoji} `));
 const subjectWithoutGitmoji = gitmoji ? subject.slice(gitmoji.length + 1) : subject;
-const subjectPattern = new RegExp(`^(${allowedTypes.join("|")})(\\([a-z0-9-]+\\))?: .+`);
+const subjectPattern = new RegExp(`^(${allowedTypes.join("|")})(\\([a-z0-9-]+\\))?: (.+)$`);
 const subjectMatch = subjectWithoutGitmoji.match(subjectPattern);
 
 const errors = [];
@@ -305,10 +306,13 @@ if (!subjectMatch) {
 }
 
 if (subjectMatch) {
-  const [, type] = subjectMatch;
+  const [, type, , description] = subjectMatch;
   const expectedGitmoji = gitmojiByType.get(type);
   if (gitmoji !== expectedGitmoji) {
     errors.push(`${type} 타입의 gitmoji는 ${expectedGitmoji} 이어야 한다.`);
+  }
+  if (/(한다|했다|된다|되다|합니다|했습니다|하였다)$/.test(description.trim())) {
+    errors.push("제목 요약은 서술형이 아니라 한국어 명사형이어야 한다. 예: 🔧 chore(repo): 허스키 검증 규칙 추가");
   }
 }
 
@@ -340,7 +344,7 @@ if (errors.length > 0) {
 ## 커밋 메시지 예시
 
 ```text
-📝 docs(convention): 허스키 세팅 가이드를 추가한다
+📝 docs(convention): 허스키 세팅 가이드 추가
 
 What changed:
 - Husky v9 설치 절차와 hook 스니펫을 추가했다.
