@@ -7,3 +7,9 @@ project/*
 .env
 .env.*
 !.env.example
+
+# Discord Codex remote control local runtime state
+tools/discord-codex-remote-control/node_modules/
+tools/discord-codex-remote-control/data/*.jsonl
+tools/discord-codex-remote-control/data/*.json
+tools/discord-codex-remote-control/data/*.log

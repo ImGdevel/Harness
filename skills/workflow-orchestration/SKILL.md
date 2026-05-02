@@ -65,6 +65,8 @@ When the selected workflow needs sub-workflows, use these skills:
 - Treat `common/spec/workflow-catalog.md` as the single source of truth for registered `job` and `pipeline` membership and order.
 - Run prerequisite steps automatically when the workflow definition requires them.
 - Stop immediately on failed gates, missing prerequisites, or ambiguous repository boundaries.
+- For implementation work, do not report completion until a PR URL exists unless the user explicitly requested no PR.
+- If PR creation fails, report the blocker and next retry step.
 - If a workflow cannot finish because one required command is unknown, report the missing command instead of inventing it.
 
 ## Output Expectations

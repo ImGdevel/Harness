@@ -8,6 +8,14 @@
 - `spec/`: 하네스 구조, 워크플로우, 템플릿 스펙
 - `templates/`: 공통 문서 템플릿
 
+## Current Highlights
+
+- `convention/project-git-governance.md`: 실제 프로젝트 원격 기준 브랜치, 작업 브랜치, 문서 원천 사전 검증 기준
+- `convention/figma-mcp-usage-conventions.md`: Figma MCP plan/seat 제한을 고려한 호출 최소화와 fallback 기준
+- `templates/game-requirements-template.md`: 게임 프로젝트 요구사항과 MVP 범위를 정의하는 템플릿
+- `templates/game-concept-art-brief-template.md`: 컨셉아트 브리프와 이미지 생성 입력 기준 템플릿
+- `templates/game-design-plan-template.md`: 게임 설계 계획과 마일스톤을 정리하는 템플릿
+
 ## Rule
 
 - 새 문서를 추가하면 이 인덱스에 한 줄 요약과 위치를 기록한다.

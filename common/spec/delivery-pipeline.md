@@ -16,6 +16,8 @@ Run one end-to-end delivery flow from requirement to handoff.
 - Run troubleshooting as a sidecar flow, then return to the main flow.
 - Commit in small intent-based slices when useful.
 - Use `pr-delivery` for commit, push, and PR creation.
+- Treat the work as unfinished until a PR URL exists, unless the user explicitly requests no PR.
+- If PR creation is blocked, report the blocker instead of marking the work complete.
 
 ## Stop Conditions
 
@@ -28,10 +30,10 @@ Run one end-to-end delivery flow from requirement to handoff.
 
 ## Outputs
 
-- `<project-root>/plan/`
-- `<project-root>/troubleshooting/`
 - `<project-root>/docs/...`
-- commits, pushes, PR, or requested handoff artifact
+- `<project-root>/docs/plan/`
+- `<project-root>/docs/troubleshooting/`
+- commits, pushes, PR URL, or explicitly requested non-PR handoff artifact
 
 ## Exit Criteria
 
@@ -39,7 +41,8 @@ Run one end-to-end delivery flow from requirement to handoff.
 - Required tests and validation are complete.
 - Reusable troubleshooting was documented.
 - Remaining work was captured.
-- Requested delivery artifact was completed.
+- PR URL was created for implementation work.
+- Requested non-PR delivery artifact was completed only when the user explicitly scoped the work away from PR delivery.
 
 ## References
 

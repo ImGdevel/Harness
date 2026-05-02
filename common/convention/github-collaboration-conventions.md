@@ -19,6 +19,19 @@ Keep GitHub Issue and PR bodies predictable and machine-checkable.
 - Keep automation fields aligned with `.github` templates.
 - Treat GitHub validation workflows as the source of enforcement.
 
+## Review Comment Handling
+
+- Treat unresolved PR review comments as unfinished work.
+- First classify every comment against user requirements, project-specific conventions, and common harness conventions.
+- Accept a comment when it identifies a real correctness, security, portability, maintainability, or convention issue.
+- If accepted, update code or docs, run the relevant validation, push the fix, and resolve the review thread.
+- Reject a comment only when it conflicts with user requirements, contradicts a stronger project convention, is factually wrong, or expands scope without product value.
+- If rejected, write a reply directly on that review thread with a concrete reason and reference the stronger requirement or convention.
+- Do not use a top-level PR comment as a substitute for a review-thread reply.
+- Do not resolve a rejected thread without a written review-thread reply.
+- When a comment reveals a reusable rule, add or update the matching common convention document in the same feedback pass.
+- Keep review response commits split by intent when code fixes and convention updates are unrelated.
+
 ## Checklist
 
 - Is the correct Issue template selected?
@@ -26,6 +39,9 @@ Keep GitHub Issue and PR bodies predictable and machine-checkable.
 - Does the PR body keep all required sections?
 - Is `Validation` explicit?
 - Do automation scripts use the same field structure as `.github` templates?
+- Were unresolved review comments accepted or rejected with explicit rationale?
+- Were accepted conversations backed by a fix and validation before resolve?
+- Were rejected conversations answered with a review-thread reply before resolve?
 
 ## References
 

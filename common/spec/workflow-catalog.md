@@ -71,9 +71,17 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 프로젝트 registry 항목이나 브랜치가 아직 정리되지 않았을 때
 - 포함 step:
   - `resolve-project-path`
+  - `read-project-registry`
+  - `validate-project-git-context`
+  - `validate-doc-source`
   - `create-issue`
   - `create-branch`
   - `ensure-project-doc-structure`
+- 중단 조건:
+  - 실제 프로젝트 원격에 `main` 또는 GitFlow의 `develop`이 없음
+  - 원격 HEAD가 registry의 `default_branch`와 다름
+  - 현재 브랜치가 작업 의도와 다른 기존 브랜치임
+  - 프로젝트 문서 원천이 repo인지 Wiki인지 확인되지 않음
 - 출력물:
   - 작업 브랜치
   - 이슈 또는 작업 단위
@@ -164,7 +172,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 사용자가 계획을 명시적으로 요청했을 때
 - 선행 조건:
   - 대상 프로젝트가 registry에서 식별되어야 한다.
-  - 실제 프로젝트 저장소의 `<project-root>/plan/` 디렉터리가 준비되어야 한다.
+  - 실제 프로젝트 저장소의 registry `plan_path` 디렉터리가 준비되어야 한다.
 - 포함 step:
   - `select-project`
   - `resolve-project-path`
@@ -172,7 +180,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - `draft-plan`
   - `save-plan`
 - 출력물:
-  - `<project-root>/plan/YYYY-MM-DD_HHMM_<slug>.md`
+  - 기본 경로 기준 `<project-root>/docs/plan/YYYY-MM-DD_HHMM_<slug>.md`
 
 ### `troubleshooting-record`
 
@@ -183,14 +191,14 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 반복 방지 가치가 있는 수정이 끝났을 때
 - 선행 조건:
   - 대상 프로젝트가 registry에서 식별되어야 한다.
-  - 실제 프로젝트 저장소의 `<project-root>/troubleshooting/` 디렉터리가 준비되어야 한다.
+  - 실제 프로젝트 저장소의 registry `troubleshooting_path` 디렉터리가 준비되어야 한다.
 - 포함 step:
   - `collect-symptoms`
   - `summarize-root-cause`
   - `record-fix`
   - `save-troubleshooting`
 - 출력물:
-  - `<project-root>/troubleshooting/YYYY-MM-DD_HHMM_<slug>.md`
+  - 기본 경로 기준 `<project-root>/docs/troubleshooting/YYYY-MM-DD_HHMM_<slug>.md`
 
 ### `full-test`
 
@@ -222,7 +230,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
 
 ### `pr-delivery`
 
-- 목적: 현재 변경을 PR 가능한 상태까지 끌고 간다.
+- 목적: 현재 변경을 PR 작성 완료 상태까지 끌고 간다.
 - 자동 트리거:
   - `커밋하고 푸시해`
   - `PR 올려`
@@ -235,16 +243,24 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 필요한 검증이 통과하거나, 왜 건너뛰는지 설명 가능해야 한다.
 - 포함 step:
   - `validate-repo-context`
+  - `validate-project-git-context`
   - `validate-branch`
   - `run-required-checks`
   - `commit`
   - `push`
   - `draft-pr`
   - `open-pr`
+- 중단 조건:
+  - 원격 기준 브랜치가 없거나 원격 HEAD가 잘못됨
+  - 현재 브랜치가 보호 브랜치이거나 이름 규칙을 위반함
+  - 현재 브랜치가 기대 base branch에서 시작하지 않음
+  - 현재 브랜치가 통합되지 않은 다른 feature 브랜치 위에 쌓임
+  - staged 변경이 둘 이상의 의도를 포함함
 - 출력물:
   - 커밋
   - 원격 브랜치
-  - PR 본문 또는 PR URL
+  - PR URL
+  - PR 생성이 불가능한 경우에는 blocker와 재시도 명령
 
 ### `implementation-doc-sync`
 
@@ -283,19 +299,24 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - PR 리뷰 피드백이 들어왔을 때
 - 포함 step:
   - `analyze-feedback`
+  - `classify-feedback-against-requirements-and-conventions`
   - `apply-change`
   - `re-validate`
   - `re-sync-docs`
+  - `resolve-accepted-review-thread`
+  - `reply-to-rejected-review-thread`
 - 반복 조건:
   - 미해결 피드백이 남아 있을 때
 - 출력물:
   - 반영된 수정과 갱신된 검증 상태
+  - 수용한 리뷰 thread resolve 목록
+  - 반려한 리뷰 thread 대댓글과 처리 근거
 
 ## Registered Pipelines
 
 ### `implementation-delivery`
 
-- 목적: 구현 시작부터 PR 준비까지 이어지는 기본 전달 파이프라인이다.
+- 목적: 구현 시작부터 PR 작성 완료까지 이어지는 기본 전달 파이프라인이다.
 - 자동 트리거:
   - `이 기능 작업해서 PR까지`
   - `구현하고 검증해서 올려`
@@ -309,10 +330,11 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 계획 저장 실패
   - 테스트 실패
   - 브랜치/저장소 전략 충돌
+  - PR 생성 실패
 
 ### `delivery-pipeline`
 
-- 목적: 요구사항 상세화부터 설계, 구현, 검증, 문서화, PR, 피드백 반영까지 이어지는 대단위 전달 파이프라인이다.
+- 목적: 요구사항 상세화부터 설계, 구현, 검증, 문서화, PR 작성, 피드백 반영까지 이어지는 대단위 전달 파이프라인이다.
 - 단일 진실 원천:
   - 정확한 `job` 구성과 순서는 이 등록 항목이 기준이다.
   - 지원 문서는 의도와 실행 규칙만 설명하며, 이 순서를 재정의하지 않는다.
@@ -339,6 +361,8 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - `feedback-response`
 - 전달 규칙:
   - 커밋, 푸시, PR 생성은 별도 `job`으로 분리하지 않고 `pr-delivery`에 포함한다.
+  - 구현 작업의 정상 종료 기준은 PR URL 생성이다.
+  - PR을 만들 수 없으면 작업 완료로 보고하지 않고 blocker로 보고한다.
   - 계획 저장은 초반 `plan-sync`에서 처리한다.
 - 반복 조건:
   - 설계 재검토 필요
@@ -356,7 +380,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 테스트 및 검증 결과
   - 트러블슈팅 문서
   - 구현 문서
-  - 커밋/PR/피드백 반영 결과
+  - 커밋/푸시/PR URL/피드백 반영 결과
 
 ### `incident-response`
 
@@ -388,11 +412,11 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - registry/index 정합성 감사
   - 실제 프로젝트 경로 검증
   - `scripts/bootstrap-project-docs.ps1` 실행
-  - 실제 프로젝트 저장소의 `docs/`, `plan/`, `troubleshooting/` 정렬
+  - 실제 프로젝트 저장소의 `docs/`, `docs/plan/`, `docs/troubleshooting/` 정렬
   - 필요한 초기 인덱스 문서 작성
 - 검증 규칙:
   - `scripts/register-project.ps1`로 registry를 갱신했다면 같은 흐름에서 `scripts/audit-project-registry.ps1`를 통과해야 한다.
-  - 프로젝트 문서 골격을 정렬했다면 실제 프로젝트 저장소에 `docs/index.md`, `plan/index.md`, `troubleshooting/index.md`가 생겨야 한다.
+  - 프로젝트 문서 골격을 정렬했다면 실제 프로젝트 저장소에 `docs/index.md`, `docs/plan/index.md`, `docs/troubleshooting/index.md`가 생겨야 한다.
 - 중단 조건:
   - 프로젝트 이름 또는 실제 저장소 경로가 없음
   - 경로 충돌

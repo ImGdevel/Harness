@@ -25,4 +25,4 @@ jobs:
 
       - name: Audit project registry
         shell: pwsh
-        run: .\scripts\audit-project-registry.ps1 -FailOnIssue
+        run: .\scripts\audit-project-registry.ps1 -FailOnIssue -SkipLocalPathExistenceCheck

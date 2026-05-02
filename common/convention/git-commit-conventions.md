@@ -14,8 +14,8 @@ Use split-by-intent commits for project repositories.
 - Do not commit broken code, debug leftovers, or secrets.
 - Run required checks before commit when the repository defines them.
 - Use `type(scope): summary`.
-- Use English imperative summary.
-- Keep summary short, lowercase-first, and no trailing period.
+- Write the commit message subject in Korean.
+- Keep the summary short and do not end it with a period.
 - Do not put issue numbers in commit messages by default.
 - Do not use vague summaries such as `wip`, `fix bug`, `update stuff`.
 - Add a body only when rationale, trade-off, or follow-up is necessary.

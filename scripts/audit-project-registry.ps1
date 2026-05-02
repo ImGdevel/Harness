@@ -1,6 +1,7 @@
 param(
     [string]$WorkspaceRoot = (Split-Path -Parent $PSScriptRoot),
-    [switch]$FailOnIssue
+    [switch]$FailOnIssue,
+    [switch]$SkipLocalPathExistenceCheck
 )
 
 function Add-Issue {
@@ -95,9 +96,12 @@ function Get-RegistryProjects {
                 RepoPath             = ""
                 RepoUrl              = ""
                 DefaultBranch        = ""
+                ProductionBranch     = ""
                 DocsPath             = ""
                 PlanPath             = ""
                 TroubleshootingPath  = ""
+                DocsSource           = "repo"
+                WikiPath             = ""
                 Status               = ""
                 Stacks               = [System.Collections.Generic.List[string]]::new()
                 Aliases              = [System.Collections.Generic.List[string]]::new()
@@ -125,9 +129,12 @@ function Get-RegistryProjects {
                     RepoPath            = $current.RepoPath
                     RepoUrl             = $current.RepoUrl
                     DefaultBranch       = $current.DefaultBranch
+                    ProductionBranch    = $current.ProductionBranch
                     DocsPath            = $current.DocsPath
                     PlanPath            = $current.PlanPath
                     TroubleshootingPath = $current.TroubleshootingPath
+                    DocsSource          = $current.DocsSource
+                    WikiPath            = $current.WikiPath
                     Status              = $current.Status
                     Stacks              = @($current.Stacks)
                     Aliases             = @($current.Aliases)
@@ -159,9 +166,12 @@ function Get-RegistryProjects {
                 "repo_path" { $current.RepoPath = $value }
                 "repo_url" { $current.RepoUrl = $value }
                 "default_branch" { $current.DefaultBranch = $value }
+                "production_branch" { $current.ProductionBranch = $value }
                 "docs_path" { $current.DocsPath = $value }
                 "plan_path" { $current.PlanPath = $value }
                 "troubleshooting_path" { $current.TroubleshootingPath = $value }
+                "docs_source" { $current.DocsSource = $value }
+                "wiki_path" { $current.WikiPath = $value }
                 "status" { $current.Status = $value }
                 "stacks" { $currentList = "Stacks" }
                 "aliases" { $currentList = "Aliases" }
@@ -285,6 +295,14 @@ foreach ($project in $registryProjects) {
 
     if (-not $project.Status) {
         Add-Issue -Issues $issues -Type "missing-registry-field" -Path "project\\registry.yaml" -Message ("Registry project '{0}' is missing 'status'." -f $project.MarkerId)
+    }
+
+    if ($project.DocsSource -eq "wiki") {
+        if (-not $project.WikiPath) {
+            Add-Issue -Issues $issues -Type "missing-registry-field" -Path "project\\registry.yaml" -Message ("Registry project '{0}' uses docs_source=wiki but is missing 'wiki_path'." -f $project.MarkerId)
+        } elseif (-not $SkipLocalPathExistenceCheck -and -not (Test-Path -LiteralPath $project.WikiPath)) {
+            Add-Issue -Issues $issues -Type "missing-wiki-path" -Path $project.WikiPath -Message ("Registry project '{0}' wiki_path does not exist." -f $project.MarkerId)
+        }
     }
 
     if ($project.Id -and $project.MarkerId -and $project.Id -ne $project.MarkerId) {
