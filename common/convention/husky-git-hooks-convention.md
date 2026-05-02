@@ -260,7 +260,7 @@ if (forbiddenFiles.length > 0) {
 
 ## validate-commit-message.mjs 스니펫
 
-커밋 메시지 제목은 한국어로 작성하고, 본문에는 변경 내용과 근거를 남긴다.
+커밋 메시지 제목은 gitmoji와 한국어 요약을 함께 작성하고, 본문에는 변경 내용과 근거를 남긴다.
 
 ```js
 import { readFileSync } from "node:fs";
@@ -270,32 +270,46 @@ const message = readFileSync(messagePath, "utf8").trim();
 const [subject, ...bodyLines] = message.split(/\r?\n/);
 const body = bodyLines.join("\n");
 
-const allowedTypes = [
-  "feat",
-  "fix",
-  "docs",
-  "style",
-  "refactor",
-  "test",
-  "chore",
-  "build",
-  "ci",
-  "perf",
-  "hotfix",
-];
+const allowedTypes = ["feat", "fix", "docs", "style", "refactor", "test", "chore", "build", "ci", "perf", "hotfix"];
+const gitmojiByType = new Map([
+  ["feat", "✨"],
+  ["fix", "🐛"],
+  ["docs", "📝"],
+  ["style", "💄"],
+  ["refactor", "♻️"],
+  ["test", "✅"],
+  ["chore", "🔧"],
+  ["build", "📦"],
+  ["ci", "👷"],
+  ["perf", "⚡"],
+  ["hotfix", "🚑"],
+]);
 
 if (/^(Merge|Revert|fixup!|squash!)/.test(subject)) {
   process.exit(0);
 }
 
-const subjectPattern = new RegExp(
-  `^(${allowedTypes.join("|")})(\\([a-z0-9-]+\\))?: .+`,
-);
+const gitmoji = [...gitmojiByType.values()].find((emoji) => subject.startsWith(`${emoji} `));
+const subjectWithoutGitmoji = gitmoji ? subject.slice(gitmoji.length + 1) : subject;
+const subjectPattern = new RegExp(`^(${allowedTypes.join("|")})(\\([a-z0-9-]+\\))?: .+`);
+const subjectMatch = subjectWithoutGitmoji.match(subjectPattern);
 
 const errors = [];
 
-if (!subjectPattern.test(subject)) {
-  errors.push("제목은 <type>(optional-scope): <한국어 요약> 형식이어야 한다.");
+if (!gitmoji) {
+  errors.push("제목은 gitmoji와 공백으로 시작해야 한다.");
+}
+
+if (!subjectMatch) {
+  errors.push("제목은 <gitmoji> <type>(optional-scope): <한국어 요약> 형식이어야 한다.");
+}
+
+if (subjectMatch) {
+  const [, type] = subjectMatch;
+  const expectedGitmoji = gitmojiByType.get(type);
+  if (gitmoji !== expectedGitmoji) {
+    errors.push(`${type} 타입의 gitmoji는 ${expectedGitmoji} 이어야 한다.`);
+  }
 }
 
 if (!/[가-힣]/.test(subject)) {
@@ -326,7 +340,7 @@ if (errors.length > 0) {
 ## 커밋 메시지 예시
 
 ```text
-docs(convention): 허스키 세팅 가이드를 추가한다
+📝 docs(convention): 허스키 세팅 가이드를 추가한다
 
 What changed:
 - Husky v9 설치 절차와 hook 스니펫을 추가했다.
