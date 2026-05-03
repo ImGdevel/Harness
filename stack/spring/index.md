@@ -18,6 +18,7 @@ Spring 관련 컨벤션과 스펙 문서의 빠른 탐색용 인덱스다.
 - `snippets/serialization-and-parsing-snippet.md`: `JsonCodec`, feature-specific parser, string/enum parser 예시
 - `convention/common-module-method-candidates.md`: 공통 모듈 메서드 후보와 라이브러리 선택 기준
 - `snippets/common-module-method-snippet.md`: 공통 메서드 코드 스니펫과 성능 테스트 prefix 예시
+- `convention/spring-gradle-ci-test-convention.md`: JUnit tag 기반 unit/integration test 분리와 Gradle CI cache 기준
 
 ## Related
 
