@@ -26,5 +26,5 @@ Separate input validation from domain policy checks.
 
 ## References
 
-- [layer-and-naming-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/layer-and-naming-convention.md>)
+- [layer-and-naming-convention.md](layer-and-naming-convention.md)
 - [3-devon-woo-community-BE docs/validation](https://github.com/100-hours-a-week/3-devon-woo-community-BE/tree/main/docs/validation)

@@ -34,4 +34,5 @@ Make role and layer visible from package name and class name.
 
 ## References
 
-- [validator-vs-policy-pattern.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/validator-vs-policy-pattern.md>)
+- [request-response-dto-convention.md](request-response-dto-convention.md)
+- [validator-vs-policy-pattern.md](validator-vs-policy-pattern.md)

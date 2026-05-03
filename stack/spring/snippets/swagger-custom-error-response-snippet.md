@@ -173,5 +173,5 @@ private Example invalidRequestExample() {
 
 ## References
 
-- [swagger-documentation-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/swagger-documentation-convention.md>)
-- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
+- [swagger-documentation-convention.md](../convention/swagger-documentation-convention.md)
+- [common-api-dto-convention.md](../convention/common-api-dto-convention.md)

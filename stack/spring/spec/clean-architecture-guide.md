@@ -28,5 +28,5 @@ Keep dependency direction and module boundary stable in Spring projects.
 
 ## References
 
-- [layer-and-naming-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/layer-and-naming-convention.md>)
+- [layer-and-naming-convention.md](../convention/layer-and-naming-convention.md)
 - [3-devon-woo-community-BE docs/architecture](https://github.com/100-hours-a-week/3-devon-woo-community-BE/tree/main/docs/architecture)

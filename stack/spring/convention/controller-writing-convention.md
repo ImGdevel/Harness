@@ -241,7 +241,8 @@ void initBinder(WebDataBinder binder) {
 
 ## References
 
-- [api-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/api-design-convention.md>)
-- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
-- [error-handling-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/error-handling-convention.md>)
-- [controller-webmvc-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/controller-webmvc-test-convention.md>)
+- [api-design-convention.md](api-design-convention.md)
+- [common-api-dto-convention.md](common-api-dto-convention.md)
+- [request-response-dto-convention.md](request-response-dto-convention.md)
+- [error-handling-convention.md](error-handling-convention.md)
+- [controller-webmvc-test-convention.md](../test/controller-webmvc-test-convention.md)

@@ -153,5 +153,5 @@ public record PageRequestParams(
 
 ## References
 
-- [common-api-dto-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/convention/common-api-dto-convention.md>)
-- [controller-and-error-snippet.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/snippets/controller-and-error-snippet.md>)
+- [common-api-dto-convention.md](../convention/common-api-dto-convention.md)
+- [controller-and-error-snippet.md](controller-and-error-snippet.md)

@@ -14,10 +14,12 @@ Spring 관련 컨벤션 문서 인덱스다.
   Spring API 설계 시 요청/응답/에러/페이징 규약을 정리한다.
 - `common-api-dto-convention.md`
   Spring API 공통 DTO, 목록/page/cursor/error/field error 응답 shape와 DTO 네이밍 기준을 정리한다.
+- `request-response-dto-convention.md`
+  기능별 request/response DTO의 이름, 패키지, 내부 mapper, 별도 assembler 분리 기준, validation/Swagger 작성 기준을 정리한다.
 - `controller-writing-convention.md`
   Spring MVC Controller 작성, request binding, null/default, Binder, response, pagination, WebMvc test 기준을 정리한다.
 - `error-handling-convention.md`
-  Spring API 예외 응답, validation 에러, 비즈니스 오류와 시스템 오류 분리 규칙을 정리한다.
+  Spring API `ErrorCode`, custom exception 사용 기준, validation/binding/type mismatch 처리, 프론트 노출 경계, Swagger 문서화와 테스트 기준을 정리한다.
 - `security-exception-convention.md`
   Spring Security filter chain 예외를 JSON 응답으로 일관 처리하는 규칙을 정리한다.
 - `swagger-documentation-convention.md`
@@ -32,6 +34,10 @@ Spring 관련 컨벤션 문서 인덱스다.
   Spring Boot 설정 파일 포맷 선택, 기록, 혼용 금지 기준을 정리한다.
 - `repository-design-convention.md`
   Spring Data JPA Repository, JPQL/native query, QueryDSL, pagination/count 작성 기준을 정리한다.
+- `serialization-and-parsing-convention.md`
+  Jackson `ObjectMapper`, JSON codec, parser/normalizer 공통화 후보와 실패 처리 기준을 정리한다.
+- `common-module-method-candidates.md`
+  Spring 공통 모듈 메서드 후보, 라이브러리 선택 기준, 성능/테스트 prefix 기준을 정리한다.
 
 ## Rule
 

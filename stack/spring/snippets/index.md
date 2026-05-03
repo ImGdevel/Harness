@@ -11,9 +11,11 @@ Spring reusable snippet index.
 - `querydsl-repository-snippet.md`
   QueryDSL custom repository, dynamic condition, dynamic sort, pagination count split example
 - `business-exception-and-error-code-snippet.md`
-  `ErrorCode` and `BusinessException`
+  `ErrorCode`, `BusinessException`, `ErrorResponse`, `FieldErrorMapper`, `GlobalExceptionHandler` common example
 - `common-api-dto-snippet.md`
   common list/page/slice/error/field error DTO examples
+- `request-response-dto-snippet.md`
+  feature request/response DTO, internal mapper, assembler split examples
 - `controller-and-error-snippet.md`
   Spring MVC controller, query request DTO, error response, global exception handler example
 - `security-entrypoint-and-access-denied-snippet.md`
@@ -28,6 +30,10 @@ Spring reusable snippet index.
   `*Docs` interface, frontend-friendly operation description, realistic success examples
 - `swagger-custom-error-response-snippet.md`
   custom error annotation, endpoint error group, error code examples
+- `serialization-and-parsing-snippet.md`
+  `JsonCodec`, feature-specific parser, string/enum parser, assembler usage examples
+- `common-module-method-snippet.md`
+  Guard, String/Collection/Enum/Date/URL/Security/File/HTTP 공통 메서드와 성능 테스트 prefix 예시
 
 ## Rules
 

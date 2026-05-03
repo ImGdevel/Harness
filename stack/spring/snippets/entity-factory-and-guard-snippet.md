@@ -168,4 +168,4 @@ public class PostLikeId implements Serializable {
 
 ## References
 
-- [entity-design-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/entity/entity-design-convention.md>)
+- [entity-design-convention.md](../entity/entity-design-convention.md)

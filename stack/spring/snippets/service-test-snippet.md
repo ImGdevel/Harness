@@ -40,4 +40,4 @@ class PostServiceTest {
 
 ## References
 
-- [service-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/service-test-convention.md>)
+- [service-test-convention.md](../test/service-test-convention.md)

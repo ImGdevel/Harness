@@ -30,5 +30,5 @@ Choose the smallest test double that makes the test fast and stable.
 
 ## References
 
-- [service-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/service-test-convention.md>)
-- [integration-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/integration-test-convention.md>)
+- [service-test-convention.md](service-test-convention.md)
+- [integration-test-convention.md](integration-test-convention.md)

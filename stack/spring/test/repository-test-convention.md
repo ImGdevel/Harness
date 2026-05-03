@@ -24,4 +24,4 @@ Test JPA mapping, query, relation, and persistence behavior.
 
 ## References
 
-- [integration-test-convention.md](</C:/Users/imdls/workspace/Project Workspace/stack/spring/test/integration-test-convention.md>)
+- [integration-test-convention.md](integration-test-convention.md)
