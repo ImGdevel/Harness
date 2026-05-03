@@ -24,3 +24,5 @@
   Figma MCP 호출량을 최소화하기 위한 plan/seat 확인, call budget, bulk write, fallback 기준을 정의한다.
 - `husky-git-hooks-convention.md`
   프로젝트 저장소의 Husky v9 local Git hook 구성, hook 책임, CI 우회 기준을 정의한다.
+- `ci-workflow-convention.md`
+  PR CI 병렬 job, pre-push/PR 테스트 경계, cache, security gate, Discord 알림 기준을 정의한다.
