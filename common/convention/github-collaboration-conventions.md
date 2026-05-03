@@ -11,6 +11,10 @@ Keep GitHub Issue and PR bodies predictable and machine-checkable.
 - Use `work-item.yml` for feature, refactor, docs, ops work.
 - Use `bug-report.yml` for bug, regression, incident work.
 - Fill all required Issue fields.
+- PR 제목은 `gitmoji + type(optional-scope): 한국어 명사형 요약`을 사용한다.
+- PR 제목 예시는 `✨ feat(admin): 관리자 인증 API 추가`, `📝 docs(wiki): 작업 로그 보강`, `🔧 chore(repo): 허스키 검증 규칙 수정`이다.
+- gitmoji가 없는 PR 제목으로는 PR 생성 완료를 보고하지 않는다.
+- 기존 PR 제목이 gitmoji 제목 규칙을 위반하면 리뷰 요청 또는 완료 보고 전에 제목부터 수정한다.
 - Use `.github/PULL_REQUEST_TEMPLATE.md` for every PR.
 - Keep `## Summary`, `## Scope`, `## Validation`, `## Checklist` in every PR body.
 - Do not leave `Validation` empty.
@@ -36,6 +40,7 @@ Keep GitHub Issue and PR bodies predictable and machine-checkable.
 
 - Is the correct Issue template selected?
 - Are required Issue fields filled?
+- Does the PR title use `gitmoji + type(optional-scope): 한국어 명사형 요약`?
 - Does the PR body keep all required sections?
 - Is `Validation` explicit?
 - Do automation scripts use the same field structure as `.github` templates?
