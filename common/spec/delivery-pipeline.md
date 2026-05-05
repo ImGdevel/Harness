@@ -24,7 +24,8 @@ Run one end-to-end delivery flow from requirement to handoff.
 - Reject comments only with a concrete reason, and leave a reply on the review thread when permissions allow it.
 - Accepted review comments must be resolved or otherwise closed on the PR thread before reporting completion.
 - After fixes are pushed, re-query PR review threads and confirm there are zero unresolved accepted comments.
-- If connector/API permissions block resolving or replying, try an alternate path such as the GitHub web UI before declaring a blocker.
+- If the GitHub connector blocks resolving or replying, try an authenticated non-interactive path such as `gh` or GitHub API with the local Git Credential Manager token before declaring a blocker.
+- Do not operate the user's GitHub Web UI to resolve review threads unless the user explicitly asks for browser-based interaction.
 
 ## Stop Conditions
 
@@ -51,7 +52,7 @@ Run one end-to-end delivery flow from requirement to handoff.
 - PR URL was created for implementation work.
 - PR automation and Gemini Code Assist first-pass review were checked after the required wait window.
 - Accepted PR review feedback was addressed or explicitly recorded as pending/blocking.
-- Accepted PR review threads were resolved or confirmed blocked after alternate resolve/reply attempts.
+- Accepted PR review threads were resolved or confirmed blocked after authenticated CLI/API resolve/reply attempts.
 - Final PR review-thread re-query shows no unresolved accepted comments, unless a documented permission blocker remains.
 - Requested non-PR delivery artifact was completed only when the user explicitly scoped the work away from PR delivery.
 

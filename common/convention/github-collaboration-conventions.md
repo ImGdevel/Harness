@@ -34,7 +34,8 @@ Keep GitHub Issue and PR bodies predictable and machine-checkable.
 - If rejected, write a reply directly on that review thread with a concrete reason and reference the stronger requirement or convention.
 - Do not use a top-level PR comment as a substitute for a review-thread reply.
 - Do not resolve a rejected thread without a written review-thread reply.
-- If API or connector permissions block resolve/reply, try an alternate path such as the GitHub web UI before reporting a blocker.
+- If connector permissions block resolve/reply, try an authenticated non-interactive path such as `gh` or GitHub API with the local Git Credential Manager token before reporting a blocker.
+- Do not operate the user's GitHub Web UI to resolve review threads unless the user explicitly requests browser-based interaction.
 - Do not report PR feedback handling as complete while any accepted review thread remains unresolved, unless every available resolve path failed and the blocker is documented.
 - When a comment reveals a reusable rule, add or update the matching common convention document in the same feedback pass.
 - Keep review response commits split by intent when code fixes and convention updates are unrelated.

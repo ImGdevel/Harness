@@ -381,7 +381,9 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 반려할 AI 리뷰는 PR thread에 대댓글로 사유를 남긴다.
   - 수용한 AI 리뷰는 PR thread resolve 또는 동등한 닫힘 처리가 끝나야 한다.
   - 리뷰 처리 후 반드시 PR review thread를 재조회하고 unresolved 수용 리뷰가 0건인지 확인한다.
-  - thread resolve 또는 대댓글 작성이 권한 문제로 실패하면 브라우저 UI 등 대체 경로를 시도하고, 모두 실패할 때만 blocker로 보고한다.
+  - thread resolve 또는 대댓글 작성이 GitHub connector 권한 문제로 실패하면 `gh` 또는 Git Credential Manager 토큰 기반 GitHub API 같은 비대화형 인증 경로를 시도한다.
+  - 사용자가 명시적으로 요청하지 않는 한 GitHub Web UI를 직접 조작해 thread를 닫지 않는다.
+  - 인증된 CLI/API 경로가 모두 실패할 때만 blocker로 보고한다.
   - 계획 저장은 초반 `plan-sync`에서 처리한다.
 - 반복 조건:
   - 설계 재검토 필요
