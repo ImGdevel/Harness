@@ -311,12 +311,19 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - `re-sync-docs`
   - `resolve-accepted-review-thread`
   - `reply-to-rejected-review-thread`
+  - `re-query-review-threads`
+  - `verify-no-unresolved-accepted-review-thread`
 - 반복 조건:
   - 미해결 피드백이 남아 있을 때
+- 중단 조건:
+  - 수용한 리뷰 thread를 resolve할 권한이 없고 대체 UI/도구 경로도 실패했을 때
+  - 반려한 리뷰 thread에 대댓글을 남길 권한이 없고 대체 UI/도구 경로도 실패했을 때
 - 출력물:
   - 반영된 수정과 갱신된 검증 상태
   - 수용한 리뷰 thread resolve 목록
   - 반려한 리뷰 thread 대댓글과 처리 근거
+  - 재조회 기준 unresolved 수용 리뷰 0건 확인 결과
+  - 권한 문제로 thread 처리가 불가능한 경우 blocker 기록
 
 ## Registered Pipelines
 
@@ -372,6 +379,9 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - PR 생성 또는 새 push 직후에는 10~20분 대기한 뒤 AI 리뷰 댓글을 조회한다.
   - 합당한 AI 리뷰는 반영, 검증, 문서 동기화, 추가 커밋/push까지 수행한다.
   - 반려할 AI 리뷰는 PR thread에 대댓글로 사유를 남긴다.
+  - 수용한 AI 리뷰는 PR thread resolve 또는 동등한 닫힘 처리가 끝나야 한다.
+  - 리뷰 처리 후 반드시 PR review thread를 재조회하고 unresolved 수용 리뷰가 0건인지 확인한다.
+  - thread resolve 또는 대댓글 작성이 권한 문제로 실패하면 브라우저 UI 등 대체 경로를 시도하고, 모두 실패할 때만 blocker로 보고한다.
   - 계획 저장은 초반 `plan-sync`에서 처리한다.
 - 반복 조건:
   - 설계 재검토 필요
