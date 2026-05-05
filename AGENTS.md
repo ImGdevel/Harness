@@ -25,6 +25,7 @@
 - 요청이 등록된 `job` 또는 `pipeline`에 명확히 대응되면 세부 step을 다시 물어보지 말고 자동으로 수행한다.
 - `delivery-pipeline`에 해당하는 요청이면 요구사항, 설계, 구현, 검증, 문서화, PR, 피드백까지 연속적으로 전진한다.
 - 하네스 저장소 자체의 Git 작업은 `common/convention/workspace-git-governance.md`를 기준으로 `main`에서 분기한다.
+- 인덱스 누락, 장기 컨텍스트 유실, 미검증 인용, 스니핏 도메인 복사 방지 규칙은 `common/convention/anti-drift-guards.md`를 따른다.
 
 ## Documentation Rule
 

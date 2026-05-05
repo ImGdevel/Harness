@@ -10,6 +10,7 @@ Run one end-to-end delivery flow from requirement to handoff.
 - Use [workflow-catalog.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-catalog.md>) as the execution source of truth.
 - Do not redefine runtime order in this file.
 - Allow long-running execution.
+- Checkpoint progress to the plan document at each `job` boundary so context compression or session restart does not lose state. See `common/convention/anti-drift-guards.md`.
 - Auto-advance to the next `job` unless a stop condition is hit.
 - Keep requirement, design, implementation, and docs in sync.
 - Re-enter the loop after review failure, validation failure, or feedback.
@@ -60,3 +61,4 @@ Run one end-to-end delivery flow from requirement to handoff.
 
 - [workflow-catalog.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-catalog.md>)
 - [workflow-model.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-model.md>)
+- [anti-drift-guards.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/anti-drift-guards.md>)

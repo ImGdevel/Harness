@@ -59,6 +59,7 @@ Do not leave a project plan only in chat when the plan has execution value.
 - If the plan is a revision or continuation of the same topic, reuse the same base filename and add `_v2`, `_v3`, and so on.
 - Keep old plan versions as history; do not overwrite silently.
 - For retained implementation work, not saving the plan is a rule violation.
+- Treat the plan as a live checkpoint: update phase status as work progresses so context compression or session restart can recover state. See `common/convention/anti-drift-guards.md`.
 
 ## Quality Gate Rules
 
