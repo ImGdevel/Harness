@@ -47,9 +47,9 @@ Keep docs searchable with minimum token cost.
 
 ## References
 
-- [anti-drift-guards.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/anti-drift-guards.md>)
-- [project-artifact-conventions.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-artifact-conventions.md>)
-- [project-doc-structure.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-doc-structure.md>)
-- [project/index.md](</C:/Users/imdls/workspace/Project Workspace/project/index.md>)
-- [project-plan-template.md](</C:/Users/imdls/workspace/Project Workspace/common/templates/project-plan-template.md>)
-- [troubleshooting-template.md](</C:/Users/imdls/workspace/Project Workspace/common/templates/troubleshooting-template.md>)
+- [anti-drift-guards.md](common/convention/anti-drift-guards.md)
+- [project-artifact-conventions.md](common/convention/project-artifact-conventions.md)
+- [project-doc-structure.md](common/convention/project-doc-structure.md)
+- [project/index.md](project/index.md)
+- [project-plan-template.md](common/templates/project-plan-template.md)
+- [troubleshooting-template.md](common/templates/troubleshooting-template.md)

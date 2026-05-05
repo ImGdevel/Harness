@@ -37,6 +37,6 @@ Use one GitFlow rule set for project repositories.
 
 ## References
 
-- [workspace-git-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/workspace-git-governance.md>)
-- [project-git-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-git-governance.md>)
+- [workspace-git-governance.md](common/convention/workspace-git-governance.md)
+- [project-git-governance.md](common/convention/project-git-governance.md)
 - Project-specific Git doc, if it exists

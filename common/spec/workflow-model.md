@@ -39,5 +39,5 @@ Use one runtime hierarchy for work selection.
 
 ## References
 
-- [workflow-catalog.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-catalog.md>)
-- [delivery-pipeline.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/delivery-pipeline.md>)
+- [workflow-catalog.md](common/spec/workflow-catalog.md)
+- [delivery-pipeline.md](common/spec/delivery-pipeline.md)

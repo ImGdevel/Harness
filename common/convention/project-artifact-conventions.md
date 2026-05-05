@@ -34,7 +34,7 @@ Keep project-owned docs in the project repository, not in the harness repository
 
 ## References
 
-- [project-doc-structure.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-doc-structure.md>)
-- [documentation-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/documentation-governance.md>)
-- [project-plan-template.md](</C:/Users/imdls/workspace/Project Workspace/common/templates/project-plan-template.md>)
-- [troubleshooting-template.md](</C:/Users/imdls/workspace/Project Workspace/common/templates/troubleshooting-template.md>)
+- [project-doc-structure.md](common/convention/project-doc-structure.md)
+- [documentation-governance.md](common/convention/documentation-governance.md)
+- [project-plan-template.md](common/templates/project-plan-template.md)
+- [troubleshooting-template.md](common/templates/troubleshooting-template.md)

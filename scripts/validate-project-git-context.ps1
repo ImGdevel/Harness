@@ -116,6 +116,24 @@ function Get-RegistryProject {
     throw "Project id not found in registry: $TargetProjectId"
 }
 
+function Resolve-RegistryPath {
+    param(
+        [string]$Path,
+        [string]$WorkspaceRoot
+    )
+
+    if (-not $Path) {
+        return ""
+    }
+
+    $expandedPath = [Environment]::ExpandEnvironmentVariables($Path)
+    if ([System.IO.Path]::IsPathRooted($expandedPath)) {
+        return [System.IO.Path]::GetFullPath($expandedPath)
+    }
+
+    return [System.IO.Path]::GetFullPath((Join-Path $WorkspaceRoot $expandedPath))
+}
+
 function Invoke-Git {
     param(
         [string]$RepoPath,
@@ -181,40 +199,42 @@ function Test-IsAncestor {
 $issues = [System.Collections.Generic.List[object]]::new()
 $registryPath = Join-Path $WorkspaceRoot "project\registry.yaml"
 $project = Get-RegistryProject -RegistryPath $registryPath -TargetProjectId $ProjectId
+$repoPath = Resolve-RegistryPath -Path $project.RepoPath -WorkspaceRoot $WorkspaceRoot
+$wikiPath = Resolve-RegistryPath -Path $project.WikiPath -WorkspaceRoot $WorkspaceRoot
 
-if (-not $project.RepoPath -or -not (Test-Path -LiteralPath $project.RepoPath)) {
+if (-not $repoPath -or -not (Test-Path -LiteralPath $repoPath)) {
     Add-Issue -Issues $issues -Type "missing-repo-path" -Message "Repository path does not exist: $($project.RepoPath)"
-} elseif (-not (Test-Path -LiteralPath (Join-Path $project.RepoPath ".git"))) {
+} elseif (-not (Test-Path -LiteralPath (Join-Path $repoPath ".git"))) {
     Add-Issue -Issues $issues -Type "not-git-repo" -Message "Repository path is not a Git repository: $($project.RepoPath)"
 }
 
 if ($issues.Count -eq 0 -and -not $SkipFetch) {
-    $fetchResult = Invoke-Git -RepoPath $project.RepoPath -GitArgs @("fetch", "--prune", "origin") -AllowFailure
+    $fetchResult = Invoke-Git -RepoPath $repoPath -GitArgs @("fetch", "--prune", "origin") -AllowFailure
     if ($fetchResult.ExitCode -ne 0) {
         Add-Issue -Issues $issues -Type "fetch-failed" -Message $fetchResult.Output
     }
 }
 
 if ($issues.Count -eq 0) {
-    $currentBranch = (Invoke-Git -RepoPath $project.RepoPath -GitArgs @("branch", "--show-current")).Output
+    $currentBranch = (Invoke-Git -RepoPath $repoPath -GitArgs @("branch", "--show-current")).Output
     $branchStrategy = $project.BranchStrategy.ToLowerInvariant()
     $defaultBranch = $project.DefaultBranch
     $productionBranch = $project.ProductionBranch
     $integrationBranch = $project.IntegrationBranch
 
-    if (-not (Test-RemoteBranch -RepoPath $project.RepoPath -BranchName $defaultBranch)) {
+    if (-not (Test-RemoteBranch -RepoPath $repoPath -BranchName $defaultBranch)) {
         Add-Issue -Issues $issues -Type "missing-remote-default-branch" -Message "origin/$defaultBranch does not exist."
     }
 
-    if ($branchStrategy -eq "gitflow" -and -not (Test-RemoteBranch -RepoPath $project.RepoPath -BranchName $productionBranch)) {
+    if ($branchStrategy -eq "gitflow" -and -not (Test-RemoteBranch -RepoPath $repoPath -BranchName $productionBranch)) {
         Add-Issue -Issues $issues -Type "missing-remote-production-branch" -Message "origin/$productionBranch does not exist."
     }
 
-    if ($branchStrategy -eq "gitflow" -and -not (Test-RemoteBranch -RepoPath $project.RepoPath -BranchName $integrationBranch)) {
+    if ($branchStrategy -eq "gitflow" -and -not (Test-RemoteBranch -RepoPath $repoPath -BranchName $integrationBranch)) {
         Add-Issue -Issues $issues -Type "missing-remote-integration-branch" -Message "origin/$integrationBranch does not exist."
     }
 
-    $remoteHead = Resolve-OriginHeadBranch -RepoPath $project.RepoPath
+    $remoteHead = Resolve-OriginHeadBranch -RepoPath $repoPath
     if ($remoteHead) {
         if ($remoteHead -ne $defaultBranch) {
             Add-Issue -Issues $issues -Type "remote-head-mismatch" -Message "origin HEAD points to '$remoteHead', expected '$defaultBranch'."
@@ -239,13 +259,13 @@ if ($issues.Count -eq 0) {
             $defaultBranch
         }
 
-        if (Test-RemoteBranch -RepoPath $project.RepoPath -BranchName $expectedBase) {
-            if (-not (Test-IsAncestor -RepoPath $project.RepoPath -Ancestor "origin/$expectedBase" -Descendant "HEAD")) {
+        if (Test-RemoteBranch -RepoPath $repoPath -BranchName $expectedBase) {
+            if (-not (Test-IsAncestor -RepoPath $repoPath -Ancestor "origin/$expectedBase" -Descendant "HEAD")) {
                 Add-Issue -Issues $issues -Type "base-not-ancestor" -Message "origin/$expectedBase is not an ancestor of '$currentBranch'."
             }
 
             if (-not $AllowStackedBranch) {
-                $remoteWorkBranches = (Invoke-Git -RepoPath $project.RepoPath -GitArgs @(
+                $remoteWorkBranches = (Invoke-Git -RepoPath $repoPath -GitArgs @(
                         "for-each-ref",
                         "--format=%(refname:short)",
                         "refs/remotes/origin/feat",
@@ -259,8 +279,8 @@ if ($issues.Count -eq 0) {
                         continue
                     }
 
-                    $isRemoteWorkBranchInHead = Test-IsAncestor -RepoPath $project.RepoPath -Ancestor $remoteWorkBranch -Descendant "HEAD"
-                    $isRemoteWorkBranchIntegrated = Test-IsAncestor -RepoPath $project.RepoPath -Ancestor $remoteWorkBranch -Descendant "origin/$expectedBase"
+                    $isRemoteWorkBranchInHead = Test-IsAncestor -RepoPath $repoPath -Ancestor $remoteWorkBranch -Descendant "HEAD"
+                    $isRemoteWorkBranchIntegrated = Test-IsAncestor -RepoPath $repoPath -Ancestor $remoteWorkBranch -Descendant "origin/$expectedBase"
 
                     if ($isRemoteWorkBranchInHead -and -not $isRemoteWorkBranchIntegrated) {
                         Add-Issue -Issues $issues -Type "stacked-work-branch" -Message "Current branch contains unintegrated work branch '$remoteWorkBranch'."
@@ -273,16 +293,16 @@ if ($issues.Count -eq 0) {
     if ($project.DocsSource -eq "wiki") {
         if (-not $project.WikiPath) {
             Add-Issue -Issues $issues -Type "missing-wiki-path" -Message "docs_source is wiki but wiki_path is empty."
-        } elseif (-not (Test-Path -LiteralPath (Join-Path $project.WikiPath ".git"))) {
+        } elseif (-not (Test-Path -LiteralPath (Join-Path $wikiPath ".git"))) {
             Add-Issue -Issues $issues -Type "missing-wiki-repo" -Message "wiki_path is not a Git repository: $($project.WikiPath)"
-        } elseif (-not (Test-Path -LiteralPath (Join-Path $project.WikiPath "Home.md"))) {
+        } elseif (-not (Test-Path -LiteralPath (Join-Path $wikiPath "Home.md"))) {
             Add-Issue -Issues $issues -Type "missing-wiki-home" -Message "Wiki Home.md does not exist: $($project.WikiPath)"
         }
     }
 }
 
 Write-Output "project: $($project.Id)"
-Write-Output "repo: $($project.RepoPath)"
+Write-Output "repo: $repoPath"
 Write-Output "branch_strategy: $($project.BranchStrategy)"
 Write-Output "default_branch: $($project.DefaultBranch)"
 Write-Output "production_branch: $($project.ProductionBranch)"

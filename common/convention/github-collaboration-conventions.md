@@ -56,6 +56,6 @@ Keep GitHub Issue and PR bodies predictable and machine-checkable.
 
 ## References
 
-- [github-pr-template.md](</C:/Users/imdls/workspace/Project Workspace/common/templates/github-pr-template.md>)
-- [github-issue-work-item-template.md](</C:/Users/imdls/workspace/Project Workspace/common/templates/github-issue-work-item-template.md>)
-- [github-issue-bug-template.md](</C:/Users/imdls/workspace/Project Workspace/common/templates/github-issue-bug-template.md>)
+- [github-pr-template.md](common/templates/github-pr-template.md)
+- [github-issue-work-item-template.md](common/templates/github-issue-work-item-template.md)
+- [github-issue-bug-template.md](common/templates/github-issue-bug-template.md)

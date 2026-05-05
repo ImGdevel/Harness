@@ -25,4 +25,4 @@ Keep harness Git strategy separate from project Git strategy.
 
 ## References
 
-- [git-branch-gitflow.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/git-branch-gitflow.md>)
+- [git-branch-gitflow.md](common/convention/git-branch-gitflow.md)

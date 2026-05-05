@@ -7,7 +7,7 @@ Run one end-to-end delivery flow from requirement to handoff.
 ## Rules
 
 - Treat `delivery-pipeline` as a `pipeline`.
-- Use [workflow-catalog.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-catalog.md>) as the execution source of truth.
+- Use [workflow-catalog.md](common/spec/workflow-catalog.md) as the execution source of truth.
 - Do not redefine runtime order in this file.
 - Allow long-running execution.
 - Checkpoint progress to the plan document at each `job` boundary so context compression or session restart does not lose state. See `common/convention/anti-drift-guards.md`.
@@ -59,6 +59,6 @@ Run one end-to-end delivery flow from requirement to handoff.
 
 ## References
 
-- [workflow-catalog.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-catalog.md>)
-- [workflow-model.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-model.md>)
-- [anti-drift-guards.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/anti-drift-guards.md>)
+- [workflow-catalog.md](common/spec/workflow-catalog.md)
+- [workflow-model.md](common/spec/workflow-model.md)
+- [anti-drift-guards.md](common/convention/anti-drift-guards.md)

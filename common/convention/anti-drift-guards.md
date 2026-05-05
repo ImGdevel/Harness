@@ -59,6 +59,6 @@ Prevent four recurring failure modes during agent sessions: lost docs, lost cont
 
 ## References
 
-- [documentation-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/documentation-governance.md>)
-- [project-artifact-conventions.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-artifact-conventions.md>)
-- [workflow-catalog.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-catalog.md>)
+- [documentation-governance.md](common/convention/documentation-governance.md)
+- [project-artifact-conventions.md](common/convention/project-artifact-conventions.md)
+- [workflow-catalog.md](common/spec/workflow-catalog.md)

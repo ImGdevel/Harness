@@ -103,6 +103,24 @@ function Ensure-Directory {
     }
 }
 
+function Resolve-RegistryPath {
+    param(
+        [string]$Path,
+        [string]$WorkspaceRoot
+    )
+
+    if (-not $Path) {
+        return ""
+    }
+
+    $expandedPath = [Environment]::ExpandEnvironmentVariables($Path)
+    if ([System.IO.Path]::IsPathRooted($expandedPath)) {
+        return [System.IO.Path]::GetFullPath($expandedPath)
+    }
+
+    return [System.IO.Path]::GetFullPath((Join-Path $WorkspaceRoot $expandedPath))
+}
+
 function Ensure-File {
     param(
         [string]$Path,
@@ -286,12 +304,14 @@ function Test-IsDirectDocsChild {
 $workspaceRoot = Split-Path -Parent $PSScriptRoot
 $registryPath = Join-Path $workspaceRoot "project\registry.yaml"
 $project = Get-RegistryProject -RegistryPath $registryPath -TargetProjectId $ProjectId
+$repoPath = Resolve-RegistryPath -Path $project.RepoPath -WorkspaceRoot $workspaceRoot
+$wikiPath = Resolve-RegistryPath -Path $project.WikiPath -WorkspaceRoot $workspaceRoot
 
-if (-not (Test-Path -LiteralPath $project.RepoPath)) {
+if (-not (Test-Path -LiteralPath $repoPath)) {
     throw "Repository path not found: $($project.RepoPath)"
 }
 
-if (-not (Test-Path -LiteralPath (Join-Path $project.RepoPath ".git"))) {
+if (-not (Test-Path -LiteralPath (Join-Path $repoPath ".git"))) {
     throw "Repository path is not a Git repository: $($project.RepoPath)"
 }
 
@@ -300,26 +320,26 @@ if ($project.DocsSource -eq "wiki") {
         throw "Project '$($project.Id)' uses docs_source=wiki but wiki_path is empty."
     }
 
-    if (-not (Test-Path -LiteralPath (Join-Path $project.WikiPath ".git"))) {
+    if (-not (Test-Path -LiteralPath (Join-Path $wikiPath ".git"))) {
         throw "Wiki path is not a Git repository: $($project.WikiPath)"
     }
 
-    if (-not (Test-Path -LiteralPath (Join-Path $project.WikiPath "Home.md"))) {
+    if (-not (Test-Path -LiteralPath (Join-Path $wikiPath "Home.md"))) {
         throw "Wiki Home.md not found: $($project.WikiPath)"
     }
 
     Write-Output "Bootstrapped project id: $($project.Id)"
-    Write-Output "Repository path: $($project.RepoPath)"
+    Write-Output "Repository path: $repoPath"
     Write-Output "Docs source: wiki"
-    Write-Output "Wiki path: $($project.WikiPath)"
+    Write-Output "Wiki path: $wikiPath"
     Write-Output "No repo docs bootstrap was required."
     exit 0
 }
 
 $createdItems = [System.Collections.Generic.List[string]]::new()
-$docsRoot = Join-Path $project.RepoPath $project.DocsPath
-$planRoot = Join-Path $project.RepoPath $project.PlanPath
-$troubleshootingRoot = Join-Path $project.RepoPath $project.TroubleshootingPath
+$docsRoot = Join-Path $repoPath $project.DocsPath
+$planRoot = Join-Path $repoPath $project.PlanPath
+$troubleshootingRoot = Join-Path $repoPath $project.TroubleshootingPath
 $planInsideDocs = Test-IsDirectDocsChild -DocsRoot $docsRoot -CandidateRoot $planRoot -ExpectedDirectoryName "plan"
 $troubleshootingInsideDocs = Test-IsDirectDocsChild -DocsRoot $docsRoot -CandidateRoot $troubleshootingRoot -ExpectedDirectoryName "troubleshooting"
 
@@ -394,7 +414,7 @@ Ensure-File `
     -CreatedItems $createdItems
 
 Write-Output "Bootstrapped project id: $($project.Id)"
-Write-Output "Repository path: $($project.RepoPath)"
+Write-Output "Repository path: $repoPath"
 Write-Output "Docs root: $docsRoot"
 Write-Output "Plan root: $planRoot"
 Write-Output "Troubleshooting root: $troubleshootingRoot"

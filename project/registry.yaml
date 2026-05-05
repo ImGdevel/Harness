@@ -3,7 +3,7 @@ projects:
   # BEGIN project:image-generation-workspace
   - id: image-generation-workspace
     name: Image Generation Workspace
-    repo_path: 'C:\Users\imdls\workspace\image-generation-workspace'
+    repo_path: '../image-generation-workspace'
     repo_url: ''
     default_branch: main
     docs_path: docs
@@ -22,7 +22,7 @@ projects:
   # BEGIN project:apocalypse-city-state
   - id: apocalypse-city-state
     name: Apocalypse City-State
-    repo_path: 'C:\Users\imdls\workspace\apocalypse-city-state'
+    repo_path: '../apocalypse-city-state'
     repo_url: ''
     default_branch: main
     docs_path: docs
@@ -40,14 +40,14 @@ projects:
   # BEGIN project:techlog-hub
   - id: techlog-hub
     name: Techlog Hub
-    repo_path: 'C:\Users\imdls\workspace\techlog-hub'
+    repo_path: '../techlog-hub'
     repo_url: ''
     default_branch: develop
     production_branch: main
     integration_branch: develop
     branch_strategy: gitflow
     docs_source: wiki
-    wiki_path: 'C:\Users\imdls\workspace\TlogHub.wiki'
+    wiki_path: '../TlogHub.wiki'
     docs_path: docs
     plan_path: docs/plan
     troubleshooting_path: docs/troubleshooting
@@ -63,7 +63,7 @@ projects:
   # BEGIN project:finops-integration-platform
   - id: finops-integration-platform
     name: FinOps Integration Platform
-    repo_path: 'C:\Users\imdls\workspace\finops-integration-platform'
+    repo_path: '../finops-integration-platform'
     repo_url: ''
     default_branch: main
     docs_path: docs
@@ -81,7 +81,7 @@ projects:
   # BEGIN project:miyou
   - id: miyou
     name: MIYOU
-    repo_path: 'C:\Users\imdls\workspace\MIYOU_ai-voice-chat'
+    repo_path: '../MIYOU_ai-voice-chat'
     repo_url: 'https://github.com/ImGdevel/MIYOU_ai-voice-chat.git'
     default_branch: develop
     docs_path: docs
@@ -96,7 +96,6 @@ projects:
       - miyou
       - MIYOU
   # END project:miyou
-
 
 
 
