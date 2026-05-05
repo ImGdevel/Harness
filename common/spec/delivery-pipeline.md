@@ -16,8 +16,12 @@ Run one end-to-end delivery flow from requirement to handoff.
 - Run troubleshooting as a sidecar flow, then return to the main flow.
 - Commit in small intent-based slices when useful.
 - Use `pr-delivery` for commit, push, and PR creation.
-- Treat the work as unfinished until a PR URL exists, unless the user explicitly requests no PR.
+- Treat the work as unfinished until a PR URL exists and the first PR automation/AI review check is complete, unless the user explicitly requests no PR.
 - If PR creation is blocked, report the blocker instead of marking the work complete.
+- After opening a PR or pushing new commits to an existing PR, wait 10 to 20 minutes for CI and AI review automation.
+- Inspect Gemini Code Assist or equivalent AI review comments after the wait.
+- Accept comments that match requirements, conventions, safety, or product quality; then fix, revalidate, document, commit, and push.
+- Reject comments only with a concrete reason, and leave a reply on the review thread when permissions allow it.
 
 ## Stop Conditions
 
@@ -42,6 +46,8 @@ Run one end-to-end delivery flow from requirement to handoff.
 - Reusable troubleshooting was documented.
 - Remaining work was captured.
 - PR URL was created for implementation work.
+- PR automation and Gemini Code Assist first-pass review were checked after the required wait window.
+- Accepted PR review feedback was addressed or explicitly recorded as pending/blocking.
 - Requested non-PR delivery artifact was completed only when the user explicitly scoped the work away from PR delivery.
 
 ## References
