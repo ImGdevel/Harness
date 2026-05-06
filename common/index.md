@@ -13,6 +13,7 @@
 - `convention/project-git-governance.md`: 실제 프로젝트 원격 기준 브랜치, 작업 브랜치, 문서 원천 사전 검증 기준
 - `convention/ci-workflow-convention.md`: PR CI 병렬 실행, pre-push/PR 테스트 경계, cache, security scan, Discord 알림 기준
 - `convention/figma-mcp-usage-conventions.md`: Figma MCP plan/seat 제한을 고려한 호출 최소화와 fallback 기준
+- `convention/anti-drift-guards.md`: 인덱스 누락, 장기 컨텍스트 유실, 미검증 인용, 스니핏 도메인 복사 방지 규칙
 - `templates/game-requirements-template.md`: 게임 프로젝트 요구사항과 MVP 범위를 정의하는 템플릿
 - `templates/game-concept-art-brief-template.md`: 컨셉아트 브리프와 이미지 생성 입력 기준 템플릿
 - `templates/game-design-plan-template.md`: 게임 설계 계획과 마일스톤을 정리하는 템플릿

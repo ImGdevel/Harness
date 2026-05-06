@@ -29,8 +29,8 @@
 
 | id | name | path | default branch | stacks | status |
 | --- | --- | --- | --- | --- | --- |
-| `miyou` | `MIYOU` | `C:\Users\imdls\workspace\MIYOU_ai-voice-chat` | `develop` | `spring`, `react` | `active` |
-| `finops-integration-platform` | `FinOps Integration Platform` | `C:\Users\imdls\workspace\finops-integration-platform` | `main` | `spring`, `react` | `active` |
-| `techlog-hub` | `Techlog Hub` | `C:\Users\imdls\workspace\techlog-hub` | `develop` | `nextjs`, `spring` | `active` |
-| `apocalypse-city-state` | `Apocalypse City-State` | `C:\Users\imdls\workspace\apocalypse-city-state` | `main` | `unity` | `active` |
-| `image-generation-workspace` | `Image Generation Workspace` | `C:\Users\imdls\workspace\image-generation-workspace` | `main` | `image-generation` | `active` |
+| `miyou` | `MIYOU` | `../MIYOU_ai-voice-chat` | `develop` | `spring`, `react` | `active` |
+| `finops-integration-platform` | `FinOps Integration Platform` | `../finops-integration-platform` | `main` | `spring`, `react` | `active` |
+| `techlog-hub` | `Techlog Hub` | `../techlog-hub` | `develop` | `nextjs`, `spring` | `active` |
+| `apocalypse-city-state` | `Apocalypse City-State` | `../apocalypse-city-state` | `main` | `unity` | `active` |
+| `image-generation-workspace` | `Image Generation Workspace` | `../image-generation-workspace` | `main` | `image-generation` | `active` |

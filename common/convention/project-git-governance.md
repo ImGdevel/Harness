@@ -69,6 +69,6 @@ GitFlow 프로젝트에서 GitHub default branch는 `develop`을 권장한다. `
 
 ## Related Docs
 
-- [git-branch-gitflow.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/git-branch-gitflow.md>)
-- [git-commit-conventions.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/git-commit-conventions.md>)
-- [workspace-git-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/workspace-git-governance.md>)
+- [git-branch-gitflow.md](common/convention/git-branch-gitflow.md)
+- [git-commit-conventions.md](common/convention/git-commit-conventions.md)
+- [workspace-git-governance.md](common/convention/workspace-git-governance.md)

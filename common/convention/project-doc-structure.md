@@ -65,5 +65,5 @@ Use one predictable `docs/` tree for every project repository.
 
 ## References
 
-- [documentation-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/documentation-governance.md>)
-- [project-artifact-conventions.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-artifact-conventions.md>)
+- [documentation-governance.md](common/convention/documentation-governance.md)
+- [project-artifact-conventions.md](common/convention/project-artifact-conventions.md)

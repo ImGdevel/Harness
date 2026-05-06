@@ -30,5 +30,5 @@ Use split-by-intent commits for project repositories.
 
 ## References
 
-- [git-branch-gitflow.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/git-branch-gitflow.md>)
+- [git-branch-gitflow.md](common/convention/git-branch-gitflow.md)
 - Project-specific Git doc, if it exists

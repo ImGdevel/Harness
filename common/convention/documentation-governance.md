@@ -15,6 +15,7 @@ Keep docs searchable with minimum token cost.
 - If a project registry entry overrides those paths, follow `plan_path` and `troubleshooting_path`.
 - Use harness `project/` for registry metadata only.
 - Every doc directory must have `index.md`.
+- When reading a directory's docs, also list its actual files (`Glob` or directory listing) so an index-missing doc is not silently skipped. See `anti-drift-guards.md`.
 - Update the nearest `index.md` in the same change.
 - If a new subdirectory is added, update the parent `index.md` too.
 - Keep `index.md` as a map only: path plus one-line summary.
@@ -26,6 +27,7 @@ Keep docs searchable with minimum token cost.
 - Prefer short, canonical, copyable snippets over long inline examples.
 - Store reusable code examples in `snippets/` instead of repeating them across many docs.
 - Link from rule docs to snippet docs instead of embedding large code blocks repeatedly.
+- Treat snippets as patterns, not as copy-paste targets. Domain identifiers and dependencies must be re-mapped to the actual task context. See `anti-drift-guards.md`.
 - Add `Flow` or `Tree` only when structure itself is required.
 - Remove tutorial text, history, and long rationale from rule docs.
 - Move deep rationale to linked reference docs only.
@@ -45,8 +47,9 @@ Keep docs searchable with minimum token cost.
 
 ## References
 
-- [project-artifact-conventions.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-artifact-conventions.md>)
-- [project-doc-structure.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-doc-structure.md>)
-- [project/index.md](</C:/Users/imdls/workspace/Project Workspace/project/index.md>)
-- [project-plan-template.md](</C:/Users/imdls/workspace/Project Workspace/common/templates/project-plan-template.md>)
-- [troubleshooting-template.md](</C:/Users/imdls/workspace/Project Workspace/common/templates/troubleshooting-template.md>)
+- [anti-drift-guards.md](common/convention/anti-drift-guards.md)
+- [project-artifact-conventions.md](common/convention/project-artifact-conventions.md)
+- [project-doc-structure.md](common/convention/project-doc-structure.md)
+- [project/index.md](project/index.md)
+- [project-plan-template.md](common/templates/project-plan-template.md)
+- [troubleshooting-template.md](common/templates/troubleshooting-template.md)

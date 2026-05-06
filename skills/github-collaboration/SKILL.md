@@ -33,6 +33,9 @@ Read these files before drafting:
 
 ## PR Rules
 
+- PR 제목은 `gitmoji + type(optional-scope): 한국어 명사형 요약`을 사용한다.
+- 예시는 `✨ feat(admin): 관리자 인증 API 추가`, `📝 docs(wiki): 작업 로그 보강`, `🔧 chore(repo): 허스키 검증 규칙 수정`이다.
+- gitmoji가 없는 PR 제목으로는 PR 생성 완료를 보고하지 않는다.
 - Always keep `Summary`, `Scope`, `Validation`, and `Checklist`.
 - `Validation` must say what was run, or explicitly say `not run` with reason.
 - `Scope` should describe both affected and excluded areas when that distinction matters.

@@ -250,6 +250,8 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - `push`
   - `draft-pr`
   - `open-pr`
+  - `wait-for-pr-automation`
+  - `inspect-ai-review-comments`
 - 중단 조건:
   - 원격 기준 브랜치가 없거나 원격 HEAD가 잘못됨
   - 현재 브랜치가 보호 브랜치이거나 이름 규칙을 위반함
@@ -260,6 +262,7 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - 커밋
   - 원격 브랜치
   - PR URL
+  - PR 자동화와 AI 리뷰 1차 확인 결과
   - PR 생성이 불가능한 경우에는 blocker와 재시도 명령
 
 ### `implementation-doc-sync`
@@ -297,7 +300,10 @@ Use this file as the runtime registry for `job` and `pipeline`.
 - 목적: PR 피드백을 반영하고 필요한 재검증과 문서 동기화를 반복한다.
 - 자동 트리거:
   - PR 리뷰 피드백이 들어왔을 때
+  - PR 생성 또는 push 후 10~20분 대기한 뒤 Gemini Code Assist 같은 AI 리뷰 댓글이 생겼을 때
 - 포함 step:
+  - `wait-10-to-20-minutes-after-pr-or-push`
+  - `inspect-gemini-review-comments`
   - `analyze-feedback`
   - `classify-feedback-against-requirements-and-conventions`
   - `apply-change`
@@ -305,12 +311,19 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - `re-sync-docs`
   - `resolve-accepted-review-thread`
   - `reply-to-rejected-review-thread`
+  - `re-query-review-threads`
+  - `verify-no-unresolved-accepted-review-thread`
 - 반복 조건:
   - 미해결 피드백이 남아 있을 때
+- 중단 조건:
+  - 수용한 리뷰 thread를 resolve할 권한이 없고 대체 UI/도구 경로도 실패했을 때
+  - 반려한 리뷰 thread에 대댓글을 남길 권한이 없고 대체 UI/도구 경로도 실패했을 때
 - 출력물:
   - 반영된 수정과 갱신된 검증 상태
   - 수용한 리뷰 thread resolve 목록
   - 반려한 리뷰 thread 대댓글과 처리 근거
+  - 재조회 기준 unresolved 수용 리뷰 0건 확인 결과
+  - 권한 문제로 thread 처리가 불가능한 경우 blocker 기록
 
 ## Registered Pipelines
 
@@ -361,8 +374,16 @@ Use this file as the runtime registry for `job` and `pipeline`.
   - `feedback-response`
 - 전달 규칙:
   - 커밋, 푸시, PR 생성은 별도 `job`으로 분리하지 않고 `pr-delivery`에 포함한다.
-  - 구현 작업의 정상 종료 기준은 PR URL 생성이다.
+  - 구현 작업의 정상 종료 기준은 PR URL 생성 후 PR 자동화와 Gemini Code Assist 리뷰 1차 확인까지 완료된 상태다.
   - PR을 만들 수 없으면 작업 완료로 보고하지 않고 blocker로 보고한다.
+  - PR 생성 또는 새 push 직후에는 10~20분 대기한 뒤 AI 리뷰 댓글을 조회한다.
+  - 합당한 AI 리뷰는 반영, 검증, 문서 동기화, 추가 커밋/push까지 수행한다.
+  - 반려할 AI 리뷰는 PR thread에 대댓글로 사유를 남긴다.
+  - 수용한 AI 리뷰는 PR thread resolve 또는 동등한 닫힘 처리가 끝나야 한다.
+  - 리뷰 처리 후 반드시 PR review thread를 재조회하고 unresolved 수용 리뷰가 0건인지 확인한다.
+  - thread resolve 또는 대댓글 작성이 GitHub connector 권한 문제로 실패하면 `gh` 또는 Git Credential Manager 토큰 기반 GitHub API 같은 비대화형 인증 경로를 시도한다.
+  - 사용자가 명시적으로 요청하지 않는 한 GitHub Web UI를 직접 조작해 thread를 닫지 않는다.
+  - 인증된 CLI/API 경로가 모두 실패할 때만 blocker로 보고한다.
   - 계획 저장은 초반 `plan-sync`에서 처리한다.
 - 반복 조건:
   - 설계 재검토 필요

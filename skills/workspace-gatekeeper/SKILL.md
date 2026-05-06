@@ -26,6 +26,8 @@ Read only the minimum context needed:
 
 Do not load unrelated framework or project docs just to start work.
 
+When reading any directory's `index.md`, also list its actual contents (`Glob` or directory listing) so unindexed docs are not silently skipped. See `common/convention/anti-drift-guards.md`.
+
 ## Scope Decision
 
 Choose one primary scope first:

@@ -44,7 +44,7 @@
 예를 들어 사용자가 `Miyou에 결제 기능 만들어줘`라고 말하면:
 
 1. 하네스가 `project/registry.yaml`에서 `miyou`를 찾는다.
-2. `repo_path`가 `C:\Users\imdls\workspace\MIYOU_ai-voice-chat`인지 확인한다.
+2. `repo_path`가 `../MIYOU_ai-voice-chat`인지 확인한다.
 3. 필요하면 `common/`과 `stack/` 문서를 읽는다.
 4. 실제 코드 수정, 테스트, docs/plan, docs/troubleshooting, Git 작업은 `MIYOU_ai-voice-chat` 저장소에서 진행한다.
 
@@ -52,11 +52,11 @@
 
 프로젝트 등록의 단일 진실 원천은 아래 파일이다.
 
-- [project/registry.yaml](</C:/Users/imdls/workspace/Project Workspace/project/registry.yaml>)
+- [project/registry.yaml](project/registry.yaml)
 
 사람이 빠르게 보는 요약은 아래 문서다.
 
-- [project/index.md](</C:/Users/imdls/workspace/Project Workspace/project/index.md>)
+- [project/index.md](project/index.md)
 
 새 프로젝트를 등록할 때는 아래 스크립트를 사용한다.
 
@@ -64,7 +64,7 @@
 .\scripts\register-project.ps1 `
   -ProjectId miyou `
   -DisplayName MIYOU `
-  -RepoPath C:\Users\imdls\workspace\MIYOU_ai-voice-chat
+  -RepoPath ..\MIYOU_ai-voice-chat
 ```
 
 이 스크립트는 `project/registry.yaml`과 `project/index.md`를 같은 변경에서 함께 갱신한다.
@@ -118,9 +118,9 @@
 
 자세한 기준은 아래 문서를 따른다.
 
-- [common/convention/documentation-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/documentation-governance.md>)
-- [common/convention/project-artifact-conventions.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-artifact-conventions.md>)
-- [common/convention/project-doc-structure.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/project-doc-structure.md>)
+- [common/convention/documentation-governance.md](common/convention/documentation-governance.md)
+- [common/convention/project-artifact-conventions.md](common/convention/project-artifact-conventions.md)
+- [common/convention/project-doc-structure.md](common/convention/project-doc-structure.md)
 
 ## What `stack/` Means
 
@@ -166,31 +166,31 @@
 
 ## Files You Will Touch Most Often
 
-- [AGENTS.md](</C:/Users/imdls/workspace/Project Workspace/AGENTS.md>)
+- [AGENTS.md](AGENTS.md)
   Codex와 Claude 공통 작업 규칙
-- [CLAUDE.MD](</C:/Users/imdls/workspace/Project Workspace/CLAUDE.MD>)
+- [CLAUDE.MD](CLAUDE.MD)
   Claude 전용 보조 규칙
-- [project/registry.yaml](</C:/Users/imdls/workspace/Project Workspace/project/registry.yaml>)
+- [project/registry.yaml](project/registry.yaml)
   프로젝트 이름과 실제 저장소 경로 매핑
-- [common/spec/workflow-model.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-model.md>)
+- [common/spec/workflow-model.md](common/spec/workflow-model.md)
   `step`, `job`, `pipeline` 모델
-- [common/spec/workflow-catalog.md](</C:/Users/imdls/workspace/Project Workspace/common/spec/workflow-catalog.md>)
+- [common/spec/workflow-catalog.md](common/spec/workflow-catalog.md)
   등록된 워크플로우 목록
 
 ## Scripts
 
-- [scripts/register-project.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/register-project.ps1>)
+- [scripts/register-project.ps1](scripts/register-project.ps1)
   외부 프로젝트를 registry에 등록하거나 갱신한다.
-- [scripts/bootstrap-project-docs.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/bootstrap-project-docs.ps1>)
+- [scripts/bootstrap-project-docs.ps1](scripts/bootstrap-project-docs.ps1)
   registry를 기준으로 실제 프로젝트 저장소의 `docs/`, `docs/plan/`, `docs/troubleshooting/` 기본 구조를 정렬한다.
-- [scripts/audit-documentation-governance.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/audit-documentation-governance.ps1>)
+- [scripts/audit-documentation-governance.ps1](scripts/audit-documentation-governance.ps1)
   문서 인덱스와 배치 규칙 정합성을 점검한다.
-- [scripts/audit-project-registry.ps1](</C:/Users/imdls/workspace/Project Workspace/scripts/audit-project-registry.ps1>)
+- [scripts/audit-project-registry.ps1](scripts/audit-project-registry.ps1)
   `project/registry.yaml`과 `project/index.md` 요약 정합성을 점검한다.
 
 ## Tools
 
-- [tools/discord-codex-remote-control](</C:/Users/imdls/workspace/Project Workspace/tools/discord-codex-remote-control>)
+- [tools/discord-codex-remote-control](tools/discord-codex-remote-control)
   Discord slash command와 webhook으로 원격 작업 요청 큐와 주요 작업 완료 알림을 처리한다.
 
 ## GitHub Rules
@@ -212,5 +212,5 @@
 
 기준 문서는 아래와 같다.
 
-- [common/convention/workspace-git-governance.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/workspace-git-governance.md>)
-- [common/convention/git-branch-gitflow.md](</C:/Users/imdls/workspace/Project Workspace/common/convention/git-branch-gitflow.md>)
+- [common/convention/workspace-git-governance.md](common/convention/workspace-git-governance.md)
+- [common/convention/git-branch-gitflow.md](common/convention/git-branch-gitflow.md)

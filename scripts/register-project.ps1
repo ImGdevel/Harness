@@ -44,6 +44,16 @@ function Expand-NormalizedList {
     )
 }
 
+function ConvertTo-RegistryPath {
+    param(
+        [string]$Path,
+        [string]$WorkspaceRoot
+    )
+
+    $relativePath = [System.IO.Path]::GetRelativePath($WorkspaceRoot, $Path)
+    return $relativePath.Replace('\', '/')
+}
+
 function Ensure-ProjectIndex {
     param([string]$Path)
 
@@ -209,6 +219,7 @@ if (-not $DefaultBranch) {
     }
 }
 
+$registryRepoPath = ConvertTo-RegistryPath -Path $resolvedRepoPath -WorkspaceRoot $workspaceRoot
 $normalizedStacks = Expand-NormalizedList -Values $Stacks
 $normalizedAliases = Expand-NormalizedList -Values @($Aliases + $ProjectId + $DisplayName)
 
@@ -216,7 +227,7 @@ $lines = @()
 $lines += "  # BEGIN project:$ProjectId"
 $lines += "  - id: $ProjectId"
 $lines += "    name: $DisplayName"
-$lines += "    repo_path: $(Quote-Yaml $resolvedRepoPath)"
+$lines += "    repo_path: $(Quote-Yaml $registryRepoPath)"
 $lines += "    repo_url: $(Quote-Yaml $RepoUrl)"
 $lines += "    default_branch: $DefaultBranch"
 if ($ProductionBranch) {
@@ -264,12 +275,13 @@ Update-ProjectIndex `
     -IndexPath $projectIndexPath `
     -ProjectId $ProjectId `
     -DisplayName $DisplayName `
-    -RepoPath $resolvedRepoPath `
+    -RepoPath $registryRepoPath `
     -DefaultBranch $DefaultBranch `
     -Stacks $normalizedStacks `
     -Status $Status
 
 Write-Output "Registered project id: $ProjectId"
 Write-Output "Repo path: $resolvedRepoPath"
+Write-Output "Registry repo path: $registryRepoPath"
 Write-Output "Registry: $registryPath"
 Write-Output "Project index: $projectIndexPath"

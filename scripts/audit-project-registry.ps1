@@ -50,6 +50,24 @@ function Normalize-MarkdownCodeScalar {
     return $normalized.Trim()
 }
 
+function Resolve-RegistryPath {
+    param(
+        [string]$Path,
+        [string]$WorkspaceRoot
+    )
+
+    if (-not $Path) {
+        return ""
+    }
+
+    $expandedPath = [Environment]::ExpandEnvironmentVariables($Path)
+    if ([System.IO.Path]::IsPathRooted($expandedPath)) {
+        return [System.IO.Path]::GetFullPath($expandedPath)
+    }
+
+    return [System.IO.Path]::GetFullPath((Join-Path $WorkspaceRoot $expandedPath))
+}
+
 function Normalize-List {
     param([string[]]$Values)
 
@@ -300,8 +318,11 @@ foreach ($project in $registryProjects) {
     if ($project.DocsSource -eq "wiki") {
         if (-not $project.WikiPath) {
             Add-Issue -Issues $issues -Type "missing-registry-field" -Path "project\\registry.yaml" -Message ("Registry project '{0}' uses docs_source=wiki but is missing 'wiki_path'." -f $project.MarkerId)
-        } elseif (-not $SkipLocalPathExistenceCheck -and -not (Test-Path -LiteralPath $project.WikiPath)) {
-            Add-Issue -Issues $issues -Type "missing-wiki-path" -Path $project.WikiPath -Message ("Registry project '{0}' wiki_path does not exist." -f $project.MarkerId)
+        } else {
+            $resolvedWikiPath = Resolve-RegistryPath -Path $project.WikiPath -WorkspaceRoot $workspaceRootPath
+            if (-not $SkipLocalPathExistenceCheck -and -not (Test-Path -LiteralPath $resolvedWikiPath)) {
+                Add-Issue -Issues $issues -Type "missing-wiki-path" -Path $project.WikiPath -Message ("Registry project '{0}' wiki_path does not exist." -f $project.MarkerId)
+            }
         }
     }
 
