@@ -40,6 +40,17 @@ Keep GitHub Issue and PR bodies predictable and machine-checkable.
 - When a comment reveals a reusable rule, add or update the matching common convention document in the same feedback pass.
 - Keep review response commits split by intent when code fixes and convention updates are unrelated.
 
+## AI Review Automation
+
+- If a repository uses an AI review app, treat its first-pass review as part of PR completion unless the project explicitly opts out.
+- Do not merge or report a PR as fully complete until CI and the configured AI review window have both been checked.
+- Wait the project-defined window before deciding that the AI review did not respond. Use 10 to 20 minutes when no stronger project rule exists.
+- If a manual slash command is needed, write one command per top-level PR comment.
+- Do not combine commands such as `/gemini review` and `/gemini summary` in one comment.
+- Request review before summary. Summary is optional and should not block code-review handling unless the project requires it.
+- If the PR is merged or closed before the AI app responds, do not treat a later failed or canceled AI response as review completion.
+- Record AI review timeout, failure, or cancellation in the project log or troubleshooting document when it affects the workflow.
+
 ## Checklist
 
 - Is the correct Issue template selected?
@@ -53,6 +64,8 @@ Keep GitHub Issue and PR bodies predictable and machine-checkable.
 - Were rejected conversations answered with a review-thread reply before resolve?
 - Was the PR review thread list re-queried after fixes?
 - Are unresolved accepted review threads zero, or is a resolve/reply permission blocker documented?
+- Was configured AI review checked before merge or completion reporting?
+- If a manual AI command was used, was it sent as one command per comment?
 
 ## References
 
